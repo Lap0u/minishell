@@ -16,9 +16,6 @@ int	main()
 			free(cmd);
 			return (0);
 		}
-		printf("%s\n", c_table->cmd);
-		for (int i = 0; i < 2; i++)
-			printf("arg: %s \n", c_table->args[i]);
 		if (ft_isbuiltin(c_table->cmd))
 			ft_split_builtin(c_table);
 		//else execve

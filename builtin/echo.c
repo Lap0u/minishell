@@ -14,5 +14,12 @@
 
 void    ft_bi_echo(t_simple_command *c_table)
 {
-    free(c_table);
+    int i = 1;
+    if (ft_strcmp(c_table->args[1], "-n") == 0)
+        i = 2;
+    while (c_table->args[i])
+        printf("%s ", c_table->args[i++]);
+    if (ft_strcmp(c_table->args[1], "-n") == 1)
+        printf("\n");
+    //free c_table
 }
