@@ -14,5 +14,11 @@
 
 void    ft_bi_pwd(t_simple_command *c_table)
 {
-    free(c_table);
+    char wd[PATH_MAX];
+
+    if (!getcwd(wd, PATH_MAX))
+        perror("Error");
+    else
+        printf("%s\n", wd);
+    free(c_table); //incomplet
 }

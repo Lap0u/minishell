@@ -14,5 +14,9 @@
 
 void    ft_bi_cd(t_simple_command *c_table)
 {
+    int ret;
+    ret = chdir(c_table->args[1]);
+    if (ret == -1)
+        perror("Error");
     free(c_table);
 }

@@ -1,6 +1,4 @@
 #include "./minishell.h"
-#define PROMPT ">minishell "
-
 
 int	main()
 {	
