@@ -1,19 +1,29 @@
 #include "minishell.h"
-//comp avec -lreadline
-#define B_SIZE 10
 #define PROMPT ">minishell "
+
+
 int	main()
-{
-	static char buffer[B_SIZE + 1];
-	write(1, PROMPT, ft_strlen(PROMPT));
-	read(0,  buffer, B_SIZE);
-	buffer[B_SIZE] = 0;
-	printf("%s\n", buffer);
-	/*
+{	
 	char *cmd;
-	cmd = readline(">minishell ");
-	printf("%s\n", cmd);
-	add_history(cmd);
-	free(cmd);///res de readline a free
-	*/return (0);
+	t_simple_command *c_table;
+
+	while (1)
+	{
+		cmd = readline(PROMPT);
+		c_table = ft_get_simple_command(cmd);
+		if (c_table == NULL)
+		{
+			free(cmd);
+			return (0);
+		}
+		printf("%s\n", c_table->cmd);
+		for (int i = 0; i < 2; i++)
+			printf("arg: %s \n", c_table->args[i]);
+		//if (ft_isbuiltin(c_table))
+		//	ft_split_builtin(c_table);
+		//else execve
+		add_history(cmd);
+		free(cmd);///res de readline a free
+	}
+	return (0);
 }
