@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "./minishell.h"
 
 int ft_get_args_size(char **args)
 {
@@ -82,39 +82,3 @@ int ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int	ft_isbuiltin(char *str)
-{
-	if (ft_strcmp(str, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(str, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(str, "pwd") == 0)
-		return (1);	
-	else if (ft_strcmp(str, "export") == 0)
-		return (1);
-	else if (ft_strcmp(str, "unset") == 0)
-		return (1);
-	else if (ft_strcmp(str, "env") == 0)
-		return (1);
-	else if (ft_strcmp(str, "exit") == 0)
-		return (1);
-	return (0);
-}
-/*
-void	ft_split_builtin(t_simple_command *c_table)
-{
-	if (ft_strcmp(str, "echo") == 0)
-		ft_bi_echo(c_table);
-	else if (ft_strcmp(str, "cd") == 0)
-		ft_bi_cd(c_table);
-	else if (ft_strcmp(str, "pwd") == 0)
-		ft_bi_pwd(c_table);
-	else if (ft_strcmp(str, "export") == 0)
-		ft_bi_export(c_table);
-	else if (ft_strcmp(str, "unset") == 0)
-		ft_bi_unset(c_table);
-	else if (ft_strcmp(str, "env") == 0)
-		ft_bi_env(c_table);
-	else if (ft_strcmp(str, "exit") == 0)
-		ft_bi_exit(c_table);
-}*/

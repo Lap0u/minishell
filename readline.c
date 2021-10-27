@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "./minishell.h"
 #define PROMPT ">minishell "
 
 
@@ -19,8 +19,8 @@ int	main()
 		printf("%s\n", c_table->cmd);
 		for (int i = 0; i < 2; i++)
 			printf("arg: %s \n", c_table->args[i]);
-		//if (ft_isbuiltin(c_table))
-		//	ft_split_builtin(c_table);
+		if (ft_isbuiltin(c_table->cmd))
+			ft_split_builtin(c_table);
 		//else execve
 		add_history(cmd);
 		free(cmd);///res de readline a free

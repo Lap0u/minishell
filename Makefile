@@ -12,7 +12,9 @@
 
 NAME		= minishell
 
-SRCS		= readline.c utils.c
+SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
+				builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c \
+				builtin/unset.c
 
 OBJS		= $(SRCS:.c=.o)
 
