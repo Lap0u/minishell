@@ -1,10 +1,12 @@
 #include "./minishell.h"
 
-int	main()
+int	main(int ac, char **av, char **env)
 {	
 	char *cmd;
 	t_simple_command *c_table;
 
+	if (ac != 1 || !av[0])
+		printf("No arguments!!!!!!!\n");
 	while (1)
 	{
 		cmd = readline(PROMPT);
@@ -15,7 +17,7 @@ int	main()
 			return (0);
 		}
 		if (ft_isbuiltin(c_table->cmd))
-			ft_split_builtin(c_table);
+			ft_split_builtin(c_table, env);
 		//else execve
 		add_history(cmd);
 		free(cmd);///res de readline a free

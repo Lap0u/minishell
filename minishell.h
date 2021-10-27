@@ -29,7 +29,7 @@ char    **ft_get_args(char *str);
 
 int ft_get_args_size(char **args);
 
-void	ft_split_builtin(t_simple_command *c_table);
+void	ft_split_builtin(t_simple_command *c_table, char **env);
 
 void	ft_bi_echo(t_simple_command *c_table);
 
@@ -41,6 +41,6 @@ void	ft_bi_export(t_simple_command *c_table);
 
 void	ft_bi_unset(t_simple_command *c_table);
 
-void	ft_bi_env(t_simple_command *c_table);
+void	ft_bi_env(t_simple_command *c_table, char **env);
 
 void	ft_bi_exit(t_simple_command *c_table);
