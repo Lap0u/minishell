@@ -9,7 +9,7 @@ int ft_get_args_size(char **args)
     i = 0;
     while (args[i] != NULL)
         i++;
-    return (i);
+    return (i - 1);
 }
 char    **ft_get_args(char *str)
 {
@@ -49,8 +49,8 @@ char	*ft_get_command(char *str)
 	char *res;
 	
 	i = 0;
-    if (!str)
-        return (NULL);
+	if (str == NULL)
+		return (NULL);
 	while (str[i] && str[i] != ' ')
 		i++;
 	res = malloc (sizeof(char) * i + 1);
@@ -76,7 +76,7 @@ int ft_strcmp(char *s1, char *s2)
 	while (s1[i] && s2[i])
 	{
 		if (s1[i] != s2[i])
-			return (1);
+			return (s1[i] - s2[i]);
 		i++;
 	}
 	if (s1[i] != s2[i])

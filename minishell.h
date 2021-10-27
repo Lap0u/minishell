@@ -1,14 +1,17 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "./libft/libft.h"
-#include <limits.h>
+#ifndef MINISHELL_H
+# define MINISHELL_h
+
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "./libft/libft.h"
+# include <limits.h>
 
 
-#define MAX_PWD	100
-#define PROMPT ">minishell "
+# define MAX_PWD	100
+# define PROMPT ">minishell "
 
 typedef struct s_simple_command
 {
@@ -37,10 +40,12 @@ void	ft_bi_cd(t_simple_command *c_table);
 
 void	ft_bi_pwd(t_simple_command *c_table);
 
-void	ft_bi_export(t_simple_command *c_table);
+void	ft_bi_export(t_simple_command *c_table, char **str);
 
 void	ft_bi_unset(t_simple_command *c_table);
 
 void	ft_bi_env(t_simple_command *c_table, char **env);
 
 void	ft_bi_exit(t_simple_command *c_table);
+
+#endif

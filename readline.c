@@ -6,7 +6,7 @@ int	main(int ac, char **av, char **env)
 	t_simple_command *c_table;
 
 	if (ac != 1 || !av[0])
-		printf("No arguments!!!!!!!\n");
+		return (printf("No arguments!!!!!!!\n"));
 	while (1)
 	{
 		cmd = readline(PROMPT);

@@ -40,7 +40,7 @@ void	ft_split_builtin(t_simple_command *c_table, char **env)
 	else if (ft_strcmp(c_table->cmd, "pwd") == 0)
 		ft_bi_pwd(c_table);
 	else if (ft_strcmp(c_table->cmd, "export") == 0)
-		ft_bi_export(c_table);
+		ft_bi_export(c_table, env);
 	else if (ft_strcmp(c_table->cmd, "unset") == 0)
 		ft_bi_unset(c_table);
 	else if (ft_strcmp(c_table->cmd, "env") == 0)
