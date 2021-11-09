@@ -6,11 +6,10 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
 # include "./libft/libft.h"
 # include <limits.h>
 
-
-# define MAX_PWD	100
 # define PROMPT ">minishell "
 
 typedef struct s_simple_command

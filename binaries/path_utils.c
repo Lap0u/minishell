@@ -37,7 +37,6 @@ char	**ft_get_paths(char **envp)
 {
 	int		i;
 	char	**res;
-	int		j;
 	char	*str;
 	char	*temp;
 
@@ -47,7 +46,6 @@ char	**ft_get_paths(char **envp)
 			break ;
 	if (envp[i] == NULL)
 		return (NULL);
-	j = 0;
 	temp = ft_rm_path(envp[i]);
 	if (temp == NULL)
 		return (NULL);
