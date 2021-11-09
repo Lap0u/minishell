@@ -23,12 +23,12 @@ char	*ft_var_only(char *str)
 
 	i = 0;
 	end = 0;
-	while (ft_strncmp(str + (end + 1), "=/", 2) != 0)
+	while (str[end + 1] != '=')
 		end++;
-	res = malloc(sizeof(char) * end+ 1);
+	res = malloc(sizeof(char) * end + 2);
 	if (res == NULL)
 		return (NULL);
-	while (i < end)
+	while (i <= end)
 	{
 		res[i] = str[i];
 		i++;
@@ -44,9 +44,9 @@ char	*ft_add_var(char *str)
 	int	j;
 
 	i = 0;
-	while ((ft_strncmp(str + i, "=/", 2) != 0) && str[i])
+	while ((ft_strncmp(str + i, "=", 1) != 0) && str[i])
 		i++;
-	i+=2;
+	i += 1;
 	res = malloc(sizeof(char) * ft_strlen(str + i) + 1);
 	j = 0;
 	while (str[i])
@@ -64,7 +64,7 @@ void	ft_expand(char **str, int i, char **env)
 	while (env[j])
 	{
 		temp = ft_var_only(env[j]);
-		if (ft_strcmp(temp, str[i] + 1) == 0)
+		if (ft_strncmp(temp, str[i] + 1, ft_strlen(str[i] + 1)) == 0)
 		{
 			free(temp);
 			free(str[i]);
@@ -72,7 +72,10 @@ void	ft_expand(char **str, int i, char **env)
 			return ;
 		}
 		free(temp);
+		j++;
 	}
+	if (!env[j])
+		str[i] = ft_strdup("");
 }
 
 void	ft_expand_var(char **str, char **env)
@@ -97,8 +100,8 @@ char    **ft_get_args(char *str, char **env)
     while (str[i] && str[i] != ' ')
         i++;
     res = ft_split(str, ' ');
-    if (res == NULL)
-        return (NULL);
+	if (res == NULL)
+    	return (NULL);
 	ft_expand_var(res, env);
     return (res);
 }
