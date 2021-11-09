@@ -6,7 +6,7 @@
 #    By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 21:17:45 by cbeaurai          #+#    #+#              #
-#    Updated: 2021/10/27 18:18:48 by cbeaurai         ###   ########.fr        #
+#    Updated: 2021/11/09 22:46:41 by cbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RM			= rm -rf
 
 LFT			= ./libft
 
-CFLAGS		= -Wall -Werror -Wextra -g -I.
+CFLAGS		= -Wall -Werror -Wextra -g -no-pie -I.
 
 LIBS		= -lreadline -L ./libft -lft
 

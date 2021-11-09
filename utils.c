@@ -55,7 +55,33 @@ char	*ft_add_var(char *str)
 	return (res);
 }
 
-void	ft_expand(char **str, int i, char **env)
+char	**ft_remove_nullvar(char **str, int i)
+{
+	int j;
+	char **res;
+	int k;
+
+	j = 0;
+	k = 0;
+	while (str[j])
+		j++;
+	res = malloc(sizeof(char*) * j);
+	if (res == NULL)
+		free(str);///////toutes les chaines a free
+	j = 0;
+	while (str[k])
+	{
+		if (i != k)
+			res[j++] = str[k++];
+		else
+			k++;
+	}
+	res[j] = NULL;
+	free(str);//////toutes les chaines a free
+	return (res);
+}
+
+char 	**ft_expand(char **str, int i, char **env)
 {
 	int j;
 	char *temp;
@@ -69,16 +95,15 @@ void	ft_expand(char **str, int i, char **env)
 			free(temp);
 			free(str[i]);
 			str[i] = ft_add_var(env[j]);
-			return ;
+			return (str);
 		}
 		free(temp);
 		j++;
 	}
-	if (!env[j])
-		str[i] = ft_strdup("");
+	return (ft_remove_nullvar(str, i));
 }
 
-void	ft_expand_var(char **str, char **env)
+char	**ft_expand_var(char **str, char **env)
 {
 	int i;
 
@@ -86,9 +111,12 @@ void	ft_expand_var(char **str, char **env)
 	while (str[i])
 	{
 		if (str[i][0] == '$')
-			ft_expand(str, i, env);
-		i++;
+			str = ft_expand(str, i, env);
+		else
+			i++;
 	}
+	return (str);
+
 }
 
 char    **ft_get_args(char *str, char **env)
@@ -102,7 +130,7 @@ char    **ft_get_args(char *str, char **env)
     res = ft_split(str, ' ');
 	if (res == NULL)
     	return (NULL);
-	ft_expand_var(res, env);
+	res = ft_expand_var(res, env);
     return (res);
 }
 
