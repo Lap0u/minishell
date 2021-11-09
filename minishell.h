@@ -21,7 +21,7 @@ typedef struct s_simple_command
 	char **env;
 }				t_simple_command;
 
-t_simple_command *ft_get_simple_command(char *str);
+t_simple_command *ft_get_simple_command(char *str, char **env);
 
 int	ft_strcmp(char *s1, char *s2);
 
@@ -29,7 +29,7 @@ int	ft_isbuiltin(char *str);
 
 char	*ft_get_command(char *str);
 
-char    **ft_get_args(char *str);
+char    **ft_get_args(char *str, char **env);
 
 int ft_get_args_size(char **args);
 

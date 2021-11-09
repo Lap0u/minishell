@@ -10,7 +10,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		cmd = readline(PROMPT);
-		c_table = ft_get_simple_command(cmd);
+		c_table = ft_get_simple_command(cmd, env);
 		if (c_table == NULL)
 		{
 			free(cmd);
