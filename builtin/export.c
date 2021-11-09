@@ -49,7 +49,7 @@ void    ft_sort_sorted(char **tab)
     }
 }
 
-void    ft_export_noarg(char **env)
+void    ft_export_noarg(t_simple_command *c_table, char **env)
 {
     int     i;
     char    **sorted;
@@ -65,11 +65,15 @@ void    ft_export_noarg(char **env)
     i = 0;
     while (sorted[i])
         printf("declare -x %s\n", sorted[i++]);
+    c_table->env = env;
 }
 
 void    ft_bi_export(t_simple_command *c_table, char **env)
 {
     if (c_table->args_num == 0)
-        ft_export_noarg(env);
+        ft_export_noarg(c_table, env);
+    //else
+      //  ft_export_arg(c_table, env);
+    
     free(c_table);
 }
