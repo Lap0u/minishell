@@ -14,9 +14,19 @@
 
 void	ft_exec_bin(t_simple_command *c_table, char **env)
 {
-    char **path;
+    pid_t   child;
+    char    **path;
+    int     status;
+    
     path = ft_get_paths(env); //check access
     ft_add_path(c_table, path);
-    execve(c_table->args[0], c_table->args, env);
-    perror("Error");
+    child = fork();
+    if (child < 0)
+        return (perror("Fork"));
+    if (child == 0)
+    {
+        execve(c_table->args[0], c_table->args, env);
+        perror("Error");
+    }
+    waitpid(child, &status, 0);
 }
