@@ -25,7 +25,8 @@ void    ft_add_path(t_simple_command *c_table, char **path)
         {
             free(c_table->args[0]);
             c_table->args[0] = temp;
-            return;
+			ft_free_3dtab(path);
+            return ;
         }
         else
             free(temp);

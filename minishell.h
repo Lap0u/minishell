@@ -58,4 +58,8 @@ char	*ft_rm_path(char *str);
 
 void    ft_add_path(t_simple_command *c_table, char **path);
 
+int		ft_proper_free(t_simple_command *c_table);
+
+char	**ft_copy_env(char **env);
+
 #endif
