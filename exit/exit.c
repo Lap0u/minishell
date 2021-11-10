@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/27 11:00:20 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/10/27 11:00:21 by cbeaurai         ###   ########.fr       */
+/*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/10/27 10:59:38 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../libft/libft.h"
 
-void    ft_bi_echo(t_simple_command *c_table)
+void    ft_free_3dstr(char **str)
 {
     int i;
 
-    i = 1;
-    if (ft_strcmp(c_table->args[1], "-n") == 0)
-        i = 2;
-    while (c_table->args[i])
-        printf("%s ", c_table->args[i++]);
-    if (ft_strcmp(c_table->args[1], "-n") != 0)
-        printf("\n");
+    i = 0;
+    while (str[i])
+        free(str[i++]);
+    free(str);
+}
+
+int ft_proper_free(t_simple_command *c_table)
+{
+    if (c_table == NULL)
+        return (0);
+    if (c_table->cmd)
+        free(c_table->cmd);
+    if (c_table->args)
+        ft_free_3dstr(c_table->args);
+    if (c_table->env)
+        ft_free_3dstr(c_table->env);
+    free(c_table);
+    return (0);
 }
