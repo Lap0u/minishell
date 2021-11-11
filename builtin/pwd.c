@@ -20,5 +20,5 @@ void    ft_bi_pwd(t_simple_command *c_table)
         perror("Error");
     else
         printf("%s\n", wd);
-    free(c_table); //incomplet
+    (void)c_table;
 }
