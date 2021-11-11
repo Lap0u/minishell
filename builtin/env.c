@@ -19,5 +19,6 @@ void    ft_bi_env(t_simple_command *c_table, char **env)
     i = 0;
     while (env[i])
         printf("%s\n", env[i++]);
-    free(c_table);
+    (void)c_table; // a modif, utiliser notre env malloc 
+                    // et pas celui du main
 }

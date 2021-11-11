@@ -7,6 +7,25 @@ typedef struct s_token
     void *valeur;
 } t_token;
 
+//J'ai fait comme si ton tableau se finissait par un membre NULL mais peut etre que tu preferes
+//utiliser la size comme conditions d'arret
+void    ft_print_tokens(t_token const **tab_tokens)
+{
+    int i;
+
+    i = 0;
+    while(tab_tokens[i])
+        i++;
+    printf("Tab contains %d tokens\n", i);
+    i = 0;
+    while (tab_tokens[i])
+    {
+        printf("Token n° %d is of type %s and contains the string : [%s]\n",
+        i, tab_tokens[i]->type, tab_tokens[i]->valeur);
+        i++;
+    }
+}
+
 int	ft_power(int nb, int power)
 {
 	int	result;

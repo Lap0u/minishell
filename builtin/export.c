@@ -74,6 +74,4 @@ void    ft_bi_export(t_simple_command *c_table, char **env)
         ft_export_noarg(c_table, env);
     //else
       //  ft_export_arg(c_table, env);
-    
-    free(c_table);
 }

@@ -14,5 +14,5 @@
 
 void    ft_bi_exit(t_simple_command *c_table)
 {
-    free(c_table);
+    (void)c_table;
 }
