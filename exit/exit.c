@@ -13,7 +13,7 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
-void    ft_free_3dstr(char **str)
+void    ft_free_2dstr(char **str)
 {
     int i;
 
@@ -30,9 +30,9 @@ int ft_proper_free(t_simple_command *c_table)
     if (c_table->cmd)
         free(c_table->cmd);
     if (c_table->args)
-        ft_free_3dstr(c_table->args);
+        ft_free_2dstr(c_table->args);
     if (c_table->env)
-        ft_free_3dstr(c_table->env);
+        ft_free_2dstr(c_table->env);
     free(c_table);
     return (0);
 }
