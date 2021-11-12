@@ -25,7 +25,7 @@ RM			= rm -rf
 
 LFT			= ./libft
 
-CFLAGS		= -Wall -Werror -Wextra -g -no-pie -I.
+CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address -no-pie -I.
 
 LIBS		= -lreadline -L ./libft -lft
 
