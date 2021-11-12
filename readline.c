@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 			return (0);
 		}
 		if (ft_isbuiltin(c_table->cmd))
-			ft_split_builtin(c_table, env);
+			ft_split_builtin(c_table);
 		else
 			ft_exec_bin(c_table, env);
 		add_history(cmd);
