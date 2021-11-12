@@ -77,7 +77,8 @@ char	**ft_remove_nullvar(char **str, int i)
 			k++;
 	}
 	res[j] = NULL;
-	free(str);//////toutes les chaines a free
+	free(str[i]);
+	free(str);
 	return (res);
 }
 
@@ -111,7 +112,7 @@ char	**ft_expand_var(char **str, char **env)
 	while (str[i])
 	{
 		if (str[i][0] == '$')
-			str = ft_expand(str, i, env);
+			str = ft_expand(str, i--, env);
 		else
 			i++;
 	}

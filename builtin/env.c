@@ -12,13 +12,15 @@
 
 #include "../minishell.h"
 
-void    ft_bi_env(t_simple_command *c_table, char **env)
+void    ft_bi_env(t_simple_command *c_table)
 {
     int i;
 
     i = 0;
-    while (env[i])
-        printf("%s\n", env[i++]);
-    (void)c_table; // a modif, utiliser notre env malloc 
-                    // et pas celui du main
+    while(c_table->env[i])
+    {
+        write(1, c_table->env[i], ft_strlen(c_table->env[i]));
+        write(1, "\n", 1);
+        i++;
+    }
 }

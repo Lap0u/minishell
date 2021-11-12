@@ -49,29 +49,32 @@ void    ft_sort_sorted(char **tab)
     }
 }
 
-void    ft_export_noarg(t_simple_command *c_table, char **env)
+void    ft_export_noarg(t_simple_command *c_table)
 {
     int     i;
     char    **sorted;
     
     i = 0;
-    while (env[i])
+    while (c_table->env[i])
         i++;
     sorted = malloc(sizeof(char*) * (i + 1));
     if (sorted == NULL)
         return; //null;
-    ft_cp_env(sorted, env);
+    ft_cp_env(sorted, c_table->env);
     ft_sort_sorted(sorted); //add quote apres egal??
     i = 0;
     while (sorted[i])
-        printf("declare -x %s\n", sorted[i++]);
-    c_table->env = env;
+    {
+        printf("declare -x %s\n", sorted[i]);
+        free(sorted[i++]);
+    }
+    free(sorted);
 }
 
-void    ft_bi_export(t_simple_command *c_table, char **env)
+void    ft_bi_export(t_simple_command *c_table)
 {
     if (c_table->args_num == 0)
-        ft_export_noarg(c_table, env);
+        ft_export_noarg(c_table);
     //else
       //  ft_export_arg(c_table, env);
 }
