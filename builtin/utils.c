@@ -31,20 +31,20 @@ int	ft_isbuiltin(char *str)
 	return (0);
 }
 
-void	ft_split_builtin(t_simple_command *c_table)
+void	ft_split_builtin(t_simple_command **c_table)
 {
-    if (ft_strcmp(c_table->cmd, "echo") == 0)
-		ft_bi_echo(c_table);
-	else if (ft_strcmp(c_table->cmd, "cd") == 0)
-		ft_bi_cd(c_table);
-	else if (ft_strcmp(c_table->cmd, "pwd") == 0)
-		ft_bi_pwd(c_table);
-	else if (ft_strcmp(c_table->cmd, "export") == 0)
-		ft_bi_export(c_table);
-	else if (ft_strcmp(c_table->cmd, "unset") == 0)
+    if (ft_strcmp((*c_table)->cmd, "echo") == 0)
+		ft_bi_echo(*c_table);
+	else if (ft_strcmp((*c_table)->cmd, "cd") == 0)
+		ft_bi_cd(*c_table);
+	else if (ft_strcmp((*c_table)->cmd, "pwd") == 0)
+		ft_bi_pwd(*c_table);
+	else if (ft_strcmp((*c_table)->cmd, "export") == 0)
+		ft_bi_export(*c_table);
+	else if (ft_strcmp((*c_table)->cmd, "unset") == 0)
 		ft_bi_unset(c_table);
-	else if (ft_strcmp(c_table->cmd, "env") == 0)
-		ft_bi_env(c_table);
-	else if (ft_strcmp(c_table->cmd, "exit") == 0)
-		ft_bi_exit(c_table);
+	else if (ft_strcmp((*c_table)->cmd, "env") == 0)
+		ft_bi_env(*c_table);
+	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
+		ft_bi_exit(*c_table);
 }

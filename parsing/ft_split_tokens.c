@@ -244,7 +244,7 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	char test[] = "Olga \"$USER$\"";
+	char test[] = "Olga $USER";
 	printf("%ld\n", ft_strlen(test));
 
 	len = nbr_words(test);

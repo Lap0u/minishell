@@ -16,6 +16,10 @@ ARG -> "test" test nom de fichier/doc etc
 SYMBOLE ->   < >> > << | $ 
 QUOTE ->    ' " peut-etre juste un symbole
 ============================================================================================================================
+PIPE
+
+chaque pipe demande forcement un appel a fork preuve avec exit | exit qui exit 2 subprocess
+============================================================================================================================
 PARSING
 
 quote a gerer au debut car il empeche l'interpretation
@@ -43,7 +47,7 @@ pour << ecrire dans un fichier temporaire qu'on supprime je pense? mais comment 
 ============================================================================================================================
 BUILTIN
 
-il faudra lire pour connaitre exactement tous les comportements des builtin car on les recode nous meme
+lire pour connaitre exactement tous les comportements des builtin car on les recode nous meme
 
 ======
 ECHO seul flag -n
@@ -81,6 +85,12 @@ renvoie 0 si fonctionne sinon return > 0
 EXPORT
 http://pwet.fr/man/linux/commandes/posix/export/
 
+
+avec export [name[=value]]
+name
+A word consisting solely of letters, numbers, and underscores, and beginning with a letter or underscore. Names are used as shell variable and function names. Also referred to as an identifier.
+word
+A sequence of characters treated as a unit by the shell. Words may not include unquoted metacharacters.
 
 ======
 UNSET
