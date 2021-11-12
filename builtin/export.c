@@ -71,10 +71,72 @@ void    ft_export_noarg(t_simple_command *c_table)
     free(sorted);
 }
 
-void    ft_bi_export(t_simple_command *c_table)
+int     is_valid_export(char *str)
 {
-    if (c_table->args_num == 0)
-        ft_export_noarg(c_table);
-    //else
-      //  ft_export_arg(c_table, env);
+    int i;
+
+    i = 0;
+    if ((ft_isalpha(str[i]) == 0 && str[i] != '_') || (str[i] == '_' && str[i + 1] == 0))
+        return (1);
+    while (str[i]  && str[i] != '=')
+    {
+        if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+void    ft_export_replace(char *str, t_simple_command **c_table)///check comportement avec export ex et ex= et ex=1
+{
+    printf("%s\nrep\n", str);
+    (void)c_table;
+}
+
+void    ft_export_addone(char *str, t_simple_command **c_table)////check comportement avec export ex et ex= et ex=1
+{
+    printf("%s\nadd\n", str);
+    (void)c_table;
+}
+
+void    ft_export_add(char *toadd, t_simple_command **c_table)
+{
+    int i;
+    int len;
+
+    len = 0;
+    i = 1;
+    while (toadd[len] != '=' && toadd[len])
+        len++;
+    while ((*c_table)->env[i])
+    {
+        if (ft_strncmp(toadd, (*c_table)->env[i], len) == 0)
+        {
+            ft_export_replace(&toadd[len], c_table);
+            return ;
+        }
+        i++;
+    }
+    ft_export_addone(&toadd[len], c_table);
+}
+
+void    ft_export_arg(t_simple_command **c_table)
+{
+    int i;
+
+    i = 1;
+    while ((*c_table)->args[i])
+    {
+        if (is_valid_export((*c_table)->args[i]) == 0)
+            ft_export_add((*c_table)->args[i], c_table);
+        i++;
+    }
+}
+
+void    ft_bi_export(t_simple_command **c_table)
+{
+    if ((*c_table)->args_num == 0)
+        ft_export_noarg(*c_table);
+    else
+        ft_export_arg(c_table);
 }

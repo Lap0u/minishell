@@ -18,6 +18,7 @@ typedef struct s_simple_command
 	char **args;
 	char *cmd;
 	char **env;
+	int	last_ret;
 }				t_simple_command;
 
 t_simple_command *ft_get_simple_command(char *str, char **env);
@@ -40,7 +41,7 @@ void	ft_bi_cd(t_simple_command *c_table);
 
 void	ft_bi_pwd(t_simple_command *c_table);
 
-void	ft_bi_export(t_simple_command *c_table);
+void	ft_bi_export(t_simple_command **c_table);
 
 void	ft_bi_unset(t_simple_command **c_table);
 

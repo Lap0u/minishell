@@ -14,7 +14,7 @@ COMMANDE -> echo wc ls cat exit etc
 FLAG -> -a -la -n etc
 ARG -> "test" test nom de fichier/doc etc
 SYMBOLE ->   < >> > << | $ 
-QUOTE ->    ' " peut-etre juste un symbole
+QUOTE ->    ' " peut-etre juste un sy`mbole
 ============================================================================================================================
 PIPE
 
@@ -73,7 +73,6 @@ si aucune commande renvoie 0
 
 ======
 ENV
-http://pwet.fr/man/linux/commandes/posix/env/
 
 ne peut prendre ni argument ni flags -> on les ignore
 affiche toutes les variables d'environnement sans tri
