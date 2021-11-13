@@ -146,6 +146,7 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
     res->args = ft_get_args(str, env);
     res->args_num = ft_get_args_size(res->args);
 	res->env = env;
+	res->last_ret = 0;
     if (res->cmd == NULL)
     {
         free(res);
