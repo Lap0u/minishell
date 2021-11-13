@@ -24,7 +24,7 @@ int	main(int ac, char **av, char **env)
 		cmd = readline(PROMPT);
 		if (cmd == NULL)
 		{
-			rl_clear_history();
+			// rl_clear_history();
 			return (ft_proper_free(c_table)); ///return valeur de la derniere commande 
 		}
 		c_table = ft_get_simple_command(cmd, temp_env);
@@ -43,6 +43,6 @@ int	main(int ac, char **av, char **env)
 		c_table = NULL;
 		free(cmd);///res de readline a free
 	}
-	rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }
