@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void    ft_bi_cd(t_simple_command *c_table)
+void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu
 {
     int ret;
     ret = chdir(c_table->args[1]);
