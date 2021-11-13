@@ -60,10 +60,13 @@ void    ft_bi_unset(t_simple_command **c_table)
     int i;
 
     i = 1;
+    (*c_table)->last_ret = 0;
     while ((*c_table)->args[i])
     {
         if (is_in_env((*c_table)->args[i], (*c_table)->env))
             ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
+        else
+            (*c_table)->last_ret++; //retour = nombre mbr non unset
         i++;
     }
     //return (0) dans tous les cas???

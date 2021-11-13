@@ -102,6 +102,15 @@ void    ft_export_replace(char *str, char *full, t_simple_command **c_table, int
         free((*c_table)->env[i]);
         (*c_table)->env[i] = ft_strdup(full);
     }
+    if ((*c_table)->env[i] == NULL)
+        (*c_table)->last_ret = 0;
+    else///////a revoir
+    {
+        perror("Malloc");
+        (*c_table)->last_ret = 1;
+        ft_proper_free(*c_table);
+    }
+    
 }
 
 void    ft_export_addone(char *str, char *full, t_simple_command **c_table)////check comportement avec export ex et ex= et ex=1
@@ -122,7 +131,10 @@ void    ft_export_addone(char *str, char *full, t_simple_command **c_table)////c
         i++;
     tab = malloc(sizeof(char *) * (i + 2));
     if (tab == NULL)
+    {
+        (*c_table)->last_ret = 1;
         return ;
+    }
     i = 0;
     while ((*c_table)->env[i])
     {
@@ -133,6 +145,7 @@ void    ft_export_addone(char *str, char *full, t_simple_command **c_table)////c
     tab[i + 1] = NULL;
     free((*c_table)->env);
     (*c_table)->env = tab;
+    (*c_table)->last_ret = 0;////checker les malloc foireux
 }
 
 void    ft_export_add(char *toadd, t_simple_command **c_table)

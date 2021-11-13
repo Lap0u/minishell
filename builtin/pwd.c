@@ -17,7 +17,10 @@ void    ft_bi_pwd(t_simple_command *c_table)
     char wd[PATH_MAX];
 
     if (!getcwd(wd, PATH_MAX))
+    {
         perror("Error");
+        c_table->last_ret = 1;//quelle val
+    }
     else
         printf("%s\n", wd);
     (void)c_table;
