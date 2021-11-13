@@ -89,12 +89,26 @@ int     is_valid_export(char *str)
 
 void    ft_export_replace(char *str, t_simple_command **c_table)///check comportement avec export ex et ex= et ex=1
 {
+    char *res;
+
+    if (str[0] == 0)///arg seul
+        printf("plop");
+    else if (str[0] == '=' && str[1] == 0)//arg= + rien
+        printf("plip");
+    else if (str[0] == '=' && str[1])//arg=xxx
+        printf("plup");
     printf("%s\nrep\n", str);
     (void)c_table;
 }
 
 void    ft_export_addone(char *str, t_simple_command **c_table)////check comportement avec export ex et ex= et ex=1
 {
+    if (str[0] == 0)///arg seul
+        printf("plop");
+    else if (str[0] == '=' && str[1] == 0)//arg= + rien
+        printf("plip");
+    else if (str[0] == '=' && str[1])//arg=xxx
+        printf("plup");
     printf("%s\nadd\n", str);
     (void)c_table;
 }
@@ -106,10 +120,11 @@ void    ft_export_add(char *toadd, t_simple_command **c_table)
 
     len = 0;
     i = 1;
-    while (toadd[len] != '=' && toadd[len])
-        len++;
     while ((*c_table)->env[i])
     {
+        len = 0;
+        while ((*c_table)->env[i][len] != '=' && (*c_table)->env[i][len])
+            len++;
         if (ft_strncmp(toadd, (*c_table)->env[i], len) == 0)
         {
             ft_export_replace(&toadd[len], c_table);
@@ -117,6 +132,9 @@ void    ft_export_add(char *toadd, t_simple_command **c_table)
         }
         i++;
     }
+    len = 0;
+    while (toadd[len] != '=' && toadd[len])
+        len++;
     ft_export_addone(&toadd[len], c_table);
 }
 
