@@ -23,4 +23,5 @@ void    ft_bi_env(t_simple_command *c_table)
         write(1, "\n", 1);
         i++;
     }
+    c_table->last_ret = 0;
 }

@@ -23,4 +23,5 @@ void    ft_bi_echo(t_simple_command *c_table)
         printf("%s ", c_table->args[i++]);
     if (ft_strcmp(c_table->args[1], "-n") != 0)
         printf("\n");
+    c_table->last_ret = 0;
 }

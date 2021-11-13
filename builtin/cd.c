@@ -12,10 +12,15 @@
 
 #include "../minishell.h"
 
-void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu
+void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu et sans arg //update des vars PWD OLD PWD etc voir man
 {
     int ret;
     ret = chdir(c_table->args[1]);
     if (ret == -1)
+    {
         perror("Error");
+        c_table->last_ret = 1;
+    }
+    else
+        c_table->last_ret = 0;
 }
