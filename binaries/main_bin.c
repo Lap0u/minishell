@@ -19,6 +19,11 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
     int     status;
     
     path = ft_get_paths(env); //check access
+    if (path == NULL)
+    {
+        printf(" %s : commande introuvable\n", c_table->cmd);
+        return ;
+    } 
     ft_add_path(c_table, path);
     child = fork();
     if (child < 0)
