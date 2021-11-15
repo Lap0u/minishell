@@ -25,13 +25,16 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
         return ;
     } 
     ft_add_path(c_table, path);
-    child = fork();
-    if (child < 0)
-        return (perror("Fork"));
-    if (child == 0)
+    if (access(c_table->args[0], X_OK) == 0)
     {
-        execve(c_table->args[0], c_table->args, env);
-        perror("Error");
+        child = fork();
+        if (child < 0)
+            return (perror("Fork"));
+        if (child == 0)
+        {
+            execve(c_table->args[0], c_table->args, env);
+            perror("Error");
+        }
+        waitpid(child, &status, 0); //il faut wait?  cat | cat | ls
     }
-    waitpid(child, &status, 0);
 }

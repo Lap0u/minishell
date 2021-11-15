@@ -27,12 +27,14 @@ int ft_proper_free(t_simple_command *c_table)
 {
     if (c_table == NULL)
         return (0);
+
     if (c_table->cmd)
         free(c_table->cmd);
+    else if (c_table->env)
+         ft_free_2dstr(c_table->env);
     if (c_table->args)
         ft_free_2dstr(c_table->args);
-    if (c_table->env)
-         ft_free_2dstr(c_table->env);
+
     free(c_table);
     return (0);
 }
