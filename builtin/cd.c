@@ -86,8 +86,30 @@ void    cd_classic(t_simple_command *c_table)
     cd_curpath(c_table);
 }
 
+char    *make_pwd(char *prefix)
+{
+    char    wd[PATH_MAX];
+    char    *temp;
+    char    *res;
+
+    if (!getcwd(wd, PATH_MAX))
+    {
+        perror("Error");
+        return (NULL);
+    }
+    temp = ft_strjoin(prefix, wd);
+    res = ft_strjoin(temp, "\"");
+    free(temp);
+    return (res);
+}
+
 void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PWD OLD PWD etc voir man
 {
+    char    *oldpwd;
+    char    *newpwd;
+    int i;
+    
+    oldpwd = make_pwd("OLDPWD=\"");
     if (c_table->args_num > 2)
     {
         printf("cd: trop d'arguments\n");
@@ -99,4 +121,22 @@ void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars
         cd_curpath(c_table);
     else
         cd_classic(c_table);
+    if (c_table->last_ret != 0)
+        return ;
+    newpwd = make_pwd("PWD=\"");
+    i = 0;
+    while (c_table->env[i])
+    {
+        if (ft_strncmp("OLDPWD=", c_table->env[i], ft_strlen("OLDPWD=")) == 0)
+        {
+            free(c_table->env[i]);
+            c_table->env[i] = oldpwd;
+        }
+        else if (ft_strncmp("PWD=", c_table->env[i], ft_strlen("PWD=")) == 0)
+        {
+            free(c_table->env[i]);
+            c_table->env[i] = newpwd;
+        }
+        i++;
+    }
 }
