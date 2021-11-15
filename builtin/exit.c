@@ -77,7 +77,9 @@ void    ft_bi_exit(t_simple_command *c_table)
         exit(ret);
     }
     else
+    {
         ret = c_table->last_ret;
         ft_proper_free(c_table);
         exit(ret);//////doit renvoyer valeure derniere commande --> $?
+    }
 }

@@ -19,14 +19,22 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
     int     status;
     
     path = ft_get_paths(env); //check access
-    ft_add_path(c_table, path);
-    child = fork();
-    if (child < 0)
-        return (perror("Fork"));
-    if (child == 0)
+    if (path == NULL)
     {
-        execve(c_table->args[0], c_table->args, env);
-        perror("Error");
+        printf(" %s : commande introuvable\n", c_table->cmd);
+        return ;
+    } 
+    ft_add_path(c_table, path);
+    if (access(c_table->args[0], X_OK) == 0)
+    {
+        child = fork();
+        if (child < 0)
+            return (perror("Fork"));
+        if (child == 0)
+        {
+            execve(c_table->args[0], c_table->args, env);
+            perror("Error");
+        }
+        waitpid(child, &status, 0); //il faut wait?  cat | cat | ls
     }
-    waitpid(child, &status, 0);
 }

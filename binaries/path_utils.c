@@ -32,6 +32,7 @@ void    ft_add_path(t_simple_command *c_table, char **path)
             free(temp);
         i++;
     }
+	ft_free_3dtab(path);
 }
 
 char	**ft_get_paths(char **envp)

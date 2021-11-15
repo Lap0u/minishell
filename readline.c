@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **env)
 		if (ft_isbuiltin(c_table->cmd))
 			ft_split_builtin(&c_table);
 		else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
-			ft_exec_bin(c_table, env);
+			ft_exec_bin(c_table, c_table->env);
 		add_history(cmd);
 		temp_env = c_table->env;
 		temp_ret = c_table->last_ret;
