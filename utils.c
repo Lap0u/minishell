@@ -144,21 +144,21 @@ t_redir	*ft_create_redir()
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
 		return (NULL);
-	start->file = ft_strdup("minishell.h");
+	start->file = ft_strdup("in1");
 	start->type = 0;
 	
 	next = malloc(sizeof(t_redir));
 	if (next == NULL)
 		return (NULL);
 	start->next = next;
-	next->file = ft_strdup("readline.c");
+	next->file = ft_strdup("out2");
 	next->type = 1;
 	
 	last = malloc(sizeof(t_redir));
 	if (last == NULL)
 		return (NULL);
 	next->next = last;
-	last->file = ft_strdup("null");
+	last->file = ft_strdup("out3");
 	last->type = 1;
 	last->next = NULL;
 	return (start);
@@ -200,29 +200,28 @@ void	ft_close_prev(t_simple_command *c_table)
 	c_table->infile = -42000;
 }
 
-void	ft_add_output(char *file, t_simple_command *c_table)
+void	ft_add_output(char *file, t_simple_command *c_table) //ajouter selon > ou >>
 {
-	int		ret;
-	int 	bytes;
-	char	buff[10];
+	DIR* folder;
+	int ret;
 
-	ret = open(file, O_RDONLY);
+	folder = opendir(file);
+	if (folder)
+	{
+		closedir(folder);
+		ft_close_prev(c_table);
+		return ;
+	}
+	ret = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
 		return ;
-	}
-	bytes = read(ret, buff, 1);
-	close(ret);
-	ret = open(file, O_RDONLY);
-	if (bytes < 0 || ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}
-	if (c_table->outfile != -21000)
+	}	
+	if (c_table->outfile >= 0)
 		close(c_table->outfile);
 	c_table->outfile = ret;
+
 }
 
 void	ft_add_input(char *file, t_simple_command *c_table)

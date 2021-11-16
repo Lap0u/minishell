@@ -36,6 +36,8 @@ int	main(int ac, char **av, char **env)
 			free(cmd);
 			return (0);
 		}
+        if (c_table->infile == -42000 || c_table->outfile == -42000)
+            return (printf("wrong infile outfile : %d", c_table->badfd));
 		if (ft_isbuiltin(c_table->cmd))
 			ft_split_builtin(&c_table);
 		else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
