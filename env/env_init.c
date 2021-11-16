@@ -13,6 +13,22 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+char *ft_add_shlvl(char *env)
+{
+    int i;
+    int lvl;
+    char *res;
+    char *temp;
+
+    i = 6;
+    lvl = ft_atoi(&env[i]);
+    lvl++;
+    temp = ft_itoa(lvl);
+    res = ft_strjoin("SHLVL=", temp);
+    free(temp);
+    return (res);
+}
+
 char    **ft_copy_env(char **env)
 {
     int     i;
@@ -28,7 +44,10 @@ char    **ft_copy_env(char **env)
         return (NULL);
     while (j < i)
     {
-        res[j] = ft_strdup(env[j]);
+        if (ft_strncmp("SHLVL=", env[j], ft_strlen("SHLVL=")) == 0)
+            res[j] = ft_add_shlvl(env[j]);
+        else
+            res[j] = ft_strdup(env[j]);
         j++;
     }
     res[j] = NULL;
