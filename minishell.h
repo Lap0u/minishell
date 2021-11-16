@@ -12,13 +12,26 @@
 
 # define PROMPT ">minishell "
 
+//type 0 = input, type 1 = output
+
+typedef struct s_redir
+{
+	char			*file;
+	int				type;
+	struct s_redir	*next;
+}				t_redir;
+
 typedef struct s_simple_command
 {
-	int	args_num;
-	char **args;
-	char *cmd;
-	char **env;
-	int	last_ret;
+	int		args_num;
+	char	**args;
+	char	*cmd;
+	char	**env;
+	int		last_ret;
+	int 	infile;
+	int 	outfile;
+	int		badfd;
+	t_redir	*redir;
 }				t_simple_command;
 
 t_simple_command *ft_get_simple_command(char *str, char **env);
@@ -62,5 +75,7 @@ void    ft_add_path(t_simple_command *c_table, char **path);
 int		ft_proper_free(t_simple_command *c_table);
 
 char	**ft_copy_env(char **env);
+
+void	ft_open_files (t_simple_command *c_table, t_redir *list);
 
 #endif
