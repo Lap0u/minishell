@@ -90,7 +90,6 @@ char    *make_pwd(char *prefix)
 {
     char    wd[PATH_MAX];
     char    *temp;
-    char    *res;
 
     if (!getcwd(wd, PATH_MAX))
     {
@@ -98,9 +97,7 @@ char    *make_pwd(char *prefix)
         return (NULL);
     }
     temp = ft_strjoin(prefix, wd);
-    res = ft_strjoin(temp, "\"");
-    free(temp);
-    return (res);
+    return (temp);
 }
 
 void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PWD OLD PWD etc voir man
@@ -109,7 +106,7 @@ void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars
     char    *newpwd;
     int i;
     
-    oldpwd = make_pwd("OLDPWD=\"");
+    oldpwd = make_pwd("OLDPWD=");
     if (c_table->args_num > 2)
     {
         printf("cd: trop d'arguments\n");
@@ -123,7 +120,7 @@ void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars
         cd_classic(c_table);
     if (c_table->last_ret != 0)
         return ;
-    newpwd = make_pwd("PWD=\"");
+    newpwd = make_pwd("PWD=");
     i = 0;
     while (c_table->env[i])
     {

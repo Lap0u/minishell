@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **env)
 		if (cmd == NULL)
 		{
 			rl_clear_history();
-			ft_proper_free(c_table);
+			ft_free_3dtab(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
 		c_table = ft_get_simple_command(cmd, temp_env);
