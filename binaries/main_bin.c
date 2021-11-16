@@ -27,6 +27,24 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
     ft_add_path(c_table, path);
     if (access(c_table->args[0], X_OK) == 0)
     {
+       	int stdout;             //redir
+        int stdin;                
+        int ret;
+
+        stdin = dup(STDIN_FILENO);
+        stdout = dup(STDOUT_FILENO);
+        if (c_table->outfile >= 0)
+        {
+            ret = dup2(c_table->outfile, STDOUT_FILENO);
+            if (ret < 0)
+                perror("Error");
+        }
+        if (c_table->infile >= 0)
+        {
+            ret = dup2(c_table->infile, STDIN_FILENO);
+            if (ret < 0)
+                perror("Error");
+        }
         child = fork();
         if (child < 0)
             return (perror("Fork"));
@@ -35,6 +53,12 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
             execve(c_table->args[0], c_table->args, env);
             perror("Error");
         }
+    	ret = dup2(stdout, STDOUT_FILENO);
+        if (ret < 0)
+                perror("Error");
+    	ret = dup2(stdin, STDIN_FILENO);
+        if (ret < 0)
+                perror("Error");
         waitpid(child, &status, 0); //il faut wait?  cat | cat | ls
     }
     else

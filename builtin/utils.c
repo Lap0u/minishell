@@ -33,7 +33,17 @@ int	ft_isbuiltin(char *str)
 
 void	ft_split_builtin(t_simple_command **c_table)
 {
-    if (ft_strcmp((*c_table)->cmd, "echo") == 0)
+	int ret;
+	int stdout;
+
+	stdout = dup(STDOUT_FILENO);
+	if ((*c_table)->outfile >= 0)
+    {
+		ret = dup2((*c_table)->outfile, STDOUT_FILENO);
+		if (ret < 0)
+			perror("Error");
+	}
+	if (ft_strcmp((*c_table)->cmd, "echo") == 0)
 		ft_bi_echo(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "cd") == 0)
 		ft_bi_cd(*c_table);
@@ -47,4 +57,8 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_env(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
 		ft_bi_exit(*c_table);
+	ret = dup2(stdout, STDOUT_FILENO);
+	if (ret < 0)
+			perror("Error");
+
 }
