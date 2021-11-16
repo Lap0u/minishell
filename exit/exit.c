@@ -50,6 +50,10 @@ int ft_proper_free(t_simple_command *c_table)
         ft_free_2dstr(c_table->args);
     if (c_table->redir)
         ft_free_redir(c_table->redir);
+    if (c_table->infile >= 0)
+        close(c_table->infile);
+    if (c_table->outfile >= 0)
+        close(c_table->outfile);
     free(c_table);
     return (0);
 }
