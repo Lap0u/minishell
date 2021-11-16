@@ -135,6 +135,48 @@ char    **ft_get_args(char *str, char **env)
     return (res);
 }
 
+t_redir	*ft_create_redir()
+{
+	t_redir *start;
+	t_redir	*next;
+	t_redir *last;
+
+	start = malloc(sizeof(t_redir));
+	if (start == NULL)
+		return (NULL);
+	start->file = ft_strdup("minishell.h");
+	start->type = 0;
+	
+	next = malloc(sizeof(t_redir));
+	if (next == NULL)
+		return (NULL);
+	start->next = next;
+	next->file = ft_strdup("readline.c");
+	next->type = 1;
+	
+	last = malloc(sizeof(t_redir));
+	if (last == NULL)
+		return (NULL);
+	next->next = last;
+	last->file = "null";
+	last->type = 1;
+	last->next = NULL;
+	return (start);
+}
+
+// void	ft_open_files (t_simple_command *c_table, char **files)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	c_table->outfile = -2000;
+// 	c_table->infile = -2000;
+// 	while (files[i])
+// 	{
+
+// 	}
+// }
+
 t_simple_command *ft_get_simple_command(char *str, char **env)
 {
 	t_simple_command *res;
@@ -146,6 +188,8 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
     res->args = ft_get_args(str, env);
     res->args_num = ft_get_args_size(res->args);
 	res->env = env;
+	res->redir = ft_create_redir();
+	// ft_open_files(res);
 	res->last_ret = 0;
     if (res->cmd == NULL)
     {

@@ -17,7 +17,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
     pid_t   child;
     char    **path;
     int     status;
-    
+
     path = ft_get_paths(env); //check access
     if (path == NULL)
     {
