@@ -49,6 +49,25 @@ void    ft_sort_sorted(char **tab)
     }
 }
 
+void    print_expformat(const char *str)
+{
+    int i;
+
+    i = 0;
+    write(1, "export ", ft_strlen("export "));
+    while (str[i] && str[i] != '=')
+        write(1, &str[i++], 1);
+    if (str[i] != 0)
+    {
+        write(1, &str[i++], 1);
+        write(1, "\"", 1);
+        while (str[i])
+            write(1, &str[i++], 1);
+        write(1, "\"", 1);
+    }
+    write(1, "\n", 1);
+}
+
 void    ft_export_noarg(t_simple_command *c_table)
 {
     int     i;
@@ -65,7 +84,7 @@ void    ft_export_noarg(t_simple_command *c_table)
     i = 0;
     while (sorted[i])
     {
-        printf("declare -x %s\n", sorted[i]);
+        print_expformat(sorted[i]);
         free(sorted[i++]);
     }
     free(sorted);
@@ -89,7 +108,6 @@ int     is_valid_export(char *str)
 
 void    ft_export_replace(char *str, char *full, t_simple_command **c_table, int i)///check comportement avec export ex et ex= et ex=1
 {
-
     if (str[0] == 0)///arg seul
         return ;
     else if (str[0] == '=' && str[1] == 0)//arg= + rien
@@ -102,9 +120,9 @@ void    ft_export_replace(char *str, char *full, t_simple_command **c_table, int
         free((*c_table)->env[i]);
         (*c_table)->env[i] = ft_strdup(full);
     }
-    if ((*c_table)->env[i] == NULL)
+    if ((*c_table)->env[i] != NULL)
         (*c_table)->last_ret = 0;
-    else///////a revoir
+    else///a check
     {
         perror("Malloc");
         (*c_table)->last_ret = 1;
@@ -120,13 +138,6 @@ void    ft_export_addone(char *str, char *full, t_simple_command **c_table)////c
 
     i = 0;
     (void)str;
-    /*if (str[0] == 0)///arg seul
-        printf("plop");
-    else if (str[0] == '=' && str[1] == 0)//arg= + rien
-        printf("plip");
-    else if (str[0] == '=' && str[1])//arg=xxx
-        printf("plup");*/
-
     while ((*c_table)->env[i])
         i++;
     tab = malloc(sizeof(char *) * (i + 2));
@@ -178,7 +189,7 @@ void    ft_export_arg(t_simple_command **c_table)
     int i;
 
     i = 1;
-    while ((*c_table)->args[i])
+    while ((*c_table)->args[i] != NULL)
     {
         if (is_valid_export((*c_table)->args[i]) == 0)
             ft_export_add((*c_table)->args[i], c_table);
