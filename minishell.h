@@ -22,7 +22,7 @@ typedef struct s_redir
 	struct s_redir	*next;
 }				t_redir;
 
-typedef struct s_simple_command
+typedef struct s_simple_commands
 {
 	int		args_num;
 	char	**args;
@@ -33,6 +33,8 @@ typedef struct s_simple_command
 	int 	outfile;
 	int		badfd;
 	t_redir	*redir;
+	struct s_simple_command *next;
+	struct s_simple_command *previous;
 }				t_simple_command;
 
 t_simple_command *ft_get_simple_command(char *str, char **env);
