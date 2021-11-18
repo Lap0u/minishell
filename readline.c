@@ -30,7 +30,12 @@ int	main(int ac, char **av, char **env)
 			ft_free_3dtab(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
-		c_table = ft_get_simple_command(cmd, temp_env);
+		c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
+		free(cmd);
+		//while (simple_command)
+		// faire tout ca pour chaque commande
+		// gerer
+		
 		if (c_table == NULL)
 		{
 			free(cmd);
