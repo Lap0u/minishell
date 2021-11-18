@@ -14,9 +14,7 @@
 
 void	ft_exec_bin(t_simple_command *c_table, char **env)
 {
-    pid_t   child;
     char    **path;
-    int     status;
 
     path = ft_get_paths(env); //check access
     if (path == NULL)
@@ -30,7 +28,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
        	int stdout;             //redir
         int stdin;                
         int ret;
-
+            
         stdin = dup(STDIN_FILENO);
         stdout = dup(STDOUT_FILENO);
         if (c_table->outfile >= 0)
@@ -44,22 +42,16 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
             ret = dup2(c_table->infile, STDIN_FILENO);
             if (ret < 0)
                 perror("Error");
+            fprintf(stderr, "ca passe");
         }
-        child = fork();
-        if (child < 0)
-            return (perror("Fork"));
-        if (child == 0)
-        {
-            execve(c_table->args[0], c_table->args, env);
-            perror("Error");
-        }
+        execve(c_table->args[0], c_table->args, env);
+        perror("Error exec");
     	ret = dup2(stdout, STDOUT_FILENO);
         if (ret < 0)
                 perror("Error");
     	ret = dup2(stdin, STDIN_FILENO);
         if (ret < 0)
                 perror("Error");
-        waitpid(child, &status, 0); //il faut wait?  cat | cat | ls
     }
     else
     {
