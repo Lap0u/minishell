@@ -51,6 +51,6 @@ void	ft_dup2_fail(t_vars *vars);
 
 char	*ft_rm_path(char *str);
 
-void	ft_exit_success(t_vars *vars);
+void	ft_exit_success(t_vars *vars, int exit);
 
 #endif

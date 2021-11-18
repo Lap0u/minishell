@@ -78,7 +78,7 @@ void	ft_exit_command(t_vars *vars)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_exit_success(t_vars *vars)
+void	ft_exit_success(t_vars *vars, int ret)
 {
 	int	i;
 
@@ -94,5 +94,5 @@ void	ft_exit_success(t_vars *vars)
 	if (vars->path != NULL)
 		ft_free_3dtab(vars->path);
 	free(vars);
-	exit(EXIT_SUCCESS);
+	exit(ret);
 }

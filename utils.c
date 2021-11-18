@@ -135,32 +135,26 @@ char    **ft_get_args(char *str, char **env)
     return (res);
 }
 
-t_redir	*ft_create_redir()
+t_redir	*ft_create_redir() ////////////////////
 {
 	t_redir *start;
-	t_redir	*next;
+	t_redir *second;
 	t_redir *last;
 
 	start = malloc(sizeof(t_redir));
-	if (start == NULL)
-		return (NULL);
-	start->file = ft_strdup("in1");
-	start->type = 0;
-	
-	next = malloc(sizeof(t_redir));
-	if (next == NULL)
-		return (NULL);
-	start->next = next;
-	next->file = ft_strdup("out2");
-	next->type = 1;
-	
+	second = malloc(sizeof(t_redir));
 	last = malloc(sizeof(t_redir));
-	if (last == NULL)
-		return (NULL);
-	next->next = last;
-	last->file = ft_strdup("out3");
-	last->type = 1;
+
+	start->next = second;
+	second->next = last;
 	last->next = NULL;
+
+	start->type = 1;
+	start->file = ft_strdup("out1");
+	second->type = 1;
+	second->file = ft_strdup("out2");
+	last->type = 0;
+	last->file = ft_strdup("inmake");
 	return (start);
 }
 

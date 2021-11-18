@@ -26,7 +26,7 @@ void	ft_1process(t_vars *vars, int end[2], char **envp)
 	if (ret < 0)
 		ft_dup2_fail(vars);
 	execve(vars->arg1[0], vars->arg1, envp);
-	perror("ERROR ");
+	perror("error ");
 	free(vars);
 }
 
@@ -44,6 +44,6 @@ void	ft_2process(t_vars *vars, int end[2], char **envp)
 		ft_dup2_fail(vars);
 	close(vars->fd2);
 	execve(vars->arg2[0], vars->arg2, envp);
-	perror("Error : ");
+	perror("ERROR ");
 	free(vars);
 }

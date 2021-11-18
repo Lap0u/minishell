@@ -18,7 +18,7 @@ OBJS 	= $(SRC:.c=.o)
 
 CC 	 	= clang
 
-CFLAGS 	= -Wall -Werror -Wextra
+CFLAGS 	= -Wall -Werror -Wextra -g -fsanitize=address
 
 ARRCS	= ar rcs
 

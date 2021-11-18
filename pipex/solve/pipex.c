@@ -35,5 +35,5 @@ void	ft_pipex(t_vars *vars, char **envp)
 	close(end[1]);
 	waitpid(child1, &status, 0);
 	waitpid(child2, &status, 0);
-	ft_exit_success(vars);
+	ft_exit_success(vars, status);
 }
