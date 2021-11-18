@@ -270,9 +270,9 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
 	{
 	    free(res->redir->next->file);
     	res->redir->next->file = ft_strdup("out4");
-		free(res->redir->next->next->file);
-		free(res->redir->next->next);
-		res->redir->next->next = NULL;
+		// free(res->redir->next->next->file);
+		// free(res->redir->next->next);
+		// res->redir->next->next = NULL;
 	}/////////////////////////////mascarade
 	ft_open_files(res, res->redir);
 	res->last_ret = 0;

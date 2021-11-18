@@ -15,15 +15,14 @@
 int		ft_pipe(t_simple_command *c_table)
 {
     pid_t child;
-    int pipe1[2];
-    int pipe2[2];
+    int pipe1[12];
+    int pipe2[12];
     int status;
     int i;
 
     i = 0;
     if (c_table->next == NULL)
         return (printf("fonction sans fork"));
-    pipe(pipe1);
     pipe(pipe2);
     while (c_table)
     {

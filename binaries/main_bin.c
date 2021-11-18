@@ -16,8 +16,6 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 {
     char    **path;
 
-    fprintf(stderr, "ca passe");
-
     path = ft_get_paths(env); //check access
     if (path == NULL)
     {
@@ -48,14 +46,6 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
         }
         execve(c_table->args[0], c_table->args, env);
         perror("Error exec");
-        // child = fork();
-        // if (child < 0)
-        //     return (perror("Fork"));
-        // if (child == 0)
-        // {
-        //     execve(c_table->args[0], c_table->args, env);
-        //     perror("Error");
-        // }
     	ret = dup2(stdout, STDOUT_FILENO);
         if (ret < 0)
                 perror("Error");

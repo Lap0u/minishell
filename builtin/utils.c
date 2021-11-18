@@ -35,8 +35,6 @@ void	ft_split_builtin(t_simple_command **c_table)
 {
 	int ret;
 	int stdout;
-
-    fprintf(stderr, "ca passe");
 	
 	stdout = dup(STDOUT_FILENO);
 	if ((*c_table)->outfile >= 0)

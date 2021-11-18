@@ -25,7 +25,7 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
         close(right[1]);
     if (c_table->next == NULL)
         close(left[0]);
-    if (c_table->previous != NULL)
+    if (c_table->next != NULL)
     {
         ret = dup2(left[0], STDIN_FILENO);
         if (ret < 0)
@@ -34,7 +34,7 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
             exit(42); /////a check
         }
     }
-    if (c_table->next != NULL)
+    if (c_table->previous != NULL)
     {
         ret = dup2(right[1], STDOUT_FILENO);
         if (ret < 0)
@@ -52,5 +52,7 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
 		ft_split_builtin(&c_table);
 	else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
 		ft_exec_bin(c_table, c_table->env);
+    close(right[1]);
+    close(left[0]);
     exit(21);
 }
