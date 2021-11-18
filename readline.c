@@ -32,10 +32,16 @@ int	main(int ac, char **av, char **env)
 		}
 		c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
 		free(cmd);
-		//while (simple_command)
-		// faire tout ca pour chaque commande
-		// gerer
-		
+		/////// piping
+		cmd = readline("cmd pipe ");
+		c_table->next = ft_get_simple_command(cmd, temp_env);
+		c_table->next->previous = c_table;
+		c_table->next->next = NULL;
+		c_table->previous = NULL;
+		free(cmd);
+		ft_pipe(c_table);
+		return (0);
+		/////////////////////
 		if (c_table == NULL)
 		{
 			free(cmd);

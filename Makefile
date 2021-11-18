@@ -15,7 +15,7 @@ NAME		= minishell
 SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c \
 				builtin/unset.c binaries/main_bin.c binaries/path_utils.c \
-				exit/exit.c env/env_init.c
+				exit/exit.c env/env_init.c pipe/pipe.c pipe/pipe_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 

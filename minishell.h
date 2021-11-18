@@ -22,7 +22,7 @@ typedef struct s_redir
 	struct s_redir	*next;
 }				t_redir;
 
-typedef struct s_simple_commands
+typedef struct s_simple_command
 {
 	int		args_num;
 	char	**args;
@@ -80,5 +80,10 @@ int		ft_proper_free(t_simple_command *c_table);
 char	**ft_copy_env(char **env);
 
 void	ft_open_files (t_simple_command *c_table, t_redir *list);
+
+int		ft_pipe(t_simple_command *c_table);
+
+void    ft_proccessing(t_simple_command *c_table, int *right, int *left);
+
 
 #endif
