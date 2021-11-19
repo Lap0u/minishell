@@ -46,6 +46,7 @@ void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y);
 void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_simple(char *str, t_token *my_arr, int *i, int *y);
+void	typification(t_token *my_arr, int nbr_token);
 t_token	*ft_split_tokens(char *str);
 
 #endif

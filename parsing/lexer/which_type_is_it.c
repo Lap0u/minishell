@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "../..minishell.h"
+#include "../../minishell.h"
 
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -59,31 +59,31 @@ void	typification(t_token *my_arr, int nbr_token)
 	}
 }
 
-int main(void)
-{
-	t_token	*arr;
-	int		len;
-	int		i;
+// int main(void)
+// {
+// 	t_token	*arr;
+// 	int		len;
+// 	int		i;
 
-	char test[] = "| >> << > < '$' \"$$\" $$";
-	printf("text: %s\n", test);
-	printf("strlen: %ld\n", ft_strlen(test));
+// 	char test[] = "| >> << > < '$' \"$$\" $$";
+// 	printf("text: %s\n", test);
+// 	printf("strlen: %ld\n", ft_strlen(test));
 
-	len = nbr_words(test);
-	printf("nbr_words: %d\n", len);
+// 	len = nbr_words(test);
+// 	printf("nbr_words: %d\n", len);
 
-	i = 0;
-	arr = ft_split_tokens(test);
-	typification(arr, len);
-	while (i < len)
-	{
-		printf("value: %s\n", arr[i].value);
-		printf("fl_quotes: %d\n", arr[i].fl_quotes);
-		printf("type: %d\n", arr[i].type);
-		free(arr[i].value);
-		// free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (0);
-}
+// 	i = 0;
+// 	arr = ft_split_tokens(test);
+// 	typification(arr, len);
+// 	while (i < len)
+// 	{
+// 		printf("value: %s\n", arr[i].value);
+// 		printf("fl_quotes: %d\n", arr[i].fl_quotes);
+// 		printf("type: %d\n", arr[i].type);
+// 		free(arr[i].value);
+// 		// free(arr[i]);
+// 		i++;
+// 	}
+// 	free(arr);
+// 	return (0);
+// }
