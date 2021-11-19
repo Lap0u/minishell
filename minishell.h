@@ -13,7 +13,7 @@
 
 # define PROMPT ">minishell "
 
-//type 0 = input, type 1 = output
+//type 0 = input, type 1 = output, type 2 = output_append, type 3 = here_doc
 
 typedef struct s_redir
 {
@@ -24,9 +24,9 @@ typedef struct s_redir
 
 typedef struct s_simple_command
 {
-	int		args_num;
-	char	**args;
-	char	*cmd;
+	int		args_num;//
+	char	**args;//
+	char	*cmd;//
 	char	**env;
 	int		last_ret;
 	int 	infile;
