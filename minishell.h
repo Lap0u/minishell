@@ -8,7 +8,7 @@
 # include <unistd.h>
 # include <dirent.h>
 # include <sys/wait.h>
-# include "./libft/libft.h"
+// # include "./libft/libft.h"
 # include <limits.h>
 
 # define PROMPT ">minishell "

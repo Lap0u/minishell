@@ -10,12 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer/lexer.h"
 #include "../../minishell.h"
+
+int is_redir(t_token arr_tok)
+{
+	if (arr_tok.type >= RED_OUT && arr_tok.type <= RED_HERE_DOC)
+		return (0);
+	return (1);
+}
+
+int is_text(t_token arr_tok)
+{
+	if (arr_tok.type <= ARG && arr_tok.type >= COMMANDE || arr_tok.type == DOLLAR)
+		return (0);
+	return (1);
+}
 
 int nbr_pipe(t_token *arr_tok)
 {
-
+	int i;
+	int count;
+	
+	i = 0;
+	count = 1;
+	if (arr_tok[0].type == PIPE)
+		return (-1);
+	while (arr_tok[i])
+	{
+		if (arr_tok[i].type == PIPE && 
+		(arr_tok[i + 1] == NULL || arr_tok[i + 1].type == PIPE))
+			return (-1);
+		if (is_redir(arr_tok[i]) == 0 && is_text(arr_tok[i + 1]) != 0)
+			return (-1);
+		if (arr_tok[i].type == PIPE)
+			count++;
+		i++;
+	}
+	return (count);
 }
 
 int	is_there_red(t_token *arr_tok)
@@ -44,7 +76,9 @@ t_simple_command *creation_list_command(t_token *arr_tok)
 	t_simple_command	*lst_command;
 	int	i;
 
-	nbr = 1 + nbr_pipe(arr_tok);
+	nbr = nbr_pipe(arr_tok);
+	if (nbr < 0)
+		return ((void *)0);
 	lst_command = NULL;
 	lst_command = (t_simple_command *)malloc(sizeof(t_simple_command) * nbr);
 	if (lst_command == (void *)0)
