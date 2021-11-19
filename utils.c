@@ -149,11 +149,11 @@ t_redir	*ft_create_redir() ////////////////////
 	second->next = last;
 	last->next = NULL;
 
-	start->type = 1;
+	start->type = 0;
 	start->file = ft_strdup("out1");
-	second->type = 1;
+	second->type = 0;
 	second->file = ft_strdup("out2");
-	last->type = 0;
+	last->type = 1;
 	last->file = ft_strdup("inmake");
 	return (start);
 }
@@ -242,9 +242,9 @@ void	ft_open_files (t_simple_command *c_table, t_redir *list)
 	c_table->infile = -21000;
 	while (list && c_table->outfile != -42000 && c_table->infile != -42000)
 	{
-		if (list->type == 1)
+		if (list->type == 0)
 			ft_add_output(list->file, c_table);
-		else if (list->type == 0)
+		else if (list->type == 1)
 			ft_add_input(list->file, c_table);
 		if (c_table->outfile == -42000 || c_table->infile == -42000)
 			c_table->badfd = i;
@@ -266,13 +266,13 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
     res->args_num = ft_get_args_size(res->args);
 	res->env = env;
 	res->redir = ft_create_redir();
-	if (str[0] == 'c')/////////////////mascarade
+	if (str[0] == 'w')/////////////////mascarade
 	{
 	    free(res->redir->next->file);
     	res->redir->next->file = ft_strdup("out4");
-		// free(res->redir->next->next->file);
-		// free(res->redir->next->next);
-		// res->redir->next->next = NULL;
+		free(res->redir->next->next->file);
+		free(res->redir->next->next);
+		res->redir->next->next = NULL;
 	}/////////////////////////////mascarade
 	ft_open_files(res, res->redir);
 	res->last_ret = 0;

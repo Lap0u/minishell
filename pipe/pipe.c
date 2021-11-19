@@ -15,8 +15,8 @@
 int		ft_pipe(t_simple_command *c_table)
 {
     pid_t child;
-    int pipe1[12];
-    int pipe2[12];
+    int pipe1[2];
+    int pipe2[2];
     int status;
     int i;
 

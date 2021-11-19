@@ -89,7 +89,7 @@ char	*make_str(char *str)
 
 	i = 0;
 	len = what_is_len(str);
-	printf("len : %d\n", len);
+	// printf("len : %d\n", len);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (*str == '\'')
 		str++;

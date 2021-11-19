@@ -8,12 +8,12 @@
 # include <unistd.h>
 # include <dirent.h>
 # include <sys/wait.h>
-// # include "./libft/libft.h"
+// # include "./libft/libft.h" //a commenter pour compiler parser/lexer
 # include <limits.h>
 
 # define PROMPT ">minishell "
 
-//type 0 = input, type 1 = output, type 2 = output_append, type 3 = here_doc
+//type 0 = output, type 1 = input, type 2 = output_append, type 3 = here_doc
 
 typedef struct s_redir
 {

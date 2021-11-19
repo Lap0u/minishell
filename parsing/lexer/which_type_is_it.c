@@ -54,7 +54,7 @@ void	typification(t_token *my_arr, int nbr_token)
 	while (i < nbr_token)
 	{
 		my_arr[i].type = which_type(&(my_arr[i]));
-		printf("return = %d\n", which_type(&(my_arr[i])));
+		// printf("return = %d\n", which_type(&(my_arr[i])));
 		i++;
 	}
 }

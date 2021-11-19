@@ -1,1 +1,24 @@
-  50  139 1574 inmake
+binaries
+builtin
+env
+exit
+inmake
+inmini
+inread
+libft
+LIST TOKEN.md
+Makefile
+minishell
+minishell.h
+minitalk
+out1
+out2
+out4
+out5
+parsing
+pipe
+pipex
+readline.c
+readline.o
+utils.c
+utils.o

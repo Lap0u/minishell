@@ -27,7 +27,7 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
         close(left[0]);
     if (c_table->next != NULL)
     {
-        ret = dup2(left[0], STDIN_FILENO);
+        ret = dup2(left[0], STDOUT_FILENO);
         if (ret < 0)
         {
             perror("dup3 ");
@@ -36,7 +36,7 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
     }
     if (c_table->previous != NULL)
     {
-        ret = dup2(right[1], STDOUT_FILENO);
+        ret = dup2(right[1], STDIN_FILENO);
         if (ret < 0)
         {
             perror("dup4 ");
