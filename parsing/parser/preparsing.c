@@ -101,8 +101,9 @@ int main(void)
 	t_token	*arr;
 	int		len;
 	int		i;
+	int		pipes;
+	char test[] = "<> $$ | echo\' | < ls -\"\'la \"plop  <|<";
 
-	char test[] = "<> '$$' | echo | < ls -la plop  <|<";
 	printf("text: %s\n", test);
 	printf("strlen: %ld\n", ft_strlen(test));
 
@@ -110,8 +111,9 @@ int main(void)
 	printf("nbr_words: %d\n\n", len);
 
 	i = 0;
-	arr = ft_split_tokens(test);
-	typification(arr, len);
+	arr = ft_split_tokens(test);// semble ok sauf " " ??
+	typification(arr, len);//semble ok
+	pipes = nbr_pipe(arr, len);
 	while (i < len)
 	{
 		printf("\nvalue: %s\n", arr[i].value);
@@ -121,7 +123,7 @@ int main(void)
 		// free(arr[i]);
 		i++;
 	}
-	printf("\nnbr_pipe: %d", nbr_pipe(arr, len));
+	printf("\nnbr_pipe: %d", pipes);
 	free(arr);
 	return (0);
 }

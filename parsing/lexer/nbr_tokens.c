@@ -45,6 +45,11 @@ int	nbr_words_s_quotes(char const *str, int *i)
 			*i = *i + 1;
 		if (str[*i] && str[*i] == '\'')
 			*i = *i + 1;
+		else if (str[*i] == 0)//////////////added by clement
+		{
+			write(2,"Error: There is not second single quotes\n", 41);
+			exit(1);
+		}////////end added
 	}
 	else if (str[*i] == '\'' && str[*i + 1] == '\'')
 		*i = *i + 2;

@@ -241,14 +241,14 @@ t_token	*ft_split_tokens(char *str)
 
 // 	i = 0;
 // 	arr = ft_split_tokens(test);
-// 	while (i < len)
-// 	{
-// 		printf("value: %s\n", arr[i].value);
-// 		printf("fl_quotes: %d\n", arr[i].fl_quotes);
-// 		free(arr[i].value);
-// 		// free(arr[i]);
-// 		i++;
-// 	}
+	// while (i < len)
+	// {
+	// 	printf("value: %s\n", arr[i].value);
+	// 	printf("fl_quotes: %d\n", arr[i].fl_quotes);
+	// 	free(arr[i].value);
+	// 	// free(arr[i]);
+	// 	i++;
+	// }
 // 	free(arr);
 // 	return (0);
 // }
