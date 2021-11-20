@@ -14,6 +14,49 @@
 #include "../../minishell.h"
 ///////////////utils
 
+void	print_args(t_simple_command *start)
+{
+	int i;
+
+	i = 0;
+	printf("ARGS : ");
+	while (start->args[i])
+	{
+		printf("%s\t", start->args[i++]);
+	}
+	printf("\n");
+}
+
+void	print_redir(t_simple_command *start)
+{
+	t_redir	*save;
+
+	save = start->redir;
+	printf("REDIR : 0 = out    1 = in    2 = out_append    3 = here_doc\n");
+	while (start->redir)
+	{
+		printf("type : %d  vers file : %s\t", start->redir->type, start->redir->file);
+		start->redir = start->redir->next;
+	}
+	printf("\n\n");
+	start->redir = save;
+}
+
+void	ft_print_sentences(t_simple_command *start)
+{
+	int i;
+
+	i = 0;
+	while (start)
+	{
+		printf("SENTENCE : %d\n\n", i++);
+		printf("COMMANDE : %s\n", start->cmd);
+		print_args(start);
+		print_redir(start);
+		start = start->next;
+	}
+}
+
 void	ft_free_3dtab(char **tab) //////a uncomment quand dollar sera implemente
 {
 	// int i;
@@ -29,21 +72,18 @@ void	ft_free_3dtab(char **tab) //////a uncomment quand dollar sera implemente
 	free(tab);
 }
 
-void	ft_free_redir(t_redir *list)
+void	ft_free_redir(t_redir **list)
 {
-	t_redir *last;
 	t_redir *temp;
 
-	last = list;
-
-	while (last)
+	while (*list)
 	{
-		printf("%p last", last);
-		temp = last;
-		last = last->next;
+		temp = *list;
+		*list = (*list)->next;
 		// free(temp.file); //a uncomment quand dollar sera imple
 		free(temp);
 	}
+	*list = NULL;
 }
 
 ///////////////end
@@ -82,7 +122,7 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len)
 			index++;
 		else if (arr_tok[index].type == DOLLAR || arr_tok[index].type == ARG)
 		{
-			// args[i] = ft_dollar(arr_tok[i]); //expand si dollar ou args=arr.value si arg
+			args[i] = arr_tok[index].value; //expand si dollar ou args=arr.value si arg
 			i++;
 		}
 		index++;
@@ -105,22 +145,21 @@ int	is_there_red(t_token *arr_tok, int index, int len)
 	return (1);
 }
 
-void	new_redir(t_token *arr_tok, t_redir *start)
+void	new_redir(t_token *arr_tok, t_redir **start)
 {
-	t_redir *last;
-	t_redir *new;
-
-
-	last = start;
-	while (last)
-		last = last->next;
+	t_redir *save;
+	t_redir	*new;
+	
+	save = *start;
+	while (save->next)
+		save = save->next;
 	new = malloc(sizeof(t_redir));
 	if (new == NULL)
 		exit(42);///doit tout free
 	new->type = arr_tok[0].type - 5;
 	new->file = arr_tok[1].value;
 	new->next = NULL;
-	last = new;
+	save->next = new;
 }
 
 t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len)
@@ -136,7 +175,6 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len)
 		return ((void *)0);
 	while (index < len && arr_tok[index].type != PIPE)
 	{
-		printf("%p\n\n", start);
 		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
 		{
 			if (bool_start == -1)
@@ -147,7 +185,7 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len)
 				bool_start = 0;
 			}
 			else
-				new_redir(&arr_tok[index], start);
+				new_redir(&arr_tok[index], &start);
 		}
 		index++;
 	}
@@ -236,12 +274,15 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len)
 	return (my_elem);
 }
 
-void	add_new_elem(t_simple_command *start, t_token *arr_tok,
+void	add_new_elem(t_simple_command **start, t_token *arr_tok,
 		int index, int len)
 {
-	while (start)
-		start = start->next;
-	start = new_elem(arr_tok, index, len);
+	t_simple_command *save;
+
+	save = *start;
+	while (save->next)
+		save = save->next;
+	save->next = new_elem(arr_tok, index, len);
 }
 
 t_simple_command *creation_list_command(t_token *arr_tok, int arr_len)
@@ -263,7 +304,7 @@ t_simple_command *creation_list_command(t_token *arr_tok, int arr_len)
 	i = 1;
 	while (i < nbr_elem)
 	{
-		add_new_elem(lst_command, arr_tok, index, arr_len);
+		add_new_elem(&lst_command, arr_tok, index, arr_len);
 		index = skip_topipe(arr_tok, index, arr_len);
 		i++;
 	}
@@ -276,10 +317,10 @@ int main(void)
 	int		len;
 	int		i;
 	int		nbr_elem;
-	char test[] = "echo test < infile ls -la > didi > fdgdf";
+	char test[] = "echo < test | < redir | ls -l -e -r > arr > plop > ppp < infile | ls -la didi > fdgdf";
 	
 	
-	t_simple_command	*all_cmd;
+	t_simple_command	*sentences;
 	t_simple_command	*temp;
 
 	printf("text: %s\n", test);
@@ -292,13 +333,14 @@ int main(void)
 	arr = ft_split_tokens(test);// semble ok
 	typification(arr, len);//semble ok
 	nbr_elem = nbr_pipe(arr, len);//semble ok
-	all_cmd = creation_list_command(arr, len);
-	while (all_cmd)
+	sentences = creation_list_command(arr, len);
+	ft_print_sentences(sentences);
+	while (sentences)
 	{
-		temp = all_cmd;
-		all_cmd = all_cmd->next;
+		temp = sentences;
+		sentences = sentences->next;
 		ft_free_3dtab(temp->args);
-		ft_free_redir(temp->redir);
+		ft_free_redir(&temp->redir);
 		free(temp);
 	}
 	while (i < len)
@@ -310,7 +352,6 @@ int main(void)
 		// free(arr[i]);
 		i++;
 	}
-	printf("\nnbr_elem: %d\n", nbr_elem);
 	free(arr);
 	return (0);
 }

@@ -9,7 +9,7 @@
 # include <dirent.h>
 # include <sys/wait.h>
 // # include "./libft/libft.h" //a commenter pour compiler parser/lexer
-# include <limits.h>
+# include <limits.h> 
 
 # define PROMPT ">minishell "
 
@@ -37,7 +37,7 @@ typedef struct s_simple_command
 	struct s_simple_command *previous;
 }				t_simple_command;
 
-t_simple_command *ft_get_simple_command(char *str, char **env);
+t_simple_command	*ft_get_simple_command(char *str, char **env);
 
 int	ft_strcmp(char *s1, char *s2);
 
