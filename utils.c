@@ -260,11 +260,11 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
 	res = malloc(sizeof(t_simple_command));
 	if (res == NULL)
 		return (NULL);
-	res->badfd = -1;
+	res->badfd = -1;// initialisation 
 	res->cmd = ft_get_command(str);
     res->args = ft_get_args(str, env);
     res->args_num = ft_get_args_size(res->args);
-	res->env = env;
+	res->env = env;// ajouter dans le parser
 	res->redir = ft_create_redir();
 	if (str[0] == 'w')/////////////////mascarade
 	{
@@ -274,7 +274,7 @@ t_simple_command *ft_get_simple_command(char *str, char **env)
 		free(res->redir->next->next);
 		res->redir->next->next = NULL;
 	}/////////////////////////////mascarade
-	ft_open_files(res, res->redir);
+	ft_open_files(res, res->redir);// ajouter dans le parser 
 	res->last_ret = 0;
     if (res->cmd == NULL)
     {
