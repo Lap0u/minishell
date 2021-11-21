@@ -13,19 +13,19 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
-void    ft_free_redir(t_redir *list)
-{
-    t_redir *temp;
+// void    ft_free_redir(t_redir *list)
+// {
+//     t_redir *temp;
 
-    while (list)
-    {
-        temp = list;
-        list = list->next;
-        free(temp->file);
-        free(temp);
-        temp = NULL;
-    }
-}
+//     while (list)
+//     {
+//         temp = list;
+//         list = list->next;
+//         free(temp->file);
+//         free(temp);
+//         temp = NULL;
+//     }
+// }
 
 void    ft_free_2dstr(char **str)
 {
