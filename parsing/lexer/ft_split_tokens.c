@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../../minishell.h"
 
 int	what_is_len_s_quotes(char *str)
 {

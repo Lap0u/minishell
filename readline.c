@@ -12,9 +12,11 @@ void	ft_init_ctable(t_simple_command **list, char **env)
 int	main(int ac, char **av, char **env)
 {	
 	char *cmd;
+	t_token *arr_tok;
 	char **temp_env;
 	t_simple_command *c_table;
 	int	temp_ret;
+	int nbr_tokens;
 
 	c_table = NULL;
 	temp_ret = 0;
@@ -30,17 +32,21 @@ int	main(int ac, char **av, char **env)
 			ft_free_3dtab(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
-		c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
-		free(cmd);
+		arr_tok = ft_split_tokens(cmd);
+		nbr_tokens = nbr_words(cmd);
+		typification(arr_tok, nbr_tokens);
+		c_table = creation_list_command(arr_tok, nbr_tokens, env);
+		// c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
+		// free(cmd);
 		/////// piping
-		cmd = readline("cmd pipe ");
-		c_table->next = ft_get_simple_command(cmd, temp_env);
-		c_table->next->previous = c_table;
-		c_table->next->next = NULL;
-		c_table->previous = NULL;
-		free(cmd);
-		ft_pipe(c_table);
-		return (0);
+		// cmd = readline("cmd pipe ");
+		// c_table->next = ft_get_simple_command(cmd, temp_env);
+		// c_table->next->previous = c_table;
+		// c_table->next->next = NULL;
+		// c_table->previous = NULL;
+		// free(cmd);
+		// ft_pipe(c_table);
+		// return (0);
 		/////////////////////
 		if (c_table == NULL)
 		{
