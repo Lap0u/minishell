@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "../..minishell.h"
 
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -65,7 +64,7 @@ int main(void)
 	int		len;
 	int		i;
 
-	char test[] = "| >> << > < '$' \"$$\" $$";
+	char test[] = "Hello \"SALUT      $$ \"";
 	printf("text: %s\n", test);
 	printf("strlen: %ld\n", ft_strlen(test));
 
