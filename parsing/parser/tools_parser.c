@@ -43,19 +43,69 @@ void	ft_print_sentences(t_simple_command *start)
 	}
 }
 
-void	ft_free_3dtab(char **tab) //////a uncomment quand dollar sera implemente
+char	*ft_var_only(char *str)
 {
-	// int i;
+	int i;
+	int end;
+	char *res;
 
-	// i = 0;
-	// if (!tab)
-	// 	return ;
-	// // while (tab[i])
-	// // {
-	// // 	free(tab[i]);
-	// // 	i++;
-	// // }
-	free(tab);
+	i = 0;
+	end = 0;
+	while (str[end + 1] != '=')
+		end++;
+	res = malloc(sizeof(char) * end + 2);
+	if (res == NULL)
+		return (NULL);
+	while (i <= end)
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i] = 0;
+	return (res);
+}
+
+char	*ft_add_var(char *str)
+{
+	int i;
+	char *res;
+	int	j;
+
+	i = 0;
+	while ((ft_strncmp(str + i, "=", 1) != 0) && str[i])
+		i++;
+	i += 1;
+	res = malloc(sizeof(char) * ft_strlen(str + i) + 1);
+	j = 0;
+	while (str[i])
+		res[j++] = str[i++];
+	res[j] = 0;
+	return (res);
+}
+
+char	*ft_expand_dollar(char *str, int mode, char **env)
+{
+	int		i;
+	char	*temp;
+	
+	i = 0;
+	if (str[0] != '$' || mode == 8 || mode == 1)
+		return (str);
+	while (env[i])
+	{
+		temp = ft_var_only(env[i]);
+		if (ft_strncmp(temp, str + 1, ft_strlen(str + 1)) == 0)
+		{
+			free(temp);
+			free(str);
+			str = ft_add_var(env[i]);
+			return (str);
+		}
+		free(temp);
+		i++;
+	}
+	return (malloc(0));
+
 }
 
 void	ft_free_redir(t_redir **list)
@@ -66,7 +116,7 @@ void	ft_free_redir(t_redir **list)
 	{
 		temp = *list;
 		*list = (*list)->next;
-		// free(temp.file); //a uncomment quand dollar sera imple
+		free(temp->file);
 		free(temp);
 	}
 	*list = NULL;

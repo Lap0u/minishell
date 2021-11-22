@@ -16,9 +16,6 @@ void    ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
 {
     int ret;
 
-    
-    fprintf(stderr, "tester ");
-
     close(right[0]);
     close(left[1]);
     if (c_table->previous == NULL)
