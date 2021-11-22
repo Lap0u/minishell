@@ -39,7 +39,6 @@ void	ft_split_builtin(t_simple_command **c_table)
 	stdout = dup(STDOUT_FILENO);
 	if ((*c_table)->outfile >= 0)
     {
-		printf("test\n\n");
 		ret = dup2((*c_table)->outfile, STDOUT_FILENO);
 		if (ret < 0)
 			perror("Error");

@@ -42,7 +42,6 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
             ret = dup2(c_table->infile, STDIN_FILENO);
             if (ret < 0)
                 perror("Error");
-            fprintf(stderr, "ca passe");
         }
         execve(c_table->args[0], c_table->args, env);
         perror("Error exec");

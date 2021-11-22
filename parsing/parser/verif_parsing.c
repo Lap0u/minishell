@@ -44,7 +44,10 @@ int skip_topipe(t_token *arr_tok, int index, int len)
 	while (index < len)
 	{
 		if (arr_tok[index].type == PIPE)
+		{
+			free(arr_tok[index].value);
 			break ;
+		}
 		index++;
 	}
 	return (index + 1);

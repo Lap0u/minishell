@@ -20,8 +20,11 @@ void    ft_bi_echo(t_simple_command *c_table)
     if (ft_strcmp(c_table->args[1], "-n") == 0)
         i = 2;
     while (c_table->args[i])
-        printf("%s ", c_table->args[i++]);
+    {
+        write(1, c_table->args[i], ft_strlen(c_table->args[i]));
+        i++;
+    }
     if (ft_strcmp(c_table->args[1], "-n") != 0)
-        printf("\n");
+        write(1, "\n", 1);
     c_table->last_ret = 0;
 }
