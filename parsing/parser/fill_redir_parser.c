@@ -28,7 +28,7 @@ void	new_redir(t_token *arr_tok, t_redir **start)
 	save->next = new;
 }
 
-t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len)
+t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 {
 	t_redir *start;
 	int		bool_start;
@@ -47,11 +47,13 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len)
 			{
 				start->type = arr_tok[index].type - 5;
 				start->file = arr_tok[index + 1].value; //expand si dollar ou args=arr.value si arg
+				start->file = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index].type, env);
 				start->next = NULL;
 				bool_start = 0;
 			}
 			else
 				new_redir(&arr_tok[index], &start);
+			free(arr_tok[index].value);
 		}
 		index++;
 	}

@@ -141,8 +141,8 @@ int		which_type(t_token *my_arr);
 void	typification(t_token *my_arr, int nbr_token);
 
 /*parsing/parser/preparsing.c*/
-t_simple_command	*new_elem(t_token *arr_tok, int index, int len);
-void	add_new_elem(t_simple_command **st, t_token *arr_tok, int ind, int len);
+t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env);
+void	add_new_elem(t_simple_command **st, t_token *arr_tok, int ind, int len, char **env);
 void	add_env_in_elem(t_simple_command *lst_command, char **env);
 t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **env);
 
@@ -152,15 +152,15 @@ void	print_redir(t_simple_command *start);
 void	ft_print_sentences(t_simple_command *start);
 void	ft_free_3dtab(char **tab);
 void	ft_free_redir(t_redir **list);
-
+char	*ft_expand_dollar(char *str, int mode, char **env);
 /*parsing/parser/fill_args_parser.c*/
 int		ft_count_args(t_token *arr_tok, int index, int len);
-char	**ft_fill_args(t_token *arr_tok, int index, int len);
+char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env);
 
 /*parsing/parser/fill_redir_parser.c*/
 int	is_there_red(t_token *arr_tok, int index, int len);
 void	new_redir(t_token *arr_tok, t_redir **start);
-t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len);
+t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env);
 
 /*parsing/parser/verif_parsing.c*/
 

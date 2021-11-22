@@ -222,7 +222,6 @@ t_token	*ft_split_tokens(char *str)
 		make_str_s_quotes(str, my_arr, &i, &y);
 		make_str_double_quote(str, my_arr, &i, &y);
 	}
-	// my_arr[y] = (void *)0;
 	return (my_arr);
 }
 
