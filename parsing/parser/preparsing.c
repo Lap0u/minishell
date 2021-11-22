@@ -75,6 +75,7 @@ t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **en
 		i++;
 	}
 	add_env_in_elem(lst_command, env);
+	free(arr_tok);
 	return (lst_command);////
 }
 

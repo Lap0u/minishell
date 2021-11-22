@@ -87,7 +87,7 @@ int		ft_pipe(t_simple_command *c_table);
 
 void    ft_proccessing(t_simple_command *c_table, int *right, int *left);
 
-
+void    ft_free_2dstr(char **str);
 /*parsing*/
 
 typedef struct s_token

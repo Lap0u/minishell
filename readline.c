@@ -29,13 +29,13 @@ int	main(int ac, char **av, char **env)
 		if (cmd == NULL)
 		{
 			rl_clear_history();
-			ft_free_3dtab(temp_env);
+			ft_free_2dstr(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
 		arr_tok = ft_split_tokens(cmd);
 		nbr_tokens = nbr_words(cmd);
 		typification(arr_tok, nbr_tokens);
-		c_table = creation_list_command(arr_tok, nbr_tokens, env);
+		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
 		// c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
 		// free(cmd);
 		/////// piping
