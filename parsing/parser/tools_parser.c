@@ -94,7 +94,7 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 	while (env[i])
 	{
 		temp = ft_var_only(env[i]);
-		if (ft_strncmp(temp, str + 1, ft_strlen(str + 1)) == 0)
+		if (ft_strcmp(temp, str + 1) == 0)
 		{
 			free(temp);
 			free(str);
@@ -104,7 +104,7 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 		free(temp);
 		i++;
 	}
-	return (malloc(0));
+	return (NULL);
 
 }
 

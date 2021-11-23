@@ -44,6 +44,8 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 			free(str);
 			i++;
 		}
+		if (temp[y].type == DOLLAR && temp[y].subst == 0)
+			free(temp[y].value);
 		y++;
 	}
 	return (count);
@@ -54,7 +56,6 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env)
 	char	**args;
 	int		nbr_args;
 	int		i;
-	(void)env;///////////
 
 	i = 0;
 	nbr_args = do_var_existe(&arr_tok, len, env);
