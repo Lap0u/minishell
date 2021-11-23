@@ -29,6 +29,10 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 	temp = *arr_tok;
 	while (y < len)
 	{
+		while (y < len && temp[y].type >= RED_OUT && temp[y].type <= RED_HERE_DOC)
+			y +=2;
+		if (y == len)
+			break ;
 		temp[y].subst = 0;
 		i = 0;
 		while (env[i])
