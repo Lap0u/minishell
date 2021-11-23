@@ -34,7 +34,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 		while (env[i])
 		{
 			str = ft_var_only(env[i]);
-			if (temp[y].type == DOLLAR && ft_strncmp(str, temp[y].value + 1, ft_strlen(temp[y].value + 1)) == 0)
+			if (temp[y].type == DOLLAR && ft_strcmp(str, temp[y].value + 1) == 0)
 			{
 				count++;
 				temp[y].subst = 1;
