@@ -44,7 +44,11 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 				temp[y].subst = 1;
 			}
 			else if (temp[y].type == ARG)
+			{
 				count++;
+				free(str);
+				break ;
+			}
 			free(str);
 			i++;
 		}
