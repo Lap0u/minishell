@@ -159,7 +159,7 @@ int		ft_count_args(t_token *arr_tok, int index, int len);
 char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env);
 
 /*parsing/parser/fill_redir_parser.c*/
-int	is_there_red(t_token *arr_tok, int index, int len);
+int	is_there_red(t_token *arr_tok, int index, int len, char **env);
 void	new_redir(t_token *arr_tok, t_redir **start);
 t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env);
 

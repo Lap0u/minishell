@@ -1,10 +1,39 @@
 #include "../../minishell.h"
 
-int	is_there_red(t_token *arr_tok, int index, int len)
+int 	is_expandable(char *str, int red, int quote, char **env)
+{
+	int		i;
+	char	*temp;
+	
+	if (str[0] != '$' || red == RED_HERE_DOC || quote == 1)
+		return (1);
+	
+	i = 0;
+	while (env[i])
+	{
+		temp = ft_var_only(env[i]);
+		if (ft_strcmp(temp, str + 1) == 0)
+		{
+			free(temp);
+			return (1);
+		}
+		free(temp);
+		i++;
+	}
+	return (0);
+}
+
+int	is_there_red(t_token *arr_tok, int index, int len, char **env)
 {
 	while (index < len && arr_tok[index].type != PIPE)
 	{
-		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
+		if (arr_tok[index].type == RED_HERE_DOC)
+			return (0);
+		else if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC && 
+		arr_tok[index + 1].fl_quotes == 1)
+			return (0);
+		else if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC &&
+		is_expandable(arr_tok[index + 1].value, 0, 0, env))
 			return (0);
 		index++;
 	}
@@ -34,16 +63,18 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 	int		bool_start;
 	
 	bool_start = -1;
-	if (is_there_red(arr_tok, index, len) == 1)
+	if (is_there_red(arr_tok, index, len, env) == 1)
 		return ((void *)0);
-	printf("test\n");
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
 		return ((void *)0);
 	while (index < len && arr_tok[index].type != PIPE)
 	{
-		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
+		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC &&
+			is_expandable(arr_tok[index + 1].value, arr_tok[index].type,
+			arr_tok[index + 1].fl_quotes, env))
 		{
+			printf("test\n");
 			if (bool_start == -1)
 			{
 				start->type = arr_tok[index].type - 5;
