@@ -89,7 +89,7 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 	char	*temp;
 	
 	i = 0;
-	if (str[0] != '$' || (mode == 8 || mode == 2))
+	if (str[0] != '$' || (mode == 8 || mode == 1))
 		return (str);
 	while (env[i])
 	{
