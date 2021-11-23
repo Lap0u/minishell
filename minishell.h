@@ -95,6 +95,7 @@ typedef struct s_token
 	int		type;
 	char	*value;
 	int		fl_quotes;
+	int		subst;
 }				t_token;
 
 # define COMMANDE 1
@@ -170,6 +171,6 @@ int nbr_pipe(t_token *arr_tok, int len);
 int skip_topipe(t_token *arr_tok, int index, int len);
 int		ft_2dlen(char **tab);
 
-
+char	*ft_var_only(char *str);
 
 #endif
