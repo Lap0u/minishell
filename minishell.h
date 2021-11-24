@@ -96,6 +96,7 @@ typedef struct s_token
 	char	*value;
 	int		fl_quotes;
 	int		subst;
+	int		fl_space;
 }				t_token;
 
 # define COMMANDE 1
