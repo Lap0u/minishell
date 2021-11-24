@@ -54,8 +54,9 @@ int	main(int ac, char **av, char **env)
 			return (0);
 		}
         if (c_table->infile == -42000 || c_table->outfile == -42000)
-            return (printf("wrong infile outfile : %d", c_table->badfd));
-		ft_pipe(c_table);
+            fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
+		else
+			ft_pipe(c_table);
 		add_history(cmd);
 		temp_env = c_table->env;
 		temp_ret = c_table->last_ret;

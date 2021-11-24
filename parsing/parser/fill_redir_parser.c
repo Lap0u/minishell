@@ -74,7 +74,6 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 			is_expandable(arr_tok[index + 1].value, arr_tok[index].type,
 			arr_tok[index + 1].fl_quotes, env))
 		{
-			printf("test\n");
 			if (bool_start == -1)
 			{
 				start->type = arr_tok[index].type - 5;
