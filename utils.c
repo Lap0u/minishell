@@ -268,7 +268,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	}
 	while (1)/////voir quoi faire avec ctrl+D
 	{
-		str = readline("> ");
+		str = readline("heredoc> ");
 		if (strcmp(str, delim) == 0)
 		{
 			free(str);
