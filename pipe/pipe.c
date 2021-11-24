@@ -43,7 +43,7 @@ void	close_pipes(int *tab, int size)
 	int i;
 
 	i = 0;
-	while (i < size)
+	while (i < size * 2)
 		close(tab[i++]);
 }
 
@@ -116,7 +116,6 @@ int		ft_pipe(t_simple_command *c_table)
 		}
 		i += 2;
 		c_table = c_table->next;
-		// if (child < 0)
         // {
         //     perror("Fork : ");
         //     return (child);
