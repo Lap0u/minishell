@@ -33,6 +33,8 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 			y +=2;
 		if (y == len)
 			break ;
+		if (temp[y].type == PIPE)
+			y++;
 		temp[y].subst = 0;
 		i = 0;
 		while (env[i])
