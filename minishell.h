@@ -34,6 +34,7 @@ typedef struct s_simple_command
 	int 	infile;
 	int 	outfile;
 	int		badfd;
+	int 	pos;
 	t_redir	*redir;
 	struct s_simple_command *next;
 	struct s_simple_command *previous;

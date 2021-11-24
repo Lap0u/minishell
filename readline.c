@@ -36,18 +36,6 @@ int	main(int ac, char **av, char **env)
 		nbr_tokens = nbr_words(cmd);
 		typification(arr_tok, nbr_tokens);
 		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
-		// c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
-		// free(cmd);
-		/////// piping
-		// cmd = readline("cmd pipe ");
-		// c_table->next = ft_get_simple_command(cmd, temp_env);
-		// c_table->next->previous = c_table;
-		// c_table->next->next = NULL;
-		// c_table->previous = NULL;
-		// free(cmd);
-		// ft_pipe(c_table);
-		// return (0);
-		/////////////////////
 		if (c_table == NULL)
 		{
 			free(cmd);
