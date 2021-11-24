@@ -49,9 +49,9 @@ void	close_pipes(int *tab, int size)
 
 int		ft_pipe(t_simple_command *c_table)
 {
-    pid_t child;
+    pid_t *childs;
 	int	*pipefd;
-    int nbr_pipe;
+    int	nbr_sent;
 	int status;
 	int i;
 
@@ -65,14 +65,21 @@ int		ft_pipe(t_simple_command *c_table)
         return (0);
     }
 	add_pos(c_table);
-	nbr_pipe = ft_lstcmd(c_table);
-	pipefd = malloc(sizeof(int) * nbr_pipe * 2);
+	nbr_sent = ft_lstcmd(c_table);
+	childs = malloc(sizeof(pid_t) *	nbr_sent);
+	if (childs == NULL)
+	{
+		perror("Malloc: ");
+		return (112);
+	}
+	pipefd = malloc(sizeof(int) *	nbr_sent * 2);
 	if (pipefd == NULL)
 	{
 		perror("Malloc:");
+		free(childs);
 		return (112);
 	}
-	while (i < nbr_pipe)
+	while (i <	nbr_sent)
 	{
 		if (pipe(pipefd + i * 2)  < 0)
 		{
@@ -84,13 +91,13 @@ int		ft_pipe(t_simple_command *c_table)
 	i = 0;
     while (c_table)
     {
-        child = fork();
-		if (child < 0)
+        childs[i / 2] = fork();
+		if (childs[i / 2] < 0)
 		{
 			perror ("fork: ");
 			return (112);
 		}
-		if (child == 0)
+		if (childs[i / 2] == 0)
 		{
 			if (i != 0)
 			{
@@ -108,7 +115,8 @@ int		ft_pipe(t_simple_command *c_table)
 					return (112);
 				}
 			}
-			close_pipes(pipefd, nbr_pipe);
+			close_pipes(pipefd,	nbr_sent
+	);
 			if (ft_isbuiltin(c_table->cmd))
 				ft_split_builtin(&c_table);
 			else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
@@ -118,16 +126,19 @@ int		ft_pipe(t_simple_command *c_table)
 		c_table = c_table->next;
         // {
         //     perror("Fork : ");
-        //     return (child);
+        //     return (childs);
         // }
-        // if (child == 0 && i % 2 == 0)
+        // if (childs == 0 && i % 2 == 0)
         //     ft_proccessing(c_table, pipe2, pipe1);
-        // else if (child == 0 && i % 2 == 1)
+        // else if (childs == 0 && i % 2 == 1)
         //     ft_proccessing(c_table, pipe1, pipe2);
         // i++;
 	}
-	close_pipes(pipefd, nbr_pipe);
+	close_pipes(pipefd,	nbr_sent);
 	free(pipefd);
-    waitpid(child, &status, 0);
+	i = 0;
+	while (i < nbr_sent)
+    	waitpid(childs[i++], &status, 0);
+	free(childs);
     return (status);
 }

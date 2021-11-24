@@ -112,6 +112,8 @@ void	ft_free_redir(t_redir **list)
 {
 	t_redir *temp;
 
+	if (*list == NULL)
+		return ;
 	while (*list)
 	{
 		temp = *list;
