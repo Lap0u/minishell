@@ -112,7 +112,7 @@ int		ft_pipe(t_simple_command *c_table)
 			if (ft_isbuiltin(c_table->cmd))
 				ft_split_builtin(&c_table);
 			else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
-				ft_exec_bin(c_table, c_table->env, pipefd, i);
+				ft_exec_bin(c_table, c_table->env);
 		}
 		i++;
 		c_table = c_table->next;
