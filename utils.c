@@ -260,7 +260,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	int	ret;
 	char *str;
 
-	ret = open(".heredoc",  O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	ret = open("file/.heredoc",  O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
@@ -268,7 +268,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	}
 	while (1)/////voir quoi faire avec ctrl+D
 	{
-		str = readline("heredoc> ");
+		str = readline("> ");
 		if (strcmp(str, delim) == 0)
 		{
 			free(str);
@@ -281,7 +281,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	if (c_table->infile >= 0)
 		close(c_table->infile);
 	close (ret);
-	ret = open(".heredoc", O_RDONLY);
+	ret = open("file/.heredoc", O_RDONLY);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);

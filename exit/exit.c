@@ -60,5 +60,6 @@ int ft_proper_free(t_simple_command *c_table)
         c_table = c_table->next;
         free(temp);
     }
+	unlink("file/.heredoc");
     return (0);
 }
