@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/11/25 13:42:48 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 #include "../libft/libft.h"
 
@@ -11,7 +23,7 @@ void	ft_file_error(t_simple_command *c_table)
 	c_table->outfile = -42000;
 }
 
-int 	ft_isfolder(char *file, int ret)
+int	ft_isfolder(char *file, int ret)
 {
 	int		bytes;
 	char	buff[10];
@@ -24,7 +36,6 @@ int 	ft_isfolder(char *file, int ret)
 	if (bytes < 0)
 		return (0);
 	return (1);
-	
 }
 
 void	ft_close_prev(t_simple_command *c_table)

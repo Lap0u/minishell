@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   readline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/11/25 14:06:06 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./minishell.h"
 
 void	ft_init_ctable(t_simple_command **list, char **env)
@@ -11,12 +23,12 @@ void	ft_init_ctable(t_simple_command **list, char **env)
 
 int	main(int ac, char **av, char **env)
 {	
-	char *cmd;
-	t_token *arr_tok;
-	char **temp_env;
-	t_simple_command *c_table;
-	int	temp_ret;
-	int nbr_tokens;
+	char				*cmd;
+	t_token				*arr_tok;
+	char				**temp_env;
+	t_simple_command	*c_table;
+	int					temp_ret;
+	int					nbr_tokens;
 
 	c_table = NULL;
 	temp_ret = 0;
@@ -41,8 +53,8 @@ int	main(int ac, char **av, char **env)
 			free(cmd);
 			return (0);
 		}
-        if (c_table->infile == -42000 || c_table->outfile == -42000)
-            fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
+		if (c_table->infile == -42000 || c_table->outfile == -42000)
+			fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
 		else
 			ft_pipe(c_table);
 		add_history(cmd);

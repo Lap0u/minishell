@@ -1,5 +1,5 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	  		                                                                  */
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -12,26 +12,26 @@
 
 #include "../minishell.h"
 
-void    ft_add_path(t_simple_command *c_table, char **path)
+void	ft_add_path(t_simple_command *c_table, char **path)
 {
-    int i;
-    char *temp;
+	int		i;
+	char	*temp;
 
-    i = 0;
-    while (path[i])
-    {
-        temp = ft_strjoin(path[i], c_table->args[0]);
-        if (access(temp, X_OK) == 0)
-        {
-            free(c_table->args[0]);
-            c_table->args[0] = temp;
+	i = 0;
+	while (path[i])
+	{
+		temp = ft_strjoin(path[i], c_table->args[0]);
+		if (access(temp, X_OK) == 0)
+		{
+			free(c_table->args[0]);
+			c_table->args[0] = temp;
 			ft_free_3dtab(path);
-            return ;
-        }
-        else
-            free(temp);
-        i++;
-    }
+			return ;
+		}
+		else
+			free(temp);
+		i++;
+	}
 	ft_free_3dtab(path);
 }
 

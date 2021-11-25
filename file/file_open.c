@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_open.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/11/25 13:42:06 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 #include "../libft/libft.h"
 
 void	ft_add_input(char *file, t_simple_command *c_table)
 {
-	int ret;
+	int	ret;
 
 	ret = open(file, O_RDONLY);
 	if (ret < 0)
@@ -16,10 +28,10 @@ void	ft_add_input(char *file, t_simple_command *c_table)
 	c_table->infile = ret;
 }
 
-void	ft_add_output(char *file, t_simple_command *c_table) //ajouter selon > ou >>
+void	ft_add_output(char *file, t_simple_command *c_table)
 {
-	DIR* folder;
-	int ret;
+	DIR		*folder;
+	int		ret;
 
 	folder = opendir(file);
 	if (folder)
@@ -41,8 +53,8 @@ void	ft_add_output(char *file, t_simple_command *c_table) //ajouter selon > ou >
 
 void	ft_add_append(char *file, t_simple_command *c_table)
 {
-		DIR* folder;
-	int ret;
+	DIR		*folder;
+	int		ret;
 
 	folder = opendir(file);
 	if (folder)
@@ -64,16 +76,16 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 
 void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 {
-	int	ret;
-	char *str;
+	int		ret;
+	char	*str;
 
-	ret = open("file/.heredoc",  O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	ret = open("file/.heredoc", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
 		return ;
 	}
-	while (1)/////voir quoi faire avec ctrl+D
+	while (1) /////voir quoi faire avec ctrl+D
 	{
 		str = readline("> ");
 		if (strcmp(str, delim) == 0)
@@ -97,10 +109,10 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	c_table->infile = ret;
 }
 
-void	ft_open_files (t_simple_command *c_table, t_redir *list)
+void	ft_open_files(t_simple_command *c_table, t_redir *list)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	c_table->outfile = -21000;
 	c_table->infile = -21000;
