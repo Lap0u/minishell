@@ -20,9 +20,9 @@ int	main(int ac, char **av, char **env)
 
 	c_table = NULL;
 	temp_ret = 0;
-	temp_env = ft_copy_env(env);
 	if (ac != 1 || !av[0])
 		return (printf("No arguments!!!!!!!\n"));
+	temp_env = ft_copy_env(env);
 	while (1)
 	{
 		cmd = readline(PROMPT);

@@ -115,10 +115,12 @@ int		ft_pipe(t_simple_command *c_table)
 					return (112);
 				}
 			}
-			close_pipes(pipefd,	nbr_sent
-	);
+			close_pipes(pipefd,	nbr_sent);
 			if (ft_isbuiltin(c_table->cmd))
+			{
 				ft_split_builtin(&c_table);
+				exit(c_table->last_ret);
+			}
 			else	//les builtins et exec doivent renvoyer une valeur de retour pour $?
 				ft_bin_nofork(c_table, c_table->env);
 		}

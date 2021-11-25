@@ -44,7 +44,8 @@ void	ft_bin_nofork(t_simple_command *c_table, char **env)
 	else
     {
 		execve(c_table->args[0], c_table->args, env);
-		perror("Error");        
+		perror("Error");
+		exit (1);        
     }
 }
 
