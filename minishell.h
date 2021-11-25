@@ -92,6 +92,11 @@ void    ft_free_2dstr(char **str);
 
 void	ft_bin_nofork(t_simple_command *c_table, char **env);
 
+void	ft_close_prev(t_simple_command *c_table);
+
+int 	ft_isfolder(char *file, int ret);
+
+void	ft_file_error(t_simple_command *c_table);
 /*parsing*/
 
 typedef struct s_token

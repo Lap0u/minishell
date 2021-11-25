@@ -57,7 +57,7 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_env(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
 		ft_bi_exit(*c_table);
-	// ret = dup2(stdout, STDOUT_FILENO);
+	ret = dup2(stdout, STDOUT_FILENO);
 	if (ret < 0)
 			perror("Error");
 

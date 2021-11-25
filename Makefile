@@ -19,7 +19,8 @@ SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				parsing/lexer/ft_split_tokens.c parsing/lexer/nbr_tokens.c parsing/lexer/which_type_is_it.c \
 				parsing/parser/preparsing.c parsing/parser/tools_parser.c parsing/parser/fill_args_parser.c \
 				parsing/parser/fill_redir_parser.c parsing/parser/verif_parsing.c\
-				libft/ft_strjoin.c libft/ft_split.c
+				libft/ft_strjoin.c libft/ft_split.c file/file_open.c \
+				file/file_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
