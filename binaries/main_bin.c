@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:33:36 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/26 11:32:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 		return ;
 	}
 	ft_add_path(c_table, path);
-	if (access(c_table->args[0], X_OK) == 0)
+	child = fork();
+	if (child < 0)
+		return (perror("Fork : "));
+	if (child == 0)	
 	{
-		child = fork();
-		if (child < 0)
-			return (perror("Fork : "));
-		if (child == 0)
+		if (access(c_table->args[0], X_OK) == 0)
 		{
 			if (c_table->outfile >= 0)
 			{
@@ -84,11 +84,8 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 			execve(c_table->args[0], c_table->args, env);
 			perror("Error exec");
 		}
-		waitpid(child, &c_table->last_ret, 0);
+		else
+			exit(0);
 	}
-	else
-	{
-		execve(c_table->args[0], c_table->args, env);
-		perror("Error");
-	}
+	waitpid(child, &c_table->last_ret, 0);
 }
