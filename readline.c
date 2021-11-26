@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/26 11:32:55 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/26 12:37:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int ac, char **av, char **env)
 		{
 			fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
 			c_table->last_ret = 1;
+		}
 		else
 			ft_pipe(c_table);
 		add_history(cmd);
