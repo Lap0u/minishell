@@ -182,8 +182,9 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 			make_str_dollar(str, my_arr, i, y);
 			if (str[*i] != '\0' && str[*i] != '\"' && str[*i] != '$')
 			{
-				str[*i - 1] = '"';
-				my_arr[*y].value = make_str(&str[*i - 1]);
+				// str[*i - 1] = '"';
+				printf("et voila str[*i] = _%c_\n", str[*i]);
+				my_arr[*y].value = make_str(&str[*i]);
 				my_arr[*y].fl_space = 0;
 				my_arr[*y].fl_quotes = 2;
 				*y = *y + 1;
