@@ -62,6 +62,8 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env)
 {
 	char	**args;
+	char	*temp;
+	char	*temp1;
 	int		nbr_args;
 	int		i;
 
@@ -77,6 +79,15 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env)
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
 			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
+			if ((arr_tok[index].fl_space == 0) && index < (len - 1))
+			{
+				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env);
+				temp1 = args[i];
+				args[i] = ft_strjoin(args[i], temp);
+				free(temp1);
+				free(temp);
+				index++;
+			}
 			i++;
 		}
 		index++;

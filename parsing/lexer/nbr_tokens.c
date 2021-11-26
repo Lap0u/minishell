@@ -81,21 +81,17 @@ int	nbr_words_double_quotes(char const *str, int *i)
 	words = 0;
 	if (str[*i] == '"')
 	{
-		printf("84: i = %d\n", *i);
 		*i = *i + 1;
 		if (str[*i] != '\"' && str[*i] != '$')
 			words++;
 		while (str[*i] && str[*i] != '"')
 		{
-			printf("90: i = %d\n", *i);
 			while (str[*i] && str[*i] != '"' && str[*i] != '$')
 				*i = *i + 1;
 			words += nbr_words_dollar(str, i);
-			printf("94: i = %d\n", *i);
 			if (str[*i] != '\"' && str[*i] != '$')
 				words++;
 		}
-		printf("str[*%d]:%c\n", *i, str[*i]);
 		if (str[*i] == '"')
 			*i = *i + 1;
 		else
@@ -118,7 +114,6 @@ int	nbr_words(char const *str)
 	len = (int)ft_strlen(str);
 	while ((i < len) && str[i])
 	{
-		printf("120: i = %d\n", i);
 		if ((str[i] != '\'' && str[i] != '"' && str[i] != '$')
 			&& (in_charset(str[i])))
 			i++;
@@ -133,8 +128,6 @@ int	nbr_words(char const *str)
 		words += nbr_words_dollar(str, &i);
 		words += nbr_words_s_quotes(str, &i);
 		words += nbr_words_double_quotes(str, &i);
-		printf("135: i = %d\n", i);
-		printf("136: nbr_words = %d\n", words);
 	}
 	return (words);
 }
