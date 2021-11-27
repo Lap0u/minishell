@@ -10,7 +10,8 @@
 # include <sys/wait.h>
 // # include "./libft/libft.h" //a commenter pour compiler parser/lexer
 # include <limits.h> 
-# include "libft/libft.h" 
+# include "libft/libft.h"
+# include <string.h>
 
 
 # define PROMPT ">minishell "
@@ -116,8 +117,8 @@ typedef struct s_token
 int		what_is_len_s_quotes(char *str);
 int		what_is_len_double_quotes(char *str);
 int		what_is_len_simple(char *str);
-int		what_is_len(char *str);
-char	*make_str(char *str);
+int		what_is_len(char *str, int fl_quotes);
+char	*make_str(char *str, int fl_quotes);
 void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y);
 void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
