@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 		// printf("%d\n", nbr_tokens);
 		while (i < nbr_tokens)
 		{
-			printf("token = %s; fl_space = %d\n", arr_tok[i].value, arr_tok[i].fl_space);
+			printf("token = %s; fl_space = %d, fl_quotes = %d\n", arr_tok[i].value, arr_tok[i].fl_space, arr_tok[i].fl_quotes);
 			i++;
 		}
 		typification(arr_tok, nbr_tokens);
