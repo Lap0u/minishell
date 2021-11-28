@@ -64,7 +64,7 @@ int	what_is_len(char *str, int fl_quotes)
 	arr = str;
 	if (*arr == '\0')
 		return (0);
-	if (*arr == '\'')
+	if (*arr == '\'' && fl_quotes == 1)
 		i = what_is_len_s_quotes(str);
 	else if (*arr == '"' || fl_quotes == 2)
 		i = what_is_len_double_quotes(str);
@@ -92,7 +92,7 @@ char	*make_str(char *str, int fl_quotes)
 	len = what_is_len(str, fl_quotes);
 	// printf("len : %d\n", len);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
-	if (*str == '\'')
+	if (*str == '\'' && fl_quotes != 2)
 		str++;
 	else if (*str == '"')
 		str++;
