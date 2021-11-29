@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:45:02 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/29 17:36:17 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	cd_noarg(t_simple_command *c_table)
 			if (chdir(&c_table->env[i][5]) < 0)
 			{
 				c_table->last_ret = 1;
-				perror("cd");
+				write(1, "minishell: cd: ", 16);
+				write(1, &c_table->env[i][5], ft_strlen(&c_table->env[i][5]));
+				perror(" ");
 			}
 			else
 				c_table->last_ret = 0;
@@ -32,7 +34,7 @@ void	cd_noarg(t_simple_command *c_table)
 		}
 		i++;
 	}
-	fprintf(stdout, "cd: HOME not set\n");
+	fprintf(stdout, "minishell: cd: HOME not set\n");
 	c_table->last_ret = 1;
 }
 
@@ -43,8 +45,10 @@ void	cd_curpath(t_simple_command *c_table)
 	ret = chdir(c_table->args[1]);
 	if (ret == -1)
 	{
-		perror("Error");
 		c_table->last_ret = 1;
+		write(1, "minishell: cd: ", 16);
+		write(1, c_table->args[1], ft_strlen(c_table->args[1]));
+		perror(" ");
 	}
 	else
 		c_table->last_ret = 0;

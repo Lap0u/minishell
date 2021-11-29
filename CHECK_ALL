@@ -1,0 +1,53 @@
+
+   _____ _    _ ______ _____ _  ________ _____  
+  / ____| |  | |  ____/ ____| |/ /  ____|  __ \ 
+ | |    | |__| | |__ | |    | ' /| |__  | |__) |
+ | |    |  __  |  __|| |    |  < |  __| |  _  / 
+ | |____| |  | | |___| |____| . \| |____| | \ \ 
+  \_____|_|  |_|______\_____|_|\_\______|_|  \_\
+                                                
+                                                
+
+ECHO http://pwet.fr/man/linux/commandes/posix/echo/
+echo basique 	OK
+echo -n 		OK
+echo $			OK
+echo $?			KO (a gerer dans expand)
+
+CD http://pwet.fr/man/linux/commandes/posix/cd/
+
+PWD http://pwet.fr/man/linux/commandes/posix/pwd/
+
+EXPORT http://pwet.fr/man/linux/commandes/posix/export/
+
+UNSET http://pwet.fr/man/linux/commandes/posix/unset/
+
+ENV http://pwet.fr/man/linux/commandes/posix/env/
+
+EXIT http://pwet.fr/man/linux/commandes/posix/exit/
+
+
+
+
+
+FERMETURE DES FDS
+-avec erreur
+-sans erreur
+-avec bcp de pipes
+-sans pipe
+
+VALEURS DE RETOUR
+
+MAUVAISE COMMANDE
+
+MAUVAIS FD
+-droit
+-folder
+
+BON FONCTIONNEMENT PIPE
+-cat | cat | ls
+-erreur au milieu de pipe
+-pb fd au milieu d'un pipe
+
+!!cas echo test | < readline.c crash double free
+!!cas $USER$NUL pas crash $NUL delete
