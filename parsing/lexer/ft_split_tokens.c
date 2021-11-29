@@ -52,6 +52,7 @@ int	what_is_len_simple(char *str)
 		len++;
 		str++;
 	}
+	len += nbr_spaces_add(str);
 	return (len);
 }
 
@@ -96,10 +97,18 @@ char	*make_str(char *str, int fl_quotes)
 		str++;
 	else if (*str == '"')
 		str++;
-	while (i < len)
+	while (i < len && str[i] != '"' && str[i] != '\'')
 	{
 		arr[i] = str[i];
 		i++;
+	}
+	if (str[i] == '"' || str[i] == '\'')
+	{
+		while (i < len - 1)
+		{
+			arr[i] = ' ';
+			i++;
+		}	
 	}
 	arr[i] = '\0';
 	return (arr);
@@ -196,6 +205,25 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	}
 	else if (str[*i] == '"' && str[*i + 1] == '"')
 		*i = *i + 2;
+}
+
+int	nbr_spaces_add(char *str)
+{
+	int	i;
+	int	nbr;
+
+	i = 0;
+	nbr = 0;
+	while(((str[i] == '"' && str[i + 1] == '"') || (str[i] == '\'' && str[i + 1] == '\'')))
+	{
+		i += 2;
+		if (str[i] == ' ')
+		{
+			nbr++;
+			i++;
+		}
+	}
+	return (nbr);
 }
 
 void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)

@@ -49,6 +49,7 @@ int	main(int ac, char **av, char **env)
 			printf("token = %s; fl_space = %d, fl_quotes = %d\n", arr_tok[i].value, arr_tok[i].fl_space, arr_tok[i].fl_quotes);
 			i++;
 		}
+		printf("nbr words = %d\n", nbr_tokens);
 		typification(arr_tok, nbr_tokens);
 		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
 		// i = 0;

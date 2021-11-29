@@ -96,6 +96,7 @@ typedef struct s_token
 	int		type;
 	char	*value;
 	int		fl_quotes;
+	int		nbr_spaces;
 	int		subst;
 	int		fl_space;
 }				t_token;
@@ -126,6 +127,7 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_simple(char *str, t_token *my_arr, int *i, int *y);
 void	typification(t_token *my_arr, int nbr_token);
 t_token	*ft_split_tokens(char *str);
+int	nbr_spaces_add(char *str);
 
 
 /*parsing/lexer/nbr_tockens.c*/
