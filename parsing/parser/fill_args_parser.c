@@ -79,7 +79,10 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
 			if (strcmp(arr_tok[index].value, "$?") == 0)
+			{
+				free(arr_tok[index].value);
 				args[i] = ft_itoa(ret);
+			}
 			else
 				args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
 			i++;
