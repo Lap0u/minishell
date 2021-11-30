@@ -78,8 +78,13 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 {
 	int		ret;
 	char	*str;
+	char	*temp_name;
+	char	*index;
 
-	ret = open("file/.heredoc", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	index = ft_itoa(c_table->pos);
+	temp_name = ft_strjoin("file/.heredoc", index);
+	free(index);
+	ret = open(temp_name, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
@@ -100,7 +105,8 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	if (c_table->infile >= 0)
 		close(c_table->infile);
 	close (ret);
-	ret = open("file/.heredoc", O_RDONLY);
+	ret = open(temp_name, O_RDONLY);
+	free(temp_name);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);

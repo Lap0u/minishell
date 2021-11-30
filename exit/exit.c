@@ -13,6 +13,18 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+void	ft_del_heredoc(int index)
+{
+	char *ind;
+	char *file;
+
+	ind = ft_itoa(index);
+	file = ft_strjoin("file/.heredoc", ind);
+	unlink(file);
+	free(ind);
+	free(file);
+}
+
 void	ft_free_2dstr(char **str)
 {
 	int	i;
@@ -42,9 +54,9 @@ int	ft_proper_free(t_simple_command *c_table)
 			close(c_table->infile);
 		if (c_table->outfile >= 0)
 			close(c_table->outfile);
+		ft_del_heredoc(c_table->pos);
 		c_table = c_table->next;
 		free(temp);
 	}
-	unlink("file/.heredoc");
 	return (0);
 }

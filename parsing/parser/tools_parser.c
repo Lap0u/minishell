@@ -39,6 +39,7 @@ void	ft_print_sentences(t_simple_command *start)
 		printf("COMMANDE : %s\n", start->cmd);
 		print_args(start);
 		print_redir(start);
+		printf("index : %d\n", start->pos);
 		start = start->next;
 	}
 }
