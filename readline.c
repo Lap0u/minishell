@@ -37,15 +37,15 @@ int	main(int ac, char **av, char **env)
 		}
 		// printf("%s\n", cmd);
 		nbr_tokens = nbr_words(cmd);
-		printf("nbr_tokens = %d\n", nbr_tokens);
+		// printf("40: main:nbr_tokens = %d\n", nbr_tokens);
 		arr_tok = ft_split_tokens(cmd);
 		// printf("%s\n", cmd);
 		// arr_tok = ft_split_tokens(test);
 		// printf("%s\n", arr_tok[0].value);
 		// int nbr = nbr_words(cmd);
 		// printf("%d\n", nbr);
-		nbr_tokens = nbr_words(cmd);
-		printf("nbr_tokens = %d\n", nbr_tokens);
+		// nbr_tokens = nbr_words(cmd);
+		// printf("48: main: nbr_tokens = %d\n", nbr_tokens);
 		// printf("nbr words = %d\n", nbr_tokens);
 		// while (i < nbr_tokens)
 		// {

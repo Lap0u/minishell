@@ -101,7 +101,7 @@ char	*make_str(char *str, int fl_quotes)
 
 	i = 0;
 	len = what_is_len(str, fl_quotes);
-	// printf("len1 : %d\n", len);
+	printf("len1 : %d\n", len);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (*str == '\'' && *(str + 1) == '\'')
 	{
@@ -120,18 +120,29 @@ char	*make_str(char *str, int fl_quotes)
 		str++;
 	// else if (*str == '"')
 	// 	str++;
-	while (i < len && str[i] != '"' && str[i] != '\'')
+	if (fl_quotes != 2)
 	{
-		arr[i] = str[i];
-		i++;
-	}
-	if (str[i] == '"' || str[i] == '\'')
-	{
-		while (i < len)
+		while (i < len && str[i] != '"' && str[i] != '\'')
 		{
-			arr[i] = ' ';
+			arr[i] = str[i];
 			i++;
-		}	
+		}
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			while (i < len)
+			{
+				arr[i] = ' ';
+				i++;
+			}	
+		}
+	}
+	else
+	{
+		while (i < len && str[i] != '"')
+		{
+			arr[i] = str[i];
+			i++;
+		}
 	}
 	arr[i] = '\0';
 	return (arr);
@@ -139,7 +150,7 @@ char	*make_str(char *str, int fl_quotes)
 
 void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 {
-	printf("fl_quotes1 = %d\n", my_arr[*y].fl_quotes);
+	printf("make_str_dollar: fl_quotes = %d, *str = %c\n", my_arr[*y].fl_quotes, *str);
 	if (str[*i] == '$')
 	{
 		my_arr[*y].value = make_str(&str[*i], 0);
@@ -199,7 +210,7 @@ void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i + 1] != '$')
 	{
 		// printf("str[i] = %c, str[i + 1] = %c\n",str[*i + 1], str[*i]);
-		my_arr[*y].value = make_str(&str[*i], 0); // a voir
+		my_arr[*y].value = make_str(&str[*i], 2); // a voir
 		my_arr[*y].fl_quotes = 2;
 		my_arr[*y].fl_space = 0;
 		*y = *y + 1;
@@ -214,6 +225,7 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i] == '"' && str[*i + 1] != '"')
 	{
 		check_str_double_quote(str, my_arr, i, y);
+		printf("228: my_arr[y - 1] = %s, *str = %c\n", my_arr[*y -1].value, str[*i]);
 		while (str[*i] && str[*i] != '\0' && str[*i] != '"')
 		{
 			while (str[*i] != '\0' && str[*i] != '"' && str[*i] != '$')
@@ -234,10 +246,13 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 				*y = *y + 1;
 			}
 		}
+		printf("249: my_arr[y - 1] = %s, *str = %c\n", my_arr[*y -1].value, str[*i]);
 		if (str[*i] == '"')
 			*i = *i + 1;
+		printf("252: my_arr[y - 1] = %s, *str = %c\n", my_arr[*y -1].value, str[*i]);
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;
+		printf("255: my_arr[y - 1] = %s, fl_space = %d\n", my_arr[*y -1].value, my_arr[*y - 1].fl_space);
 	}
 	else if (str[*i] == '"' && str[*i + 1] == '"')
 	{
