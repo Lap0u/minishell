@@ -17,11 +17,16 @@ int	what_is_len_s_quotes(char *str)
 	int	len;
 
 	len = 0;
-	str++;
-	while (*str && *str != '\'')
-	{
+	if (*str == '\'' && *(str + 1) == '\'')
 		len++;
+	else
+	{
 		str++;
+		while (*str && *str != '\'')
+		{
+			len++;
+			str++;
+		}
 	}
 	return (len);
 }
@@ -31,12 +36,17 @@ int	what_is_len_double_quotes(char *str)
 	int	len;
 
 	len = 0;
-	if (*str == '"')
-		str++;
-	while (*str && *str != '"' && *str != '$')
-	{
+	
+	if (*str == '\'' && *(str + 1) == '\'')
 		len++;
+	else
+	{
 		str++;
+		while (*str && *str != '"' && *str != '$')
+		{
+			len++;
+			str++;
+		}
 	}
 	return (len);
 }
@@ -52,7 +62,7 @@ int	what_is_len_simple(char *str)
 		len++;
 		str++;
 	}
-	len += nbr_spaces_add(str);
+	// len += nbr_spaces_add(str);
 	return (len);
 }
 
@@ -91,12 +101,25 @@ char	*make_str(char *str, int fl_quotes)
 
 	i = 0;
 	len = what_is_len(str, fl_quotes);
-	// printf("len : %d\n", len);
+	// printf("len1 : %d\n", len);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
-	if (*str == '\'' && fl_quotes != 2)
+	if (*str == '\'' && *(str + 1) == '\'')
+	{
+		arr[i] = '\0';
+		// printf("str = %s, len = %d\n", arr, ft_strlen(arr));
+		return (arr);
+	}
+	else if (*str == '"' && *(str + 1) == '"')
+	{
+		arr[i] = '\0';
+		return (arr);
+	}
+	else if (*str == '\'' && *(str + 1) != '\'' && fl_quotes != 2)
 		str++;
-	else if (*str == '"')
+	else if (*str == '"' && *(str + 1) != '"')
 		str++;
+	// else if (*str == '"')
+	// 	str++;
 	while (i < len && str[i] != '"' && str[i] != '\'')
 	{
 		arr[i] = str[i];
@@ -104,7 +127,7 @@ char	*make_str(char *str, int fl_quotes)
 	}
 	if (str[i] == '"' || str[i] == '\'')
 	{
-		while (i < len - 1)
+		while (i < len)
 		{
 			arr[i] = ' ';
 			i++;
@@ -116,6 +139,7 @@ char	*make_str(char *str, int fl_quotes)
 
 void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 {
+	printf("fl_quotes1 = %d\n", my_arr[*y].fl_quotes);
 	if (str[*i] == '$')
 	{
 		my_arr[*y].value = make_str(&str[*i], 0);
@@ -157,17 +181,24 @@ void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y)
 	}
 	else if (str[*i] == '\'' && str[*i + 1] == '\'')
 	{
+		write(1, "m_\n", 3);
+		my_arr[*y].value = make_str(&str[*i], 1);
 		*i = *i + 2;
+		my_arr[*y].fl_quotes = 1;
+		my_arr[*y].fl_space = 0;
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;
+		*y = *y + 1;
 	}
 	
 }
 
 void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 {
+	// printf("str[i] = %c, str[i + 1] = %c\n",str[*i], str[*i + 1]);
 	if (str[*i + 1] != '$')
 	{
+		// printf("str[i] = %c, str[i + 1] = %c\n",str[*i + 1], str[*i]);
 		my_arr[*y].value = make_str(&str[*i], 0); // a voir
 		my_arr[*y].fl_quotes = 2;
 		my_arr[*y].fl_space = 0;
@@ -183,13 +214,18 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i] == '"' && str[*i + 1] != '"')
 	{
 		check_str_double_quote(str, my_arr, i, y);
-		while (str[*i] != '\0' && str[*i] != '"')
+		while (str[*i] && str[*i] != '\0' && str[*i] != '"')
 		{
 			while (str[*i] != '\0' && str[*i] != '"' && str[*i] != '$')
 				*i = *i + 1;
 			if (str[*i] == '$')
+			{
+				printf("str[i] = %c\n", str[*i]);
 				my_arr[*y].fl_quotes = 2;
+			}
 			make_str_dollar(str, my_arr, i, y);
+			printf("fl_quotes = %d\n", my_arr[*y - 1].fl_quotes);
+			printf("str[i]1 = %c\n", str[*i]);
 			if (str[*i] != '\0' && str[*i] != '\"' && str[*i] != '$')
 			{
 				my_arr[*y].fl_space = 0;
@@ -204,27 +240,40 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 			my_arr[*y].fl_space = 1;
 	}
 	else if (str[*i] == '"' && str[*i + 1] == '"')
-		*i = *i + 2;
-}
-
-int	nbr_spaces_add(char *str)
-{
-	int	i;
-	int	nbr;
-
-	i = 0;
-	nbr = 0;
-	while(((str[i] == '"' && str[i + 1] == '"') || (str[i] == '\'' && str[i + 1] == '\'')))
 	{
-		i += 2;
-		if (str[i] == ' ')
-		{
-			nbr++;
-			i++;
-		}
+		write(1, "v_\n", 3);
+		my_arr[*y].value = make_str(&str[*i], 1);
+		*i = *i + 2;
+		my_arr[*y].fl_quotes = 2;
+		my_arr[*y].fl_space = 0;
+		if (str[*i] == ' ')
+			my_arr[*y].fl_space = 1;
+		*y = *y + 1;
 	}
-	return (nbr);
+	printf("my_arr[*y].value = %s, my_arr[*y].fl_space = %d, my_arr[*y].fl_quotes = %d\n", my_arr[*y - 1].value,my_arr[*y - 1].fl_space, my_arr[*y - 1].fl_quotes);
 }
+
+// int	nbr_spaces_add(char *str)
+// {
+// 	int	i;
+// 	int	nbr;
+
+// 	i = 0;
+// 	nbr = 0;
+// 	while(((str[i] == '"' && str[i + 1] == '"') || (str[i] == '\'' && str[i + 1] == '\'')))
+// 	{
+// 		i += 2;
+// 		if (str[i] == ' ')
+// 		{
+// 			nbr++;
+// 			write(1, "m_\n", 3);
+// 			while (str[i] == ' ')
+// 				i++;
+// 		}
+		
+// 	}
+// 	return (nbr);
+// }
 
 void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)
 {
@@ -259,8 +308,9 @@ t_token	*ft_split_tokens(char *str)
 	y = 0;
 	i = 0;
 	len = ft_strlen(str);
+	// printf("len = %d\n", len);
 	words = nbr_words(str);
-	my_arr = (t_token *)malloc(sizeof(t_token) * words);
+	my_arr = (t_token *)malloc(sizeof(t_token) * (words + 1));
 	if (my_arr == (void *)0)
 		return ((void *)0);
 	while (i < len && str[i])
@@ -272,6 +322,7 @@ t_token	*ft_split_tokens(char *str)
 		make_str_s_quotes(str, my_arr, &i, &y);
 		make_str_double_quote(str, my_arr, &i, &y);
 	}
+	my_arr[words].fl_quotes = -1;
 	return (my_arr);
 }
 

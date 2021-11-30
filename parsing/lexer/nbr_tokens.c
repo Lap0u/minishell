@@ -49,7 +49,10 @@ int	nbr_words_s_quotes(char const *str, int *i)
 		}////////end added
 	}
 	else if (str[*i] == '\'' && str[*i + 1] == '\'')
+	{
+		words++;
 		*i = *i + 2;
+	}
 	return (words);
 }
 
@@ -92,7 +95,13 @@ int	nbr_words_double_quotes(char const *str, int *i)
 			if (str[*i] != '\"' && str[*i] != '$')
 				words++;
 		}
-		if (str[*i] == '"')
+		if (str[*i] == '"' && str[*i - 1] != '$')
+		{
+			printf("lalala, = %d\n", words);
+			words++;
+			*i = *i + 1;
+		}
+		else if (str[*i] == '"' && str[*i - 1] == '$')
 			*i = *i + 1;
 		else
 		{
