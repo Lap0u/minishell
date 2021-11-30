@@ -9,8 +9,9 @@
                                                 
 
 PB Generaux
-- (crash si export wewe puis export $wewe, dans expand_var check si = aussi "crash sur toutes les fcts)
+- (crash si export wewe puis export $wewe, dans expand_var check si = aussi "crash sur toutes les fcts)  FIXED
 - dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
+- creer un semblant d'env si env -i ./minishell
 
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
 ECHO basique 	OK
@@ -25,8 +26,8 @@ CD	HOME set	OK
 CD 	/bla/blabla	OK
 CD 	.   ..		OK
 CD 	CDPATH		OK
-CD  normal		OK
-CD	permission	OK
+CD  NORMAL		OK
+CD	PERMISSION	OK
 
 PWD http://pwet.fr/man/linux/commandes/posix/pwd/
 PWD	NOARG		OK
@@ -60,10 +61,10 @@ EXIT WRONGARG	OK
 
 
 FERMETURE DES FDS
--avec erreur
--sans erreur
--avec bcp de pipes
--sans pipe
+-avec erreur		OK
+-sans erreur		OK
+-avec bcp de pipes	OK
+-sans pipe			OK 
 
 VALEURS DE RETOUR
 
