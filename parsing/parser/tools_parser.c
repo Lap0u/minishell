@@ -53,7 +53,7 @@ char	*ft_var_only(char *str)
 	end = 0;
 	while (str[end + 1] != '=' && str[end + 1])
 		end++;
-	if (str[end + 1] == 0)
+	if (str[end + 1] == 0 || str[end + 2] == 0)
 		return (NULL);
 	res = malloc(sizeof(char) * end + 2);
 	if (res == NULL)
