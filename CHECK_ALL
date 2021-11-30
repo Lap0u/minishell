@@ -16,6 +16,14 @@ echo $?			KO (a gerer dans expand)
 
 CD http://pwet.fr/man/linux/commandes/posix/cd/
 
+cd  HOME notset OK
+cd	HOME set	OK
+cd 	/bla/blabla	OK
+cd 	.   ..		OK
+cd 	CDPATH		OK
+cd  normal		OK
+cd	permission	OK
+
 PWD http://pwet.fr/man/linux/commandes/posix/pwd/
 
 EXPORT http://pwet.fr/man/linux/commandes/posix/export/

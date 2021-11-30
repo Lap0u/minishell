@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/29 17:36:17 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 10:30:16 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ void	cd_noarg(t_simple_command *c_table)
 	fprintf(stdout, "minishell: cd: HOME not set\n");
 	c_table->last_ret = 1;
 }
+
+char	*make_pwd(char *prefix)
+{
+	char	wd[PATH_MAX];
+
+	if (!getcwd(wd, PATH_MAX))
+	{
+		perror("Error");
+		return (NULL);
+	}
+	if (prefix)
+		return (ft_strjoin(prefix, wd));
+	else
+		return (ft_strdup(wd));
+}
+
 
 void	cd_curpath(t_simple_command *c_table)
 {
@@ -78,7 +94,8 @@ void	cd_classic(t_simple_command *c_table)
 		c_table->last_ret = chdir(complete);
 		if (c_table->last_ret == 0)
 		{
-			printf("%s\n", complete);
+			write(1, make_pwd(NULL), ft_strlen(make_pwd(NULL)));
+			write(1, "\n", 1);
 			free(temp);
 			free(complete);
 			ft_free_3dtab(path);
@@ -88,20 +105,6 @@ void	cd_classic(t_simple_command *c_table)
 		i++;
 	}
 	cd_curpath(c_table);
-}
-
-char	*make_pwd(char *prefix)
-{
-	char	wd[PATH_MAX];
-	char	*temp;
-
-	if (!getcwd(wd, PATH_MAX))
-	{
-		perror("Error");
-		return (NULL);
-	}
-	temp = ft_strjoin(prefix, wd);
-	return (temp);
 }
 
 void	ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PWD OLD PWD etc voir man
