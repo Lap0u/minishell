@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:48:17 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:56:21 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:18:14 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ void	ft_export_arg(t_simple_command **c_table)
 	{
 		if (is_valid_export((*c_table)->args[i]) == 0)
 			ft_export_add((*c_table)->args[i], c_table);
+		else
+		{
+			write(2, "minishell: export : `", 22);
+			write(2, (*c_table)->args[i], ft_strlen((*c_table)->args[i]));
+			write(2, "': not a valid identifier", 26);
+			write(2, "\n", 1);
+			(*c_table)->last_ret = 1;
+		}
 		i++;
 	}
 }

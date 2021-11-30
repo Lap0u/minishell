@@ -8,6 +8,10 @@
                                                 
                                                 
 
+PB Generaux
+- (crash si export wewe puis export $wewe, dans expand_var check si = aussi "crash sur toutes les fcts)
+- dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
+
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
 echo basique 	OK
 echo -n 		OK
@@ -25,8 +29,16 @@ cd  normal		OK
 cd	permission	OK
 
 PWD http://pwet.fr/man/linux/commandes/posix/pwd/
+PWD	NOARG		OK
+PWD	ARG			OK
 
 EXPORT http://pwet.fr/man/linux/commandes/posix/export/
+EXPORT NOARG	OK
+EXPORT wewe		OK
+EXPORT $NUL		OK	
+EXPORT wewe=	OK
+EXPORT wewe=bla	OK
+EXPORT we=bla puis export wewe=bla OK
 
 UNSET http://pwet.fr/man/linux/commandes/posix/unset/
 

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:53:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:57:00 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:05:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,14 @@ void	ft_export_add(char *toadd, t_simple_command **c_table)
 	int	len;
 
 	len = 0;
+	while (toadd[len] != '=' && toadd[len])
+		len++;
 	i = 1;
 	while ((*c_table)->env[i])
 	{
-		len = 0;
-		while ((*c_table)->env[i][len] != '=' && (*c_table)->env[i][len])
-			len++;
+		// len = 0;
+		// while ((*c_table)->env[i][len] != '=' && (*c_table)->env[i][len])
+		// 	len++;
 		if (ft_strncmp(toadd, (*c_table)->env[i], len) == 0)
 		{
 			ft_export_replace(&toadd[len], toadd, c_table, i);
@@ -113,8 +115,5 @@ void	ft_export_add(char *toadd, t_simple_command **c_table)
 		}
 		i++;
 	}
-	len = 0;
-	while (toadd[len] != '=' && toadd[len])
-		len++;
 	ft_export_addone(&toadd[len], toadd, c_table);
 }

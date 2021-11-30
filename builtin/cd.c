@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/30 10:30:16 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:22:55 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	cd_noarg(t_simple_command *c_table)
 			if (chdir(&c_table->env[i][5]) < 0)
 			{
 				c_table->last_ret = 1;
-				write(1, "minishell: cd: ", 16);
-				write(1, &c_table->env[i][5], ft_strlen(&c_table->env[i][5]));
+				write(2, "minishell: cd: ", 16);
+				write(2, &c_table->env[i][5], ft_strlen(&c_table->env[i][5]));
 				perror(" ");
 			}
 			else
@@ -34,7 +34,7 @@ void	cd_noarg(t_simple_command *c_table)
 		}
 		i++;
 	}
-	fprintf(stdout, "minishell: cd: HOME not set\n");
+	write(2, "minishell: cd: HOME not set\n", 29);
 	c_table->last_ret = 1;
 }
 
@@ -62,8 +62,8 @@ void	cd_curpath(t_simple_command *c_table)
 	if (ret == -1)
 	{
 		c_table->last_ret = 1;
-		write(1, "minishell: cd: ", 16);
-		write(1, c_table->args[1], ft_strlen(c_table->args[1]));
+		write(2, "minishell: cd: ", 16);
+		write(2, c_table->args[1], ft_strlen(c_table->args[1]));
 		perror(" ");
 	}
 	else
@@ -94,8 +94,7 @@ void	cd_classic(t_simple_command *c_table)
 		c_table->last_ret = chdir(complete);
 		if (c_table->last_ret == 0)
 		{
-			write(1, make_pwd(NULL), ft_strlen(make_pwd(NULL)));
-			write(1, "\n", 1);
+			ft_bi_pwd(c_table);
 			free(temp);
 			free(complete);
 			ft_free_3dtab(path);
@@ -116,7 +115,7 @@ void	ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PW
 	oldpwd = make_pwd("OLDPWD=");
 	if (c_table->args_num > 2)
 	{
-		printf("minishell: cd: trop d'arguments\n");
+		write(2, "minishell: cd: trop d'arguments\n", 33);
 		c_table->last_ret = 1;
 	}
 	else if (c_table->args_num <= 1)
