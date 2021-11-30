@@ -177,12 +177,12 @@ int					which_type(t_token *my_arr);
 void				typification(t_token *my_arr, int nbr_token);
 
 /*parsing/parser/preparsing.c*/
-t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env);
+t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret);
 void				add_new_elem(t_simple_command **st, t_token *arr_tok,
-						int ind, int len, char **env);
+						int ind, int len, char **env, int ret);
 void				add_env_in_elem(t_simple_command *lst_command, char **env);
 t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len,
-						char **env);
+						char **env, int last_ret);
 
 /*parsing/parser/tools_parser.c*/
 void				print_args(t_simple_command *start);
@@ -194,7 +194,7 @@ char				*ft_expand_dollar(char *str, int mode, char **env);
 /*parsing/parser/fill_args_parser.c*/
 int					ft_count_args(t_token *arr_tok, int index, int len);
 char				**ft_fill_args(t_token *arr_tok, int index,
-						int len, char **env);
+						int len, char **env, int ret);
 
 /*parsing/parser/fill_redir_parser.c*/
 int					is_there_red(t_token *arr_tok, int index,

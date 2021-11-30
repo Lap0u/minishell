@@ -7,7 +7,8 @@ int 	is_expandable(char *str, int red, int quote, char **env)
 	
 	if (str[0] != '$' || red == RED_HERE_DOC || quote == 1)
 		return (1);
-	
+	if (quote != 1 && ft_strcmp(str, "$?") == 0)
+		return (1);
 	i = 0;
 	while (env[i])
 	{
@@ -77,7 +78,7 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 			if (bool_start == -1)
 			{
 				start->type = arr_tok[index].type - 5;
-				if (arr_tok[index].type == RED_HERE_DOC || arr_tok[index +1].fl_quotes ==1)
+				if (arr_tok[index].type == RED_HERE_DOC || arr_tok[index +1].fl_quotes == 1)
 					start->file = arr_tok[index + 1].value;
 				else
 					start->file = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index].type, env);
