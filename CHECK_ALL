@@ -14,12 +14,14 @@ PB Generaux
 - creer un semblant d'env si env -i ./minishell
 - plusieurs heredoc dans pipes differents 	FIXED
 - echo test < | echo test doit donner erreur parsing
+- cmd inexistante doit afficer msg d'erreur
+- entree dans readline pas crash
 
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
 ECHO basique 	OK
 ECHO -n 		OK
 ECHO $			OK
-ECHO $?			KO (a gerer dans expand)
+ECHO $?			KO (a gerer dans expand)	FIXED
 
 CD http://pwet.fr/man/linux/commandes/posix/cd/
 
