@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/26 12:37:10 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 12:14:53 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char **av, char **env)
 		nbr_tokens = nbr_words(cmd);
 		typification(arr_tok, nbr_tokens);
 		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
+		c_table->last_ret = temp_ret;
 		if (c_table == NULL)
 		{
 			free(cmd);

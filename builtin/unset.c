@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:57:47 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:58:57 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:58:33 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,16 @@ void	ft_bi_unset(t_simple_command **c_table)
 		if (is_in_env((*c_table)->args[i], (*c_table)->env))
 			ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
 		else
-			(*c_table)->last_ret++; //retour = nombre mbr non unset
+		{
+			if (is_valid_export((*c_table)->args[i]))
+			{
+				write(2, "minishell: unset : `", 21);
+				write(2, (*c_table)->args[i], ft_strlen((*c_table)->args[i]));
+				write(2, "': not a valid identifier", 26);
+				write(2, "\n", 1);
+			}
+			(*c_table)->last_ret = 1;
+		} //retour = nombre mbr non unset
 		i++;
 	}
 	//return (0) dans tous les cas???

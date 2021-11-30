@@ -13,20 +13,20 @@ PB Generaux
 - dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
 
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
-echo basique 	OK
-echo -n 		OK
-echo $			OK
-echo $?			KO (a gerer dans expand)
+ECHO basique 	OK
+ECHO -n 		OK
+ECHO $			OK
+ECHO $?			KO (a gerer dans expand)
 
 CD http://pwet.fr/man/linux/commandes/posix/cd/
 
-cd  HOME notset OK
-cd	HOME set	OK
-cd 	/bla/blabla	OK
-cd 	.   ..		OK
-cd 	CDPATH		OK
-cd  normal		OK
-cd	permission	OK
+CD  HOME notset OK
+CD	HOME set	OK
+CD 	/bla/blabla	OK
+CD 	.   ..		OK
+CD 	CDPATH		OK
+CD  normal		OK
+CD	permission	OK
 
 PWD http://pwet.fr/man/linux/commandes/posix/pwd/
 PWD	NOARG		OK
@@ -41,12 +41,21 @@ EXPORT wewe=bla	OK
 EXPORT we=bla puis export wewe=bla OK
 
 UNSET http://pwet.fr/man/linux/commandes/posix/unset/
+UNSET NOARG		OK
+UNSET 1 ARG		OK
+UNSET X ARG		OK
+UNSET 1 FAIL	OK
+UNSET X FAIL	OK
 
 ENV http://pwet.fr/man/linux/commandes/posix/env/
+ENV	NOARG		OK
+ENV	ARG			OK
 
 EXIT http://pwet.fr/man/linux/commandes/posix/exit/
 
-
+EXIT NOARG		OK
+EXIT ARG		OK
+EXIT WRONGARG	OK
 
 
 

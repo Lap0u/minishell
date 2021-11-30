@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:52 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:47:34 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/30 12:29:52 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,32 @@ void	ft_bi_exit(t_simple_command *c_table)
 	int	ret;
 
 	ret = ft_exitreturn(c_table->args[1]);
-	if (c_table->args_num > 1)
-	{
-		printf("exit: too many arguments\n");
-		return ;
-	}
-	else if (ret < 0 && c_table->args_num > 0)
-	{
-		printf("exit: numeric argument required");
-		return ;
-	}
-	else if (c_table->args_num == 1)
-	{
+	if (c_table->args_num == 1)
+	{		
+		ret = c_table->last_ret;
 		ft_proper_free(c_table);
+		write(1, "exit\n", 5);
 		exit(ret);
+	}
+	else if (c_table->args_num > 2)
+	{
+		write(2, "minishell: exit: too many arguments\n", 37);
+		c_table->last_ret = 1;
+		return ;
+	}
+	else if (ret < 0 && c_table->args_num == 2)
+	{
+		write(1, "exit\n", 5);
+		write(2, "minishell: exit: ", 18);
+		write(2, c_table->args[1], ft_strlen(c_table->args[1]));
+		write(2, ": numeric argument required\n", 29);
+		ft_proper_free(c_table);
+		exit(2);
 	}
 	else
 	{
-		ret = c_table->last_ret;
+		write(1, "exit\n", 5);
 		ft_proper_free(c_table);
-		exit(ret);//////doit renvoyer valeure derniere commande --> $?
+		exit(ret);
 	}
 }
