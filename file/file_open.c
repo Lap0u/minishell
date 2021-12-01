@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:42:06 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:24:12 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_add_input(char *file, t_simple_command *c_table)
 	ret = open(file, O_RDONLY);
 	if (ret < 0)
 	{
+		c_table->badfd = 1;
 		ft_close_prev(c_table);
 		return ;
 	}
@@ -38,12 +39,14 @@ void	ft_add_output(char *file, t_simple_command *c_table)
 	{
 		closedir(folder);
 		ft_close_prev(c_table);
+		c_table->badfd = 0;
 		return ;
 	}
 	ret = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
+		c_table->badfd = 1;
 		return ;
 	}	
 	if (c_table->outfile >= 0)
@@ -61,12 +64,14 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 	{
 		closedir(folder);
 		ft_close_prev(c_table);
+		c_table->badfd = 0;
 		return ;
 	}
 	ret = open(file, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 	{
 		ft_close_prev(c_table);
+		c_table->badfd = 1;
 		return ;
 	}	
 	if (c_table->outfile >= 0)
@@ -133,7 +138,7 @@ void	ft_open_files(t_simple_command *c_table, t_redir *list)
 		else if (list->type == 3)
 			ft_add_heredoc(list->file, c_table);
 		if (c_table->outfile == -42000 || c_table->infile == -42000)
-			c_table->badfd = i;
+			ft_write_wfolder(list->file, c_table->badfd);
 		i++;
 		list = list->next;
 	}
