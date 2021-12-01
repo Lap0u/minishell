@@ -122,7 +122,7 @@ void				ft_export_add(char *toadd, t_simple_command **c_table);
 
 void				ft_cp_env(char **sorted, char **env);
 
-void	ft_write_wfolder(char *str, int i);
+void				ft_write_wfolder(char *str, int i);
 
 /*parsing*/
 

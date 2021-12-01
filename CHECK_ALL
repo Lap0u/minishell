@@ -76,14 +76,14 @@ VALEURS DE RETOUR	OK
 
 MAUVAISE COMMANDE	OK
 
-MAUVAIS FD
+MAUVAIS FD			OK
 -droit				OK
 -folder				OK
 
 BON FONCTIONNEMENT PIPE
 -cat | cat | ls		OK
--erreur au milieu de pipe
--pb fd au milieu d'un pipe
+-erreur au milieu de pipe	OK
+-pb fd au milieu d'un pipe	OK
 
 !!cas echo test | < readline.c crash double free
 !!cas $USER$NUL pas crash $NUL delete
