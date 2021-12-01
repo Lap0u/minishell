@@ -251,7 +251,7 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 			*i = *i + 1;
 		printf("252: my_arr[y - 1] = %s, *str = %c\n", my_arr[*y -1].value, str[*i]);
 		if (str[*i] == ' ')
-			my_arr[*y].fl_space = 1;
+			my_arr[*y - 1].fl_space = 1;
 		printf("255: my_arr[y - 1] = %s, fl_space = %d\n", my_arr[*y -1].value, my_arr[*y - 1].fl_space);
 	}
 	else if (str[*i] == '"' && str[*i + 1] == '"')
