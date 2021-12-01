@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 10:30:18 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:08:20 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	ft_bin_nofork(t_simple_command *c_table, char **env)
 	path = ft_get_paths(env); //check access
 	if (path == NULL)
 	{
-		printf(" %s : commande introuvable car PATH est unset\n", c_table->cmd);
-		return ;
+		write(2, "minishell: ", 12);
+		write(2, c_table->cmd, ft_strlen(c_table->cmd));
+		write(2, ": No such file or directory\n", 29);
+		exit(127);
 	}
 	ft_add_path(c_table, path);
 	if (access(c_table->args[0], X_OK) == 0)
@@ -59,7 +61,10 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 	path = ft_get_paths(env);//check access
 	if (path == NULL)
 	{
-		printf(" %s : commande introuvable car PATH est unset\n", c_table->cmd);
+		write(2, "minishell: ", 12);
+		write(2, c_table->cmd, ft_strlen(c_table->cmd));
+		write(2, ": No such file or directory\n", 29);
+		c_table->last_ret = 127;
 		return ;
 	}
 	ft_add_path(c_table, path);

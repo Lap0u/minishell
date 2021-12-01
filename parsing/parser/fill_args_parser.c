@@ -83,7 +83,7 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 				free(arr_tok[index].value);
 				args[i] = ft_itoa(ret);
 			}
-			else
+			else 
 				args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
 			i++;
 		}

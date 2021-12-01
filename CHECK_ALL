@@ -11,11 +11,13 @@
 PB Generaux
 - (crash si export wewe puis export $wewe, dans expand_var check si = aussi "crash sur toutes les fcts) FIXED
 - dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
-- creer un semblant d'env si env -i ./minishell
+- creer un semblant d'env si env -i ./minishell	FIXED
 - plusieurs heredoc dans pipes differents 	FIXED
 - echo test < | echo test doit donner erreur parsing
-- cmd inexistante doit afficer msg d'erreur
-- entree dans readline pas crash
+- cmd inexistante doit afficer msg d'erreur FIXED
+- entree dans readline pas crash			FIXED
+- bon retour avec fork et sans fork			FIXED
+- gerer erreur env -i != cmd not found		FIXED
 
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
 ECHO basique 	OK

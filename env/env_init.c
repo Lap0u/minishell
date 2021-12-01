@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:38:07 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:00:39 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ char	*ft_add_shlvl(char *env)
 	return (res);
 }
 
+char	**ft_empty_env()
+{
+	char **res;
+
+	res = malloc(sizeof(char *) * 2);
+	if (res == NULL)
+		return (NULL);
+	res[0] = ft_strdup(" ");
+	res[1] = NULL;
+	return (res);
+}
+
 char	**ft_copy_env(char **env)
 {
 	int		i;
@@ -37,6 +49,8 @@ char	**ft_copy_env(char **env)
 
 	i = 0;
 	j = 0;
+	if (env[0] == NULL)
+		return (ft_empty_env());
 	while (env[i])
 		i++;
 	res = malloc(sizeof(char *) * (i + 1));

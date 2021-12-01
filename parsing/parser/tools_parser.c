@@ -52,9 +52,9 @@ char	*ft_var_only(char *str)
 
 	i = 0;
 	end = 0;
-	while (str[end + 1] != '=' && str[end + 1])
+	while (str[end] && str[end + 1] != '=' && str[end + 1])
 		end++;
-	if (str[end + 1] == 0 || str[end + 2] == 0)
+	if (str[end] || str[end + 1] == 0 || str[end + 2] == 0)
 		return (NULL);
 	res = malloc(sizeof(char) * end + 2);
 	if (res == NULL)
@@ -92,6 +92,8 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 	char	*temp;
 	
 	i = 0;
+	if (env == NULL)
+		return (str);
 	if ((str[0] != '$' || mode == 8 || mode == 1) || (str[0] == '$' && !str[1]))
 		return (str);
 	while (env[i])
