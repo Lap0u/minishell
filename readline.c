@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/30 12:14:53 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:10:37 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **env)
 			c_table->last_ret = 1;
 		}
 		else
-			ft_pipe(c_table);
+			c_table->last_ret = ft_pipe(c_table);
 		add_history(cmd);
 		temp_env = c_table->env;
 		temp_ret = c_table->last_ret;

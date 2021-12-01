@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:27:40 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:31:13 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_pipe(t_simple_command *c_table)
 			ft_split_builtin(&c_table);
 		else//les builtins et exec doivent renvoyer une valeur de retour pour $?
 			ft_exec_bin(c_table, c_table->env);
-		return (0);
+		return (c_table->last_ret);
 	}
 	add_pos(c_table);
 	nbr_sent = ft_lstcmd(c_table);
@@ -133,5 +133,5 @@ int	ft_pipe(t_simple_command *c_table)
 	while (i < nbr_sent)
 		waitpid(childs[i++], &status, 0);
 	free(childs);
-	return (status);
+	return (WEXITSTATUS(status));
 }
