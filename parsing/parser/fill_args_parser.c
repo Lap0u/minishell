@@ -53,7 +53,10 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 			i++;
 		}
 		if (temp[y].type == DOLLAR && temp[y].subst == 0)
+		{
 			free(temp[y].value);
+			temp[y].value = NULL;
+		}
 		y++;
 	}
 	return (count);
@@ -85,9 +88,12 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env)
 				// write(1, "jfjfj\n", 6);
 				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env);
 				temp1 = args[i];
-				args[i] = ft_strjoin(args[i], temp);
+				if (temp != NULL)
+				{
+					args[i] = ft_strjoin(temp1, temp);
+					free(temp1);
+				}
 				printf("args1[i] = %s\n", args[i]);
-				free(temp1);
 				free(temp);
 				index++;
 			}
