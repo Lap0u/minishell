@@ -124,6 +124,8 @@ void				ft_cp_env(char **sorted, char **env);
 
 void				ft_write_wfolder(char *str, int i);
 
+char				*make_pwd(char *prefix);
+
 /*parsing*/
 
 typedef struct s_token

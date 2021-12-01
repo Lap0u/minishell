@@ -85,5 +85,8 @@ BON FONCTIONNEMENT PIPE
 -erreur au milieu de pipe	OK
 -pb fd au milieu d'un pipe	OK
 
+- env -i export recree		OK
+- env -i env update			OK
+- 
 !!cas echo test | < readline.c crash double free
 !!cas $USER$NUL pas crash $NUL delete

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 11:00:39 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:44:23 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ char	**ft_empty_env()
 {
 	char **res;
 
-	res = malloc(sizeof(char *) * 2);
+	res = malloc(sizeof(char *) * 4);
 	if (res == NULL)
 		return (NULL);
-	res[0] = ft_strdup(" ");
-	res[1] = NULL;
+	res[0] = ft_strdup("OLDPWD");
+	res[1] = make_pwd("PWD=");
+	res[2] = ft_strdup("SHLVL=1");
+	res[3] = NULL;
 	return (res);
 }
 

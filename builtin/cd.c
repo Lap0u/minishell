@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/30 11:22:55 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:45:56 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PW
 	i = 0;
 	while (c_table->env[i])
 	{
-		if (ft_strncmp("OLDPWD=", c_table->env[i], ft_strlen("OLDPWD=")) == 0)
+		if (ft_strncmp("OLDPWD", c_table->env[i], ft_strlen("OLDPWD")) == 0)
 		{
 			free(c_table->env[i]);
 			c_table->env[i] = oldpwd;
