@@ -1,0 +1,56 @@
+TEST PARSING     = -> OK   / -> FAUX        * -> CORRIGE
+
+problemes:
+- "" ou '' entourees d'espaces compte comme un argument \0       ----semble fix 
+- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
+- "text" ou 'text' doit compter les espaces apres
+- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+
+ec""ho test 	=
+""echo test 	=
+echo"" test		/ ]		 	- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
+echo "" test	=
+echo $USER		=
+echo $USE""R	=
+echo ""$USER	=
+echo "$"USER	=
+echo  $""USER	/ ] 		- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+
+ec''ho test 	=
+''echo test 	=
+echo'' test		/ ]			- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
+echo '' test	=
+echo $USER		=
+echo $USE''R	=
+echo ''$USER	=
+echo '$'USER	= ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+echo  $''USER	/ ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+echo $			= ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+echo $""		/ ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+
+echo "" "" "" test	/ ]		- "" ou '' entourees d'espaces compte comme un argument \0
+echo """""" test	/ ]		- "" ou '' entourees d'espaces compte comme un argument \0
+ls ""			/	  ]		- "" ou '' entourees d'espaces compte comme un argument \0
+echo $USER"" ''		/ ]
+
+ls '"			=
+ls "'			=
+ls "    "		=
+ls "  ' "		=
+"ls"			=
+l"s"			=
+ls"" -la		/ ] 		- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
+ls "" -la		/ ] 		- "" ou '' entourees d'espaces compte comme un argument \0
+ls """"-la		=
+ls ""-la		=
+
+echo test""test		=
+echo test"" test	/ ]		- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
+echo test ""test	=
+echo test "'"test	=
+echo $$$USER		=
+echo $$USER			=
+echo $USER$USER		=
+echo $USER""$USER	=
+echo $USER" "$USER	=
+echo "|" ls			/ ]		- "text" ou 'text' doit compter les espaces apres

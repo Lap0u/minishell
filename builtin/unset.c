@@ -3,71 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/27 11:00:40 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/10/27 11:00:42 by cbeaurai         ###   ########.fr       */
+/*   Created: 2021/11/25 13:57:47 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/11/30 11:58:33 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_in_env(char *str, char **env)
+int	is_in_env(char *str, char **env)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (env[i])
-    {
-        if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
-            return (1);
-        else
-            i++;
-    }
-    return (0);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
+			return (1);
+		else
+			i++;
+	}
+	return (0);
 }
 
-void    ft_remove_from_env(char *str, char ***env)
+void	ft_remove_from_env(char *str, char ***env)
 {
-    int i;
-    char    **res;
-    int j;
+	int		i;
+	char	**res;
+	int		j;
 
-    i = 0;
-    j = 0;
-    while ((*env)[i])
-        i++;
-    res = malloc(sizeof(char*) * i);
-    if (res == NULL)
-        return (void)ft_free_3dtab((*env));
-    i = 0;
-    while ((*env)[j])
-    {
-        if (ft_strncmp(str, (*env)[j], ft_strlen(str)) != 0)
-            res[i++] = (*env)[j++];
-        else
-            free((*env)[j++]);
-    }
-    res[i] = NULL;
-    free(*env);
-    (*env) = res;
+	i = 0;
+	j = 0;
+	while ((*env)[i])
+		i++;
+	res = malloc(sizeof(char *) * i);
+	if (res == NULL)
+		return ((void)ft_free_3dtab((*env)));
+	i = 0;
+	while ((*env)[j])
+	{
+		if (ft_strncmp(str, (*env)[j], ft_strlen(str)) != 0)
+			res[i++] = (*env)[j++];
+		else
+			free((*env)[j++]);
+	}
+	res[i] = NULL;
+	free(*env);
+	(*env) = res;
 }
 
-
-
-void    ft_bi_unset(t_simple_command **c_table)
+void	ft_bi_unset(t_simple_command **c_table)
 {
-    int i;
+	int	i;
 
-    i = 1;
-    (*c_table)->last_ret = 0;
-    while ((*c_table)->args[i])
-    {
-        if (is_in_env((*c_table)->args[i], (*c_table)->env))
-            ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
-        else
-            (*c_table)->last_ret++; //retour = nombre mbr non unset
-        i++;
-    }
-    //return (0) dans tous les cas???
+	i = 1;
+	(*c_table)->last_ret = 0;
+	while ((*c_table)->args[i])
+	{
+		if (is_in_env((*c_table)->args[i], (*c_table)->env))
+			ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
+		else
+		{
+			if (is_valid_export((*c_table)->args[i]))
+			{
+				write(2, "minishell: unset : `", 21);
+				write(2, (*c_table)->args[i], ft_strlen((*c_table)->args[i]));
+				write(2, "': not a valid identifier", 26);
+				write(2, "\n", 1);
+			}
+			(*c_table)->last_ret = 1;
+		} //retour = nombre mbr non unset
+		i++;
+	}
+	//return (0) dans tous les cas???
 }

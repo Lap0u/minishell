@@ -1,4 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   readline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/12/01 12:42:29 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./minishell.h"
+
+int		ft_check_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if(str[i] > 32 && str[i] != 127)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	ft_init_ctable(t_simple_command **list, char **env)
 {
@@ -11,20 +37,18 @@ void	ft_init_ctable(t_simple_command **list, char **env)
 
 int	main(int ac, char **av, char **env)
 {	
-	char *cmd;
-	t_token *arr_tok;
-	char **temp_env;
-	t_simple_command *c_table;
-	int	temp_ret;
-	int nbr_tokens;
-	int i;
+	char				*cmd;
+	t_token				*arr_tok;
+	char				**temp_env;
+	t_simple_command	*c_table;
+	int					temp_ret;
+	int					nbr_tokens;
 
 	c_table = NULL;
 	temp_ret = 0;
-	temp_env = ft_copy_env(env);
-	i = 0;
 	if (ac != 1 || !av[0])
 		return (printf("No arguments!!!!!!!\n"));
+	temp_env = ft_copy_env(env);
 	while (1)
 	{
 		cmd = readline(PROMPT);
@@ -35,40 +59,28 @@ int	main(int ac, char **av, char **env)
 			ft_free_2dstr(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
-		// printf("%s\n", cmd);
-		nbr_tokens = nbr_words(cmd);
-		// printf("40: main:nbr_tokens = %d\n", nbr_tokens);
-		arr_tok = ft_split_tokens(cmd);
-		// printf("%s\n", cmd);
-		// arr_tok = ft_split_tokens(test);
-		// printf("%s\n", arr_tok[0].value);
-		// int nbr = nbr_words(cmd);
-		// printf("%d\n", nbr);
-		// nbr_tokens = nbr_words(cmd);
-		// printf("48: main: nbr_tokens = %d\n", nbr_tokens);
-		// printf("nbr words = %d\n", nbr_tokens);
-		while (i < nbr_tokens)
+		else if (ft_check_space(cmd) == 1)
 		{
-			printf("token = %s; fl_space = %d, fl_quotes = %d\n", arr_tok[i].value, arr_tok[i].fl_space, arr_tok[i].fl_quotes);
-			i++;
+			arr_tok = ft_split_tokens(cmd);
+			nbr_tokens = nbr_words(cmd);
+			typification(arr_tok, nbr_tokens);
+			c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);
+			// c_table->last_ret = temp_ret;
+			if (c_table == NULL)
+			{
+				free(cmd);
+				return (0);
+			}
+			if (c_table->infile == -42000 || c_table->outfile == -42000)
+				c_table->last_ret = 1;
+			else
+				c_table->last_ret = ft_pipe(c_table);
+			add_history(cmd);
+			temp_env = c_table->env;
+			temp_ret = c_table->last_ret;
+			ft_proper_free(c_table);
+			c_table = NULL;
 		}
-		// printf("nbr words = %d\n", nbr_tokens);
-		typification(arr_tok, nbr_tokens);
-		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
-		if (c_table == NULL)
-		{
-			free(cmd);
-			return (0);
-		}
-        if (c_table->infile == -42000 || c_table->outfile == -42000)
-            fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
-		else
-			ft_pipe(c_table);
-		add_history(cmd);
-		temp_env = c_table->env;
-		temp_ret = c_table->last_ret;
-		ft_proper_free(c_table);
-		c_table = NULL;
 		free(cmd);///res de readline a free
 	}
 	// rl_clear_history();

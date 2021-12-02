@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 21:17:45 by cbeaurai          #+#    #+#              #
-#    Updated: 2021/11/13 05:58:21 by cbeaurai         ###   ########.fr        #
+#    Updated: 2021/11/25 13:52:16 by cbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				parsing/lexer/ft_split_tokens.c parsing/lexer/nbr_tokens.c parsing/lexer/which_type_is_it.c \
 				parsing/parser/preparsing.c parsing/parser/tools_parser.c parsing/parser/fill_args_parser.c \
 				parsing/parser/fill_redir_parser.c parsing/parser/verif_parsing.c\
-				libft/ft_strjoin.c libft/ft_split.c
+				libft/ft_strjoin.c libft/ft_split.c file/file_open.c \
+				file/file_utils.c builtin/export_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 

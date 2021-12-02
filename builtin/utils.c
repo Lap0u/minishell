@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/10/27 10:59:38 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:01:12 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isbuiltin(char *str)
 	else if (ft_strcmp(str, "cd") == 0)
 		return (1);
 	else if (ft_strcmp(str, "pwd") == 0)
-		return (1);	
+		return (1);
 	else if (ft_strcmp(str, "export") == 0)
 		return (1);
 	else if (ft_strcmp(str, "unset") == 0)
@@ -33,12 +33,12 @@ int	ft_isbuiltin(char *str)
 
 void	ft_split_builtin(t_simple_command **c_table)
 {
-	int ret;
-	int stdout;
-	
+	int	ret;
+	int	stdout;
+
 	stdout = dup(STDOUT_FILENO);
 	if ((*c_table)->outfile >= 0)
-    {
+	{
 		ret = dup2((*c_table)->outfile, STDOUT_FILENO);
 		if (ret < 0)
 			perror("Error");
@@ -57,8 +57,7 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_env(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
 		ft_bi_exit(*c_table);
-	// ret = dup2(stdout, STDOUT_FILENO);
+	ret = dup2(stdout, STDOUT_FILENO);
 	if (ret < 0)
-			perror("Error");
-
+		perror("Error");
 }

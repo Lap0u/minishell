@@ -39,6 +39,7 @@ void	ft_print_sentences(t_simple_command *start)
 		printf("COMMANDE : %s\n", start->cmd);
 		print_args(start);
 		print_redir(start);
+		printf("index : %d\n", start->pos);
 		start = start->next;
 	}
 }
@@ -51,8 +52,10 @@ char	*ft_var_only(char *str)
 
 	i = 0;
 	end = 0;
-	while (str[end + 1] != '=')
+	while (str[end] && str[end + 1] != '=' && str[end + 1])
 		end++;
+	if (str[end] || str[end + 1] == 0 || str[end + 2] == 0)
+		return (NULL);
 	res = malloc(sizeof(char) * end + 2);
 	if (res == NULL)
 		return (NULL);

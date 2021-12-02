@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../minishell.h"
 
-t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env)
+t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret)
 {
 	t_simple_command	*my_elem;
 
@@ -19,40 +19,44 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env)
 	my_elem = (t_simple_command *)malloc(sizeof(t_simple_command));
 	if (my_elem != (void *)0)
 	{
+		my_elem->last_ret = ret;
 		my_elem->redir = ft_fill_redir(arr_tok, index, len, env);
-		my_elem->args = ft_fill_args(arr_tok, index, len, env);
+		my_elem->args = ft_fill_args(arr_tok, index, len, env, ret);
 		my_elem->cmd = my_elem->args[0];
 		my_elem->args_num = ft_get_args_size(my_elem->args);
-		ft_open_files(my_elem, my_elem->redir); // a voir!!!
 		my_elem->args_num = ft_2dlen(my_elem->args); ////
 		my_elem->next = (void *)0;
 	}
 	return (my_elem);
 }
 
-void	add_new_elem(t_simple_command **st, t_token *arr_tok, int ind, int len, char **env)
+void	add_new_elem(t_simple_command **st, t_token *arr_tok, int ind, int len, char **env, int ret)
 {
 	t_simple_command *save;
 
 	save = *st;
 	while (save->next)
 		save = save->next;
-	save->next = new_elem(arr_tok, ind, len, env);
+	save->next = new_elem(arr_tok, ind, len, env, ret);
 }
 
 void	add_env_in_elem(t_simple_command *lst_command, char **env)
 {
 	t_simple_command	*temp;
+	int					i;
 
+	i = 0;
 	temp = lst_command;
 	while (temp)
 	{
 		temp->env = env;
+		temp->pos = i++;
+		ft_open_files(temp, temp->redir); // a voir!!!
 		temp = temp->next;
 	}
 }
 
-t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **env)
+t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **env, int last_ret)
 {
 	int nbr_elem;
 	t_simple_command	*lst_command;
@@ -64,14 +68,14 @@ t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **en
 	if (nbr_elem < 0)
 		return ((void *)0);
 	lst_command = NULL;
-	lst_command = new_elem(arr_tok, index, arr_len, env);
+	lst_command = new_elem(arr_tok, index, arr_len, env, last_ret);
 	index = skip_topipe(arr_tok, index, arr_len);
 	if (lst_command == (void *)0)
 		return ((void *)0);
 	i = 1;
 	while (i < nbr_elem)
 	{
-		add_new_elem(&lst_command, arr_tok, index, arr_len, env);
+		add_new_elem(&lst_command, arr_tok, index, arr_len, env, last_ret);
 		index = skip_topipe(arr_tok, index, arr_len);
 		i++;
 	}

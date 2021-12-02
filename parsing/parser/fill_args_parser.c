@@ -40,7 +40,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 		while (env[i])
 		{
 			str = ft_var_only(env[i]);
-			if ((temp[y].type == DOLLAR && ft_strcmp(str, temp[y].value + 1) == 0) || ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
+			if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR && ft_strcmp(str, temp[y].value + 1) == 0) || ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
 			{
 				count++;
 				temp[y].subst = 1;
@@ -64,7 +64,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 	return (count);
 }
 
-char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env)
+char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 {
 	char	**args;
 	char	*temp;
