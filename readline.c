@@ -70,19 +70,25 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		cmd = readline(PROMPT);
-		// char test[] = "\"$USER $USER\"";
 		if (cmd == NULL)
 		{
-			// rl_clear_history();
+			rl_clear_history();
 			ft_free_2dstr(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
 		else if (ft_check_space(cmd) == 1)
 		{
 			nbr_tokens = nbr_words(cmd);
+			printf("nbr = %d\n", nbr_tokens);
 			if (nbr_tokens >= 0)
 			{
 				arr_tok = ft_split_tokens(cmd);
+				int i = 0;
+				while (i < nbr_tokens)
+				{
+					printf("token: = %s, len = %d\n", arr_tok[i].value, ft_strlen(arr_tok[i].value));
+					i++;
+				}
 				typification(arr_tok, nbr_tokens);
 				if (check_syntax(arr_tok, nbr_tokens))
 				{
@@ -108,6 +114,6 @@ int	main(int ac, char **av, char **env)
 		}
 		free(cmd);///res de readline a free
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	return (0);
 }

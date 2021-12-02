@@ -79,13 +79,22 @@ int	what_is_len_dollar(char *str)
 	// printf("75: *str - 1 =  %c\n", *(str - 1));
 	if (*str && ((*str == '"' && *(str + 1) == '"') || (*str == '\'' && *(str + 1) == '\'')))
 		len += 2;
-	if (*str && *str == '$')
+	else if (*str && *str == '$')
+		len++;
+	else if (*str && *str == '?')
 		len++;
 	else if (*str && (*str != '\'' && *str != '"'
 					&& *str != '$') && (!in_charset(*str)) && *str != '_' && !ft_isalpha(*str))
 		len++;
 	else if (*str && (*str == '_' || ft_isalpha(*str)))
-		len += what_is_len_simple(str);
+	{
+		while (*str && (*str == '_' || ft_isalpha(*str)))
+		{
+			len++;
+			str++;
+		}
+	}
+		// len += what_is_len_simple(str);
 	return (len);
 }
 

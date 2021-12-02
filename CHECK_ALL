@@ -10,20 +10,37 @@
 
 PB Generaux
 - (crash si export wewe puis export $wewe, dans expand_var check si = aussi "crash sur toutes les fcts) FIXED
-- dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
+
+- dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22 FIXED
+
 - creer un semblant d'env si env -i ./minishell	FIXED
+
 - plusieurs heredoc dans pipes differents 	FIXED
+
 - echo test < | echo test ou echo test <| echo test  doit donner erreur parsing
+
 - cmd inexistante doit afficer msg d'erreur FIXED
+
 - entree dans readline pas crash			FIXED
+
 - bon retour avec fork et sans fork			FIXED
+
 - gerer erreur env -i != cmd not found		FIXED
+
 - gerer les signaux
-- quand une quote est pas ferme  ou commence/fini par pipe faut erreur mais pas quitter (et donner valeur de retour)
+
+- quand une quote est pas ferme  ou commence/fini par pipe faut erreur mais pas quitter (et donner valeur de retour) FIXED 
+
 - dans parsing il faut donner une erreur de syntaxe si on ecrit echo < | test et pas quitter
+FIXED (il reste gerer les cas de redir collee)
+
+
 - gerer echo >bla et echo >               bla (le 2e marche deja)
+
 - pas crash quand on ecrit juste > test sans commande (creer un char **vide peut-etre) FIXED
-- refaire $? (je crois que ca marche mais il est bloque car dans le lexer $? est supprime alors qu'il faut le garder, erreur en dessous)
+
+- refaire $? (je crois que ca marche mais il est bloque car dans le lexer $? est supprime alors qu'il faut le garder, erreur en dessous) FIXED
+
 - dans le parser il faut garder les var separees par les nonlettres non chiffre -> echo $PWD=22 doit marcher et echo $. doit pas crash, juste comme echo $wewewe
 
 ECHO http://pwet.fr/man/linux/commandes/posix/echo/
