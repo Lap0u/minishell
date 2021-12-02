@@ -65,7 +65,9 @@ int	nbr_words_dollar(char const *str, int *i)
 	{
 		words++;
 		*i = *i + 1;
-		if (str[*i] && str[*i] != '$')
+		if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"') || (str[*i] == '\'' && str[*i + 1] == '\'')))
+			*i = *i + 2;
+		else if (str[*i] && str[*i] != '$')
 		{
 			while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
 					&& str[*i] != '$') && (!in_charset(str[*i])) && (str[*i] == '_' || ft_isalpha(str[*i])))
@@ -84,7 +86,7 @@ int	nbr_words_double_quotes(char const *str, int *i)
 	words = 0;
 	if (str[*i] == '"')
 	{
-		printf("87: nbr_words_double_quotes, *Str = %c\n", str[*i]);
+		// printf("87: nbr_words_double_quotes, *Str = %c\n", str[*i]);
 		*i = *i + 1;
 		if (str[*i] != '\"' && str[*i] != '$')
 			words++;
@@ -96,10 +98,10 @@ int	nbr_words_double_quotes(char const *str, int *i)
 			if (str[*i] != '\"' && str[*i] != '$')
 				words++;
 		}
-		printf("99: nbr_words_double_quotes, *Str = %c\n", str[*i]);
+		// printf("99: nbr_words_double_quotes, *Str = %c\n", str[*i]);
 		if (str[*i] == '"' && str[*i - 1] == '"')
 		{
-			printf("100: nbr_words_double_quotes = %d\n", words);
+			// printf("100: nbr_words_double_quotes = %d\n", words);
 			words++;
 			*i = *i + 1;
 		}
@@ -138,7 +140,7 @@ int	nbr_words(char const *str)
 		}
 		words += nbr_words_dollar(str, &i);
 		words += nbr_words_s_quotes(str, &i);
-		printf("140: nbr_words, *Str = %c\n", *str);
+		// printf("140: nbr_words, *Str = %c\n", *str);
 		words += nbr_words_double_quotes(str, &i);
 	}
 	return (words);
