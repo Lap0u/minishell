@@ -13,7 +13,7 @@ PB Generaux
 - dans expand var stopper l'expand quand c'est plus un name (!= lettres ou chiffres) echo $PWD=22
 - creer un semblant d'env si env -i ./minishell	FIXED
 - plusieurs heredoc dans pipes differents 	FIXED
-- echo test < | echo test doit donner erreur parsing
+- echo test < | echo test ou echo test <| echo test  doit donner erreur parsing
 - cmd inexistante doit afficer msg d'erreur FIXED
 - entree dans readline pas crash			FIXED
 - bon retour avec fork et sans fork			FIXED
@@ -22,7 +22,7 @@ PB Generaux
 - quand une quote est pas ferme  ou commence/fini par pipe faut erreur mais pas quitter (et donner valeur de retour)
 - dans parsing il faut donner une erreur de syntaxe si on ecrit echo < | test et pas quitter
 - gerer echo >bla et echo >               bla (le 2e marche deja)
-- pas crash quand on ecrit juste > test sans commande (creer un char **vide peut-etre)
+- pas crash quand on ecrit juste > test sans commande (creer un char **vide peut-etre) FIXED
 - refaire $? (je crois que ca marche mais il est bloque car dans le lexer $? est supprime alors qu'il faut le garder, erreur en dessous)
 - dans le parser il faut garder les var separees par les nonlettres non chiffre -> echo $PWD=22 doit marcher et echo $. doit pas crash, juste comme echo $wewewe
 
@@ -95,5 +95,5 @@ BON FONCTIONNEMENT PIPE
 - env -i export recree		OK
 - env -i env update			OK
 - 
-!!cas echo test | < readline.c crash double free
-!!cas $USER$NUL pas crash $NUL delete
+!!cas echo test | < readline.c crash double free 	FIXED
+!!cas $USER$NUL pas crash $NUL delete				FIXED
