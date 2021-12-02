@@ -18,6 +18,11 @@ void	ft_add_path(t_simple_command *c_table, char **path)
 	char	*temp;
 
 	i = 0;
+	if (c_table->args[0][0] == 0)
+	{
+		ft_free_3dtab(path);
+		return ;
+	}
 	while (path[i])
 	{
 		temp = ft_strjoin(path[i], c_table->args[0]);
