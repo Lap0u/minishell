@@ -17,12 +17,12 @@ int	main(int ac, char **av, char **env)
 	t_simple_command *c_table;
 	int	temp_ret;
 	int nbr_tokens;
-	// int i;
+	int i;
 
 	c_table = NULL;
 	temp_ret = 0;
 	temp_env = ft_copy_env(env);
-	// i = 0;
+	i = 0;
 	if (ac != 1 || !av[0])
 		return (printf("No arguments!!!!!!!\n"));
 	while (1)
@@ -47,11 +47,11 @@ int	main(int ac, char **av, char **env)
 		// nbr_tokens = nbr_words(cmd);
 		// printf("48: main: nbr_tokens = %d\n", nbr_tokens);
 		// printf("nbr words = %d\n", nbr_tokens);
-		// while (i < nbr_tokens)
-		// {
-		// 	printf("token = %s; fl_space = %d, fl_quotes = %d\n", arr_tok[i].value, arr_tok[i].fl_space, arr_tok[i].fl_quotes);
-		// 	i++;
-		// }
+		while (i < nbr_tokens)
+		{
+			printf("token = %s; fl_space = %d, fl_quotes = %d\n", arr_tok[i].value, arr_tok[i].fl_space, arr_tok[i].fl_quotes);
+			i++;
+		}
 		// printf("nbr words = %d\n", nbr_tokens);
 		typification(arr_tok, nbr_tokens);
 		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);

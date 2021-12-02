@@ -68,7 +68,7 @@ int	nbr_words_dollar(char const *str, int *i)
 		if (str[*i] && str[*i] != '$')
 		{
 			while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-					&& str[*i] != '$') && (!in_charset(str[*i])))
+					&& str[*i] != '$') && (!in_charset(str[*i])) && (str[*i] == '_' || ft_isalpha(str[*i])))
 				*i = *i + 1;
 		}
 		else if (str[*i] && str[*i] == '$')
