@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/02 14:49:28 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:15:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int ac, char **av, char **env)
 				free(cmd);
 				return (0);
 			}
-			if (c_table->infile == -42000 || c_table->outfile == -42000)
+			if (c_table->infile == -42000 || c_table->outfile == -42000 || c_table->args_num == 0)
 				c_table->last_ret = 1;
 			else
 				c_table->last_ret = ft_pipe(c_table);
