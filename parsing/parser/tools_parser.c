@@ -86,7 +86,7 @@ char	*ft_add_var(char *str)
 	return (res);
 }
 
-char	*ft_expand_dollar(char *str, int mode, char **env)
+char	*ft_expand_dollar(char *str, int mode, char **env, int ret)
 {
 	int		i;
 	char	*temp;
@@ -96,6 +96,11 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 	{
 		if ((str[0] != '$' || mode == 8 || mode == 1) || (str[0] == '$' && !str[1]))
 			return (str);
+		if (ft_strcmp("$?", str) == 0)
+		{
+			free(str);
+			return (ft_itoa(ret));
+		}
 		while (env[i])
 		{
 			temp = ft_var_only(env[i]);

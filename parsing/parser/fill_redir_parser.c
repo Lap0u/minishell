@@ -87,7 +87,7 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 			}
 			else
 				new_redir(&arr_tok[index], &start);
-			free(arr_tok[index].value);
+			// free(arr_tok[index].value);
 			index++;
 		}
 		index++;

@@ -194,7 +194,7 @@ void				print_redir(t_simple_command *start);
 void				ft_print_sentences(t_simple_command *start);
 void				ft_free_3dtab(char **tab);
 void				ft_free_redir(t_redir **list);
-char				*ft_expand_dollar(char *str, int mode, char **env);
+char				*ft_expand_dollar(char *str, int mode, char **env, int ret);
 /*parsing/parser/fill_args_parser.c*/
 int					ft_count_args(t_token *arr_tok, int index, int len);
 char				**ft_fill_args(t_token *arr_tok, int index,

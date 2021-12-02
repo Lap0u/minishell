@@ -84,12 +84,12 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 			index++;
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
-			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
-			printf("args[i] = %s\n", args[i]);
+			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env, ret);//expand si dollar ou args=arr.value si arg
+			// printf("args[i] = %s\n", args[i]);
 			while (((arr_tok[index].fl_space == 0 && (arr_tok[index + 1].fl_quotes == 2 || arr_tok[index + 1].fl_quotes == 1)) && index < (len - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (len - 1)))
 			{
 				// write(1, "jfjfj\n", 6);
-				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env);
+				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env, ret);
 				temp1 = args[i];
 				if (temp != NULL)
 				{
