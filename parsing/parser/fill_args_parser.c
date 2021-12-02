@@ -55,7 +55,10 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 			i++;
 		}
 		if (temp[y].type == DOLLAR && temp[y].subst == 0)
+		{
 			free(temp[y].value);
+			temp[y].value = NULL;
+		}
 		y++;
 	}
 	return (count);
@@ -64,6 +67,8 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 {
 	char	**args;
+	char	*temp;
+	char	*temp1;
 	int		nbr_args;
 	int		i;
 
@@ -78,13 +83,22 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 			index++;
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
-			if (strcmp(arr_tok[index].value, "$?") == 0)
+			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
+			// printf("args[i] = %s\n", args[i]);
+			while (((arr_tok[index].fl_space == 0 && (arr_tok[index + 1].fl_quotes == 2 || arr_tok[index + 1].fl_quotes == 1)) && index < (len - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (len - 1)))
 			{
-				free(arr_tok[index].value);
-				args[i] = ft_itoa(ret);
+				// write(1, "jfjfj\n", 6);
+				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env);
+				temp1 = args[i];
+				if (temp != NULL)
+				{
+					args[i] = ft_strjoin(temp1, temp);
+					free(temp1);
+				}
+				// printf("args1[i] = %s\n", args[i]);
+				free(temp);
+				index++;
 			}
-			else 
-				args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env);//expand si dollar ou args=arr.value si arg
 			i++;
 		}
 		index++;

@@ -52,9 +52,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		cmd = readline(PROMPT);
+		// char test[] = "\"$USER $USER\"";
 		if (cmd == NULL)
 		{
-			rl_clear_history();
+			// rl_clear_history();
 			ft_free_2dstr(temp_env);
 			return (temp_ret); //return valeur de la derneire commande
 		}
@@ -82,6 +83,6 @@ int	main(int ac, char **av, char **env)
 		}
 		free(cmd);///res de readline a free
 	}
-	rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }

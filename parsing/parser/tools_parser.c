@@ -92,22 +92,23 @@ char	*ft_expand_dollar(char *str, int mode, char **env)
 	char	*temp;
 	
 	i = 0;
-	if (env == NULL)
-		return (str);
-	if ((str[0] != '$' || mode == 8 || mode == 1) || (str[0] == '$' && !str[1]))
-		return (str);
-	while (env[i])
+	if (str)
 	{
-		temp = ft_var_only(env[i]);
-		if (ft_strcmp(temp, str + 1) == 0)
-		{
-			free(temp);
-			free(str);
-			str = ft_add_var(env[i]);
+		if ((str[0] != '$' || mode == 8 || mode == 1) || (str[0] == '$' && !str[1]))
 			return (str);
+		while (env[i])
+		{
+			temp = ft_var_only(env[i]);
+			if (ft_strcmp(temp, str + 1) == 0)
+			{
+				free(temp);
+				free(str);
+				str = ft_add_var(env[i]);
+				return (str);
+			}
+			free(temp);
+			i++;
 		}
-		free(temp);
-		i++;
 	}
 	return (NULL);
 
