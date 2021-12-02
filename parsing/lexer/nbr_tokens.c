@@ -45,7 +45,7 @@ int	nbr_words_s_quotes(char const *str, int *i)
 		else if (str[*i] == 0)//////////////added by clement
 		{
 			write(2,"Error: There is not second single quotes\n", 41);
-			exit(1);
+			return (-1);
 		}////////end added
 	}
 	else if (str[*i] == '\'' && str[*i + 1] == '\'')
@@ -110,7 +110,7 @@ int	nbr_words_double_quotes(char const *str, int *i)
 		else
 		{
 			write(2,"Error: There is not second duble quotes\n", 40);
-			exit(1);
+			return (-2);
 		}
 	}
 	return (words);
@@ -121,9 +121,11 @@ int	nbr_words(char const *str)
 	int	words;
 	int	i;
 	int	len;
+	int	check;
 
 	words = 0;
 	i = 0;
+	check = 0;
 	len = (int)ft_strlen(str);
 	while ((i < len) && str[i])
 	{
@@ -139,9 +141,14 @@ int	nbr_words(char const *str)
 				i++;
 		}
 		words += nbr_words_dollar(str, &i);
-		words += nbr_words_s_quotes(str, &i);
-		// printf("140: nbr_words, *Str = %c\n", *str);
-		words += nbr_words_double_quotes(str, &i);
+		check = nbr_words_s_quotes(str, &i);
+		if (check < 0)
+			return (check);
+		words += check;
+		check = nbr_words_double_quotes(str, &i);
+		if (check < 0)
+			return (check);
+		words += check;
 	}
 	return (words);
 }

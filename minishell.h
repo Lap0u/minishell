@@ -52,6 +52,17 @@ typedef struct s_simple_command
 	struct s_simple_command	*previous;
 }				t_simple_command;
 
+typedef struct s_token
+{
+	int		type;
+	char	*value;
+	int		fl_quotes;
+	int		nbr_spaces;
+	int		subst;
+	int		fl_space;
+}				t_token;
+
+
 t_simple_command	*ft_get_simple_command(char *str, char **env);
 
 int					ft_strcmp(char *s1, char *s2);
@@ -127,17 +138,10 @@ void				ft_write_wfolder(char *str, int i);
 
 char				*make_pwd(char *prefix);
 
+int 				check_syntax(t_token *arr_tok, int nbr_tokens);
+
 /*parsing*/
 
-typedef struct s_token
-{
-	int		type;
-	char	*value;
-	int		fl_quotes;
-	int		nbr_spaces;
-	int		subst;
-	int		fl_space;
-}				t_token;
 
 # define COMMANDE 1
 # define FLAG 2

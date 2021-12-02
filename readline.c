@@ -35,6 +35,24 @@ void	ft_init_ctable(t_simple_command **list, char **env)
 	return ;
 }
 
+int check_syntax(t_token *arr_tok, int nbr_tokens)
+{
+	int	i;
+
+	i = 0;
+	while (i < nbr_tokens)
+	{
+		if (arr_tok[0].value[0] == '|')
+			return (0);
+		if (arr_tok[nbr_tokens - 1].value[0] == '|')
+			return (0);
+		if ((arr_tok[i].value[0] == '|') && ((arr_tok[i - 1].value[0] == '<') || (arr_tok[i - 1].value[0] == '>')))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	main(int ac, char **av, char **env)
 {	
 	char				*cmd;
@@ -61,25 +79,32 @@ int	main(int ac, char **av, char **env)
 		}
 		else if (ft_check_space(cmd) == 1)
 		{
-			arr_tok = ft_split_tokens(cmd);
 			nbr_tokens = nbr_words(cmd);
-			typification(arr_tok, nbr_tokens);
-			c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);
-			// c_table->last_ret = temp_ret;
-			if (c_table == NULL)
+			if (nbr_tokens >= 0)
 			{
-				free(cmd);
-				return (0);
+				arr_tok = ft_split_tokens(cmd);
+				typification(arr_tok, nbr_tokens);
+				if (check_syntax(arr_tok, nbr_tokens))
+				{
+					c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);
+					// c_table->last_ret = temp_ret;
+					if (c_table == NULL)
+					{
+						free(cmd);
+						return (0);
+					}
+					if (c_table->infile == -42000 || c_table->outfile == -42000 || c_table->args_num == 0)
+						c_table->last_ret = 1;
+					else
+						c_table->last_ret = ft_pipe(c_table);
+					// add_history(cmd);
+					temp_env = c_table->env;
+					temp_ret = c_table->last_ret;
+					ft_proper_free(c_table);
+					c_table = NULL;
+				}
+				add_history(cmd);
 			}
-			if (c_table->infile == -42000 || c_table->outfile == -42000 || c_table->args_num == 0)
-				c_table->last_ret = 1;
-			else
-				c_table->last_ret = ft_pipe(c_table);
-			add_history(cmd);
-			temp_env = c_table->env;
-			temp_ret = c_table->last_ret;
-			ft_proper_free(c_table);
-			c_table = NULL;
 		}
 		free(cmd);///res de readline a free
 	}
