@@ -58,7 +58,7 @@ void	new_redir(t_token *arr_tok, t_redir **start)
 	save->next = new;
 }
 
-t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
+t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env, int ret)
 {
 	t_redir *start;
 	int		bool_start;
@@ -81,7 +81,7 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 				if (arr_tok[index].type == RED_HERE_DOC || arr_tok[index +1].fl_quotes == 1)
 					start->file = arr_tok[index + 1].value;
 				else
-					start->file = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index].type, env);
+					start->file = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index].type, env, ret);
 				start->next = NULL;
 				bool_start = 0;
 			}

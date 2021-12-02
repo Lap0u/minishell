@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/05/20 13:24:12 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:50:04 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../minishell.h"
 
 t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret)
@@ -20,7 +21,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int
 	if (my_elem != (void *)0)
 	{
 		my_elem->last_ret = ret;
-		my_elem->redir = ft_fill_redir(arr_tok, index, len, env);
+		my_elem->redir = ft_fill_redir(arr_tok, index, len, env, ret);
 		my_elem->args = ft_fill_args(arr_tok, index, len, env, ret);
 		my_elem->cmd = my_elem->args[0];
 		my_elem->args_num = ft_get_args_size(my_elem->args);
