@@ -55,32 +55,15 @@ int	main(int ac, char **av, char **env)
 		// printf("nbr words = %d\n", nbr_tokens);
 		typification(arr_tok, nbr_tokens);
 		c_table = creation_list_command(arr_tok, nbr_tokens, temp_env);
-		// i = 0;
-		// while (i < nbr_tokens)
-		// {
-		// 	printf("arg = %s\n", c_table->args[i]);
-		// 	i++;
-		// }
-		// c_table = ft_get_simple_command(cmd, temp_env); //doit creer liste chainee
-		// free(cmd);
-		// /////// piping
-		// // cmd = readline("cmd pipe ");
-		// // c_table->next = ft_get_simple_command(cmd, temp_env);
-		// // c_table->next->previous = c_table;
-		// // c_table->next->next = NULL;
-		// // c_table->previous = NULL;
-		// // free(cmd);
-		// // ft_pipe(c_table);
-		// // return (0);
-		// /////////////////////
 		if (c_table == NULL)
 		{
 			free(cmd);
 			return (0);
 		}
         if (c_table->infile == -42000 || c_table->outfile == -42000)
-            return (printf("wrong infile outfile : %d", c_table->badfd));
-		ft_pipe(c_table);
+            fprintf(stderr, "minishell: wrong file index : %d\n ", c_table->badfd);
+		else
+			ft_pipe(c_table);
 		add_history(cmd);
 		temp_env = c_table->env;
 		temp_ret = c_table->last_ret;

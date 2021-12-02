@@ -109,17 +109,20 @@ void    ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars
     oldpwd = make_pwd("OLDPWD=");
     if (c_table->args_num > 2)
     {
-        printf("cd: trop d'arguments\n");
+        printf("minishell: cd: trop d'arguments\n");
         c_table->last_ret = 1;
     }
-    else if (c_table->args_num < 1)
+    else if (c_table->args_num <= 1)
         cd_noarg(c_table);
     else if (c_table->args[1][0] == '/' || c_table->args[1][0] == '.')
         cd_curpath(c_table);
     else
         cd_classic(c_table);
     if (c_table->last_ret != 0)
-        return ;
+	{
+		free(oldpwd);
+		return ;
+	}
     newpwd = make_pwd("PWD=");
     i = 0;
     while (c_table->env[i])

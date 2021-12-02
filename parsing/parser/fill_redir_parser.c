@@ -64,17 +64,16 @@ t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env)
 	
 	bool_start = -1;
 	if (is_there_red(arr_tok, index, len, env) == 1)
-		return ((void *)0);
+		return (NULL);
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
-		return ((void *)0);
+		return (NULL);
 	while (index < len && arr_tok[index].type != PIPE)
 	{
 		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC &&
 			is_expandable(arr_tok[index + 1].value, arr_tok[index].type,
 			arr_tok[index + 1].fl_quotes, env))
 		{
-			printf("test\n");
 			if (bool_start == -1)
 			{
 				start->type = arr_tok[index].type - 5;

@@ -22,6 +22,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env)
 		my_elem->redir = ft_fill_redir(arr_tok, index, len, env);
 		my_elem->args = ft_fill_args(arr_tok, index, len, env);
 		my_elem->cmd = my_elem->args[0];
+		my_elem->args_num = ft_get_args_size(my_elem->args);
 		ft_open_files(my_elem, my_elem->redir); // a voir!!!
 		my_elem->args_num = ft_2dlen(my_elem->args); ////
 		my_elem->next = (void *)0;
