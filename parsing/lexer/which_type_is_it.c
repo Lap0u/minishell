@@ -39,7 +39,7 @@ int	which_type(t_token *my_arr)
 		return (RED_OUT_APP);
 	else if (ft_strlen(my_arr->value) == 2 && (ft_strncmp("<<",my_arr->value, 2) == 0) && my_arr->fl_quotes == 0)
 		return (RED_HERE_DOC);
-	else if ((ft_strncmp("$",my_arr->value, 1) == 0) && my_arr->fl_quotes != 1)
+	else if ((ft_strncmp("$",my_arr->value, 1) == 0) && my_arr->fl_quotes != 1 && ft_strlen(my_arr->value) != 1)
 		return (DOLLAR);
 	else
 		return (ARG);
@@ -51,6 +51,7 @@ void	typification(t_token *my_arr, int nbr_token)
 	int i;
 
 	i = 0;
+	printf("nbr = %d\n", nbr_token);
 	while (i < nbr_token)
 	{
 		my_arr[i].type = which_type(&(my_arr[i]));
