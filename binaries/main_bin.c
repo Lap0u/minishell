@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 11:08:20 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:51:02 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,36 +68,41 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 		return ;
 	}
 	ft_add_path(c_table, path);
-	child = fork();
-	if (child < 0)
-		return (perror("minishell: fork : "));
-	if (child == 0)	
+	if (c_table->args_num != 0)
 	{
-		if (access(c_table->args[0], X_OK) == 0)
+		child = fork();
+		if (child < 0)
+			return (perror("minishell: fork : "));
+		if (child == 0)	
 		{
-			if (c_table->outfile >= 0)
+			if (access(c_table->args[0], X_OK) == 0)
 			{
-				ret = dup2(c_table->outfile, STDOUT_FILENO);
-				if (ret < 0)
-					perror("Error");
+				if (c_table->outfile >= 0)
+				{
+					ret = dup2(c_table->outfile, STDOUT_FILENO);
+					if (ret < 0)
+						perror("Error");
+				}
+				if (c_table->infile >= 0)
+				{
+					ret = dup2(c_table->infile, STDIN_FILENO);
+					if (ret < 0)
+						perror("Error");
+				}
+				execve(c_table->args[0], c_table->args, env);
+				perror("Error exec");
 			}
-			if (c_table->infile >= 0)
+			else
 			{
-				ret = dup2(c_table->infile, STDIN_FILENO);
-				if (ret < 0)
-					perror("Error");
+				write(2, "minishell: ", 12);
+				write(2, c_table->cmd, ft_strlen(c_table->cmd));
+				write(2, ": command not found\n", 21);
+				exit(127);
 			}
-			execve(c_table->args[0], c_table->args, env);
-			perror("Error exec");
 		}
-		else
-		{
-			write(2, "minishell: ", 12);
-			write(2, c_table->cmd, ft_strlen(c_table->cmd));
-			write(2, ": command not found\n", 21);
-			exit(127);
-		}
-	}
 	waitpid(child, &c_table->last_ret, 0);
 	c_table->last_ret = WEXITSTATUS(c_table->last_ret);
+	}
+	else
+		c_table->last_ret = 0;
 }

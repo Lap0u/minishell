@@ -6,11 +6,23 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/02 12:50:04 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:49:16 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+char				**make_nul_cmd()
+{
+	char	**res;
+
+	res = malloc(sizeof(char *) * 2);
+	if (res == NULL)
+		return (NULL);
+	res[0] = ft_strdup("");
+	res[1] = NULL;
+	return (res);
+}
 
 t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret)
 {
