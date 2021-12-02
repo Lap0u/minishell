@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/02 14:51:02 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:58:51 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ void	ft_bin_nofork(t_simple_command *c_table, char **env)
 		execve(c_table->args[0], c_table->args, env);
 		perror("Error exec:");
 	}
-	else
+	else if (c_table->args_num != 0)
 	{
 		write(2, "minishell: ", 12);
 		write(2, c_table->cmd, ft_strlen(c_table->cmd));
 		write(2, ": command not found\n", 21);
 		exit(127);
 	}
+	exit (0);
 }
 
 void	ft_exec_bin(t_simple_command *c_table, char **env)

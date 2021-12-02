@@ -6,22 +6,24 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/02 14:49:16 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:56:51 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char				**make_nul_cmd()
+void				ft_free_arrtok(t_token *tab, int size)
 {
-	char	**res;
+	int i;
 
-	res = malloc(sizeof(char *) * 2);
-	if (res == NULL)
-		return (NULL);
-	res[0] = ft_strdup("");
-	res[1] = NULL;
-	return (res);
+	i = 0;
+	while (i < size)
+	{
+		if (tab[i].type >= RED_OUT && tab[i].type <= RED_HERE_DOC)
+			free(tab[i].value);
+		i++;
+	}
+	free(tab);
 }
 
 t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret)
@@ -93,7 +95,7 @@ t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **en
 		i++;
 	}
 	add_env_in_elem(lst_command, env);
-	free(arr_tok);
+	ft_free_arrtok(arr_tok, arr_len);
 	return (lst_command);////
 }
 
