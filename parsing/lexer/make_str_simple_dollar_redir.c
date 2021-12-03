@@ -12,105 +12,82 @@
 
 #include "../../minishell.h"
 
-int	in_charset(char letter)
+void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y)
 {
-	if (letter == ' ' || letter == '\t' || letter == '\n')
-		return (1);
-	return (0);
+	if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+			&& str[*i] != '$') && (!in_charset(str[*i]))
+		&& (str[*i] == '_' || ft_isalpha(str[*i])))
+	{
+		while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+				&& str[*i] != '$') && (!in_charset(str[*i]))
+			&& (str[*i] == '_' || ft_isalpha(str[*i])))
+			*i = *i + 1;
+	}
+	else
+		*i = *i + 1;
+	if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+		my_arr[*y].fl_space = 1;
 }
 
-int	nbr_words_dollar(char const *str, int *i)
+void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 {
-	int	words;
-
-	words = 0;
 	if (str[*i] == '$')
 	{
-		words++;
+		my_arr[*y].value = make_str(&str[*i], 0);
 		*i = *i + 1;
+		my_arr[*y].fl_space = 0;
 		if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"')
 				|| (str[*i] == '\'' && str[*i + 1] == '\'')))
-			*i = *i + 2;
-		else if (str[*i] && (str[*i] == '?' || str[*i] == '0'))
-			*i = *i + 1;
-		else if (str[*i] && str[*i] != '$')
 		{
-			while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-					&& str[*i] != '$') && (!in_charset(str[*i]))
-				&& (str[*i] == '_' || ft_isalpha(str[*i])))
-				*i = *i + 1;
-		}
+			*i = *i + 2;
+			if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+				my_arr[*y].fl_space = 1;
+		}			
+		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+				&& str[*i] != '$'))
+			make_str_dollar_filled(str, my_arr, i, y);
 		else if (str[*i] && str[*i] == '$')
+		{
 			*i = *i + 1;
+			if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+				my_arr[*y].fl_space = 1;
+		}
+		*y = *y + 1;
 	}
-	return (words);
 }
 
-int	nbr_words_redir(char const *str, int *i)
+void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)
 {
-	int	words;
-
-	words = 0;
-	if (str[*i] == '>')
-	{
-		words++;
-		*i = *i + 1;
-		if (str[*i] == '>')
-			*i = *i + 1;
-	}
-	else if (str[*i] == '<')
-	{
-		words++;
-		*i = *i + 1;
-		if (str[*i] == '<')
-			*i = *i + 1;
-	}
-	return (words);
-}
-
-int	nbr_words_simple(char const *str, int *i)
-{
-	int	words;
-
-	words = 0;
 	if ((str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 		&& (in_charset(str[*i])))
 		*i = *i + 1;
 	if (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<')
 	{
-		words++;
+		my_arr[*y].value = make_str(&str[*i], 0);
+		my_arr[*y].fl_quotes = 0;
+		my_arr[*y].fl_space = 0;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 			&& (!in_charset(str[*i])) && str[*i] != '>' && str[*i] != '<')
 			*i = *i + 1;
+		if (str[*i] == ' ')
+			my_arr[*y].fl_space = 1;
+		*y = *y + 1;
 	}
-	return (words);
 }
 
-int	nbr_words(char const *str)
+void	make_str_redir(char *str, t_token *my_arr, int *i, int *y)
 {
-	int	words;
-	int	i;
 	int	len;
-	int	check;
 
-	words = 0;
-	i = 0;
-	check = 0;
-	len = (int)ft_strlen(str);
-	while ((i < len) && str[i])
+	len = 0;
+	if (str[*i] == '>' || str[*i] == '<')
 	{
-		words += nbr_words_simple(str, &i);
-		words += nbr_words_dollar(str, &i);
-		words += nbr_words_redir(str, &i);
-		check = nbr_words_s_quotes(str, &i);
-		if (check < 0)
-			return (check);
-		words += check;
-		check = nbr_words_double_quotes(str, &i);
-		if (check < 0)
-			return (check);
-		words += check;
+		len = what_is_len(&str[*i], 0);
+		my_arr[*y].fl_quotes = 0;
+		my_arr[*y].fl_space = 1;
+		my_arr[*y].value = make_str(&str[*i], 0);
+		*y = *y + 1;
+		*i += len;
 	}
-	return (words);
 }
