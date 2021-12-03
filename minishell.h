@@ -178,6 +178,8 @@ int					nbr_words_s_quotes(char const *str, int *i);
 int					nbr_words_dollar(char const *str, int *i);
 int					nbr_words_double_quotes(char const *str, int *i);
 int					nbr_words(char const *str);
+int					nbr_words_redir(char const *str, int *i);
+
 
 /*parsing/lexer/which_type_is_it.c*/
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

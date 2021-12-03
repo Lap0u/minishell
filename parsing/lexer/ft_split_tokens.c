@@ -57,7 +57,7 @@ int	what_is_len_simple(char *str)
 
 	len = 0;
 	while (*str != '\0' && (*str != '\'' && *str != '"' && *str != '$')
-		&& (!in_charset(*str)))
+		&& (!in_charset(*str)) && *str != '>' && *str != '<')
 	{
 		len++;
 		str++;
@@ -98,6 +98,28 @@ int	what_is_len_dollar(char *str)
 	return (len);
 }
 
+int	what_is_len_redir(char *str)
+{
+	int	len;
+
+	len = 0;
+	if (*str == '>')
+	{
+		len++;
+		str++;
+		if (*str == '>')
+			len++;
+	}
+	else if (*str == '<')
+	{
+		len++;
+		str++;
+		if (*str == '<')
+			len++;
+	}
+	return (len);
+}
+
 int	what_is_len(char *str, int fl_quotes)
 {
 	int		i;
@@ -111,10 +133,12 @@ int	what_is_len(char *str, int fl_quotes)
 		i = what_is_len_s_quotes(str);
 	else if (*arr == '"' || fl_quotes == 2)
 		i = what_is_len_double_quotes(str);
-	else if (*arr != '$')
+	else if (*arr != '$' && (*arr != '<' && *arr != '>'))
 		i = what_is_len_simple(arr);
 	else if (*arr == '$')
 		i = what_is_len_dollar(arr);
+	else if (*arr == '<' || *arr == '>')
+		i = what_is_len_redir(arr);
 	else
 	{
 		// write(1, "m_\n", 3);
@@ -318,8 +342,8 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 				my_arr[*y].fl_quotes = 2;
 			}
 			make_str_dollar(str, my_arr, i, y);
-			printf("fl_quotes = %d\n", my_arr[*y - 1].fl_quotes);
-			printf("str[i]1 = %c\n", str[*i]);
+			// printf("fl_quotes = %d\n", my_arr[*y - 1].fl_quotes);
+			// printf("str[i]1 = %c\n", str[*i]);
 			if (str[*i] != '\0' && str[*i] != '\"' && str[*i] != '$')
 			{
 				my_arr[*y].fl_space = 0;
@@ -378,17 +402,38 @@ void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)
 		&& (in_charset(str[*i])))
 		*i = *i + 1;
 	if (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-		&& (in_charset(str[*i]) == 0))
+		&& (in_charset(str[*i]) == 0)&& str[*i] != '>' && str[*i] != '<')
 	{
-		my_arr[*y].value = make_str(&str[*i], 1);
+		// printf("str[*i] = %c\n", str[*i]);
+		my_arr[*y].value = make_str(&str[*i], 0);
+		// printf("str[i] = %s\n", my_arr[*y].value);
 		my_arr[*y].fl_quotes = 0;
 		my_arr[*y].fl_space = 0;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-			&& (!in_charset(str[*i])))
+			&& (!in_charset(str[*i])) && str[*i] != '>' && str[*i] != '<')
 			*i = *i + 1;
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;
 		*y = *y + 1;
+	}
+}
+
+void	make_str_redir(char *str, t_token *my_arr, int *i, int *y)
+{
+	int	len;
+
+	len = 0;
+	if (str[*i] == '>' || str[*i] == '<')
+	{
+		len =  what_is_len(&str[*i], 0);
+		my_arr[*y].fl_quotes = 0;
+		my_arr[*y].fl_space = 1;
+		// printf("427str[*i] = %c, %d\n", str[*i], len);
+		my_arr[*y].value = make_str(&str[*i], 0);
+		// printf("str[i] = %s\n", my_arr[*y].value);
+		// len =  what_is_len(&str[*i], 0);
+		*y = *y + 1;
+		*i += len;
 	}
 }
 
@@ -414,6 +459,7 @@ t_token	*ft_split_tokens(char *str)
 	{
 		// printf("367: *Str = %c\n", str[i]);
 		make_str_simple(str, my_arr, &i, &y);
+		make_str_redir(str, my_arr, &i, &y);
 		if (str[i] == '$')
 			my_arr[y].fl_quotes = 0;
 		make_str_dollar(str, my_arr, &i, &y);

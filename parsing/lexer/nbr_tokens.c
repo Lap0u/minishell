@@ -118,6 +118,28 @@ int	nbr_words_double_quotes(char const *str, int *i)
 	return (words);
 }
 
+int	nbr_words_redir(char const *str, int *i)
+{
+	int	words;
+
+	words = 0;
+	if (str[*i] == '>')
+	{
+		words++;
+		*i = *i + 1;
+		if (str[*i] == '>')
+			*i = *i + 1;
+	}
+	else if (str[*i] == '<')
+	{
+		words++;
+		*i = *i + 1;
+		if (str[*i] == '<')
+			*i = *i + 1;
+	}
+	return (words);
+}
+
 int	nbr_words(char const *str)
 {
 	int	words;
@@ -135,14 +157,15 @@ int	nbr_words(char const *str)
 			&& (in_charset(str[i])))
 			i++;
 		if (str[i] && (str[i] != '\'' && str[i] != '"' && str[i] != '$')
-			&& (in_charset(str[i]) == 0))
+			&& (in_charset(str[i]) == 0) && str[i] != '>' && str[i] != '<')
 		{
 			words++;
 			while (str[i] && (str[i] != '\'' && str[i] != '"' && str[i] != '$')
-				&& (!in_charset(str[i])))
+				&& (!in_charset(str[i])) && str[i] != '>' && str[i] != '<')
 				i++;
 		}
 		words += nbr_words_dollar(str, &i);
+		words += nbr_words_redir(str, &i);
 		check = nbr_words_s_quotes(str, &i);
 		if (check < 0)
 			return (check);

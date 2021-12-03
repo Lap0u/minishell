@@ -84,12 +84,8 @@ int	main(int ac, char **av, char **env)
 			{
 				arr_tok = ft_split_tokens(cmd);
 				int i = 0;
-				while (i < nbr_tokens)
-				{
-					printf("token: = %s, len = %d\n", arr_tok[i].value, ft_strlen(arr_tok[i].value));
-					i++;
-				}
 				typification(arr_tok, nbr_tokens);
+				i = 0;
 				if (check_syntax(arr_tok, nbr_tokens))
 				{
 					c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);
