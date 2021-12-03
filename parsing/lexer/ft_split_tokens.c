@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/05/20 13:24:12 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:47:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ t_token	*ft_split_tokens(char *str, int nbr_tokens)
 		make_str_double_quote(str, my_arr, &i, &y);
 	}
 	my_arr[nbr_tokens].fl_quotes = -1;
+	typification(my_arr, nbr_tokens);
 	return (my_arr);
 }

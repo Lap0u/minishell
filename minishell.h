@@ -62,6 +62,8 @@ typedef struct s_token
 	int		fl_space;
 }				t_token;
 
+int					launch_start(char *cmd, int nbr_tok, char ***env, int ret);
+
 t_simple_command	*ft_get_simple_command(char *str, char **env);
 
 int					ft_strcmp(char *s1, char *s2);
@@ -151,6 +153,8 @@ void				ft_cp_env(char **sorted, char **env);
 void				ft_write_wfolder(char *str, int i);
 
 char				*make_pwd(char *prefix);
+
+int					soft_quit(char **temp_env, int ret);
 
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
 

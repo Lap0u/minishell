@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:41:39 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:37:20 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,10 @@ int	check_syntax(t_token *arr_tok, int nbr_tokens)
 int	main(int ac, char **av, char **env)
 {	
 	char				*cmd;
-	t_token				*arr_tok;
 	char				**temp_env;
-	t_simple_command	*c_table;
 	int					temp_ret;
 	int					nbr_tokens;
 
-	c_table = NULL;
 	temp_ret = 0;
 	if (ac != 1 || !av[0])
 		return (write(2, "No arguments for this beauty\n", 30));
@@ -98,42 +95,16 @@ int	main(int ac, char **av, char **env)
 	{
 		cmd = readline(PROMPT);
 		if (cmd == NULL)
-		{
-			rl_clear_history();
-			ft_free_2dstr(temp_env);
-			return (temp_ret);
-		}
+			return (soft_quit(temp_env, temp_ret));
 		else if (ft_check_space(cmd) == 1)
 		{
-			nbr_tokens = nbr_words(cmd);
-			printf("nbr = %d\n", nbr_tokens);
+			nbr_tokens = nbr_words(cmd);//////debug
+			printf("nbr = %d\n", nbr_tokens);//////
 			if (nbr_tokens >= 0)
-			{
-				arr_tok = ft_split_tokens(cmd, nbr_tokens);
-				typification(arr_tok, nbr_tokens);
-				if (check_syntax(arr_tok, nbr_tokens))
-				{
-					c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);
-					if (c_table == NULL)
-					{
-						free(cmd);
-						return (0);
-					}
-					if (c_table->infile == -42000 || c_table->outfile == -42000 || c_table->args_num == 0)
-						c_table->last_ret = 1;
-					else
-						c_table->last_ret = ft_pipe(c_table);
-					temp_env = c_table->env;
-					temp_ret = c_table->last_ret;
-					ft_proper_free(c_table);
-					c_table = NULL;
-				}
-				else
-					temp_ret = 2;
-				add_history(cmd);
-			}
+				temp_ret = launch_start(cmd, nbr_words(cmd),
+						&temp_env, temp_ret);
 		}
-		free(cmd);///res de readline a free
+		free(cmd);
 	}
 	rl_clear_history();
 	return (0);
