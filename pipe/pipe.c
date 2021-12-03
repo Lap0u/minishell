@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 13:39:36 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 14:27:47 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,11 @@ int	ft_lstcmd(t_simple_command *list)
 	i = 0;
 	while (list)
 	{
+		list->pos = i;
 		i++;
 		list = list->next;
 	}
 	return (i);
-}
-
-void	add_pos(t_simple_command *list)
-{
-	int	i;
-
-	i = 0;
-	while (list)
-	{
-		list->pos = i;
-		list = list->next;
-		i++;
-	}
 }
 
 void	close_pipes(int *tab, int size)
@@ -57,76 +45,13 @@ int	ft_pipe(t_simple_command *c_table)
 
 	i = 0;
 	if (c_table->next == NULL)
-	{
-		if (ft_isbuiltin(c_table->cmd))
-			ft_split_builtin(&c_table);
-		else
-			ft_exec_bin(c_table, c_table->env);
-		return (c_table->last_ret);
-	}
-	add_pos(c_table);
+		return (onec_exec(c_table));
 	nbr_sent = ft_lstcmd(c_table);
-	childs = malloc(sizeof(pid_t) * nbr_sent);
-	if (childs == NULL)
-	{
-		perror("minishell: malloc");
-		return (112);
-	}
-	pipefd = malloc(sizeof(int) * nbr_sent * 2);
-	if (pipefd == NULL)
-	{
-		perror("minishell: malloc");
-		free(childs);
-		return (112);
-	}
-	while (i < nbr_sent)
-	{
-		if (pipe(pipefd + i * 2) < 0)
-		{
-			perror("minishell: pipe");
-			return (112);
-		}
-		i++;
-	}
-	i = 0;
-	while (c_table)
-	{
-		childs[i / 2] = fork();
-		if (childs[i / 2] < 0)
-		{
-			perror("minishell: fork");
-			return (112);
-		}
-		if (childs[i / 2] == 0)
-		{
-			if (i != 0)
-			{
-				if (dup2(pipefd[i - 2], STDIN_FILENO) < 0)
-				{
-					perror("minishell: dup4");
-					return (112);
-				}
-			}
-			if (c_table->next != NULL)
-			{
-				if (dup2(pipefd[i + 1], STDOUT_FILENO) < 0)
-				{
-					perror("minishell: dup3");
-					return (112);
-				}
-			}
-			close_pipes(pipefd, nbr_sent);
-			if (ft_isbuiltin(c_table->cmd))
-			{
-				ft_split_builtin(&c_table);
-				exit(c_table->last_ret);
-			}
-			else
-				ft_bin_nofork(c_table, c_table->env);
-		}
-		i += 2;
-		c_table = c_table->next;
-	}
+	childs = init_childs(nbr_sent);
+	pipefd = init_pipes(nbr_sent, childs);
+	if (childs == NULL || pipefd == NULL)
+		return (1);
+	launch_exec(c_table, childs, pipefd, nbr_sent);
 	close_pipes(pipefd, nbr_sent);
 	free(pipefd);
 	i = 0;

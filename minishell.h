@@ -115,6 +115,17 @@ void				write_heredoc(char *delim, int ret);
 
 int					ft_pipe(t_simple_command *c_table);
 
+int					onec_exec(t_simple_command *c_table);
+
+void				close_pipes(int *tab, int size);
+
+int					*init_pipes(int nbr_sent, pid_t *childs);
+
+pid_t				*init_childs(int nbr_sent);
+
+void				launch_exec(t_simple_command *c_table, pid_t *childs,
+						int *pipefd, int size);
+
 void				ft_free_2dstr(char **str);
 
 void				ft_bin_nofork(t_simple_command *c_table, char **env);
