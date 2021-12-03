@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 11:48:08 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:35:53 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 {
 	int		ret;
-	char	*str;
 	char	*temp_name;
 	char	*index;
 
@@ -78,18 +77,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	ret = open(temp_name, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 		return (ft_close_prev(c_table));
-	while (1)
-	{
-		str = readline("> ");
-		if (strcmp(str, delim) == 0)
-		{
-			free(str);
-			break ;
-		}
-		write(ret, str, ft_strlen(str));
-		write(ret, "\n", 1);
-		free(str);
-	}
+	write_heredoc(delim, ret);
 	close (ret);
 	ret = open(temp_name, O_RDONLY);
 	free(temp_name);

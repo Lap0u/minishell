@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 14:05:03 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:36:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,22 @@ void	ft_close_prev(t_simple_command *c_table)
 		close(c_table->infile);
 	c_table->outfile = -42000;
 	c_table->infile = -42000;
+}
+
+void	write_heredoc(char *delim, int ret)
+{
+	char	*str;
+
+	while (1)
+	{
+		str = readline("> ");
+		if (strcmp(str, delim) == 0)
+		{
+			free(str);
+			break ;
+		}
+		write(ret, str, ft_strlen(str));
+		write(ret, "\n", 1);
+		free(str);
+	}
 }

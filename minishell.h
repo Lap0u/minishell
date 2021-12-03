@@ -82,7 +82,7 @@ void				ft_bi_cd(t_simple_command *c_table);
 
 int					cd_path(t_simple_command *c_table, char **path, char *temp);
 
-void				add_pwds(t_simple_command *c_table, char 
+void				add_pwds(t_simple_command *c_table, char
 						*oldpwd, char *newpwd);
 
 void				ft_bi_pwd(t_simple_command *c_table);
@@ -111,10 +111,9 @@ char				**ft_copy_env(char **env);
 
 void				ft_open_files(t_simple_command *c_table, t_redir *list);
 
-int					ft_pipe(t_simple_command *c_table);
+void				write_heredoc(char *delim, int ret);
 
-void				ft_proccessing(t_simple_command *c_table, int *right,
-						int *left);
+int					ft_pipe(t_simple_command *c_table);
 
 void				ft_free_2dstr(char **str);
 
