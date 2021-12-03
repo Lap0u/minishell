@@ -82,10 +82,8 @@ int	main(int ac, char **av, char **env)
 			printf("nbr = %d\n", nbr_tokens);
 			if (nbr_tokens >= 0)
 			{
-				arr_tok = ft_split_tokens(cmd);
-				int i = 0;
+				arr_tok = ft_split_tokens(cmd, nbr_tokens);
 				typification(arr_tok, nbr_tokens);
-				i = 0;
 				if (check_syntax(arr_tok, nbr_tokens))
 				{
 					c_table = creation_list_command(arr_tok, nbr_tokens, temp_env, temp_ret);

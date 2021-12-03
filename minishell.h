@@ -159,26 +159,39 @@ int 				check_syntax(t_token *arr_tok, int nbr_tokens);
 int		what_is_len_s_quotes(char *str);
 int		what_is_len_double_quotes(char *str);
 int		what_is_len_simple(char *str);
+int		what_is_len_dollar(char *str);
+int		what_is_len_redir(char *str);
+
+void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
+
+void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y);
+void	make_str_redir(char *str, t_token *my_arr, int *i, int *y);
+
+
 int		what_is_len(char *str, int fl_quotes);
 char	*make_str(char *str, int fl_quotes);
 void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y);
 void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
+void	make_str_double_quote_filled(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
 void	make_str_simple(char *str, t_token *my_arr, int *i, int *y);
 void	typification(t_token *my_arr, int nbr_token);
-t_token	*ft_split_tokens(char *str);
+t_token	*ft_split_tokens(char *str, int nbr_tokens);
 int	nbr_spaces_add(char *str);
 
 /*parsing/lexer/nbr_tockens.c*/
 
-int					ft_strlen(const char *s);
 int					in_charset(char letter);
-int					nbr_words_s_quotes(char const *str, int *i);
-int					nbr_words_dollar(char const *str, int *i);
-int					nbr_words_double_quotes(char const *str, int *i);
-int					nbr_words(char const *str);
+int					nbr_words_simple(char const *str, int *i);
 int					nbr_words_redir(char const *str, int *i);
+int					nbr_words_dollar(char const *str, int *i);
+int					nbr_words(char const *str);
+
+
+/*parsing/lexer/nbr_words_quotes.c*/
+int					nbr_words_s_quotes(char const *str, int *i);
+int					nbr_words_double_quotes(char const *str, int *i);
 
 
 /*parsing/lexer/which_type_is_it.c*/
