@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 15:37:20 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:54:54 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	main(int ac, char **av, char **env)
 			nbr_tokens = nbr_words(cmd);//////debug
 			printf("nbr = %d\n", nbr_tokens);//////
 			if (nbr_tokens >= 0)
-				temp_ret = launch_start(cmd, nbr_words(cmd),
-						&temp_env, temp_ret);
+				launch_start(cmd, nbr_words(cmd),
+						&temp_env, &temp_ret);
 		}
 		free(cmd);
 	}

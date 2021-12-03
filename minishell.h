@@ -62,7 +62,7 @@ typedef struct s_token
 	int		fl_space;
 }				t_token;
 
-int					launch_start(char *cmd, int nbr_tok, char ***env, int ret);
+void				launch_start(char *cmd, int nbr_tok, char ***env, int *ret);
 
 t_simple_command	*ft_get_simple_command(char *str, char **env);
 

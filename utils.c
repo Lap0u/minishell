@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 15:41:47 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:54:01 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int	launch_start(char *cmd, int nbr_tok, char ***env, int ret)
+void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 {
 	t_token				*arr_tok;
 	t_simple_command	*c_table;
@@ -65,7 +65,7 @@ int	launch_start(char *cmd, int nbr_tok, char ***env, int ret)
 	arr_tok = ft_split_tokens(cmd, nbr_tok);
 	if (check_syntax(arr_tok, nbr_tok))
 	{
-		c_table = creation_list_command(arr_tok, nbr_tok, *env, ret);
+		c_table = creation_list_command(arr_tok, nbr_tok, *env, *ret);
 		if (c_table == NULL)
 			exit_free_val(cmd, 0);
 		if (c_table->infile == -42000 || c_table->outfile == -42000
@@ -73,13 +73,12 @@ int	launch_start(char *cmd, int nbr_tok, char ***env, int ret)
 			c_table->last_ret = 1;
 		else
 			c_table->last_ret = ft_pipe(c_table);
-		env = &c_table->env;
-		ret = c_table->last_ret;
+		*env = c_table->env;
+		*ret = c_table->last_ret;
 		ft_proper_free(c_table);
 		c_table = NULL;
 	}			
 	else
-		ret = 2;
+		*ret = 2;
 	add_history(cmd);
-	return (ret);
 }
