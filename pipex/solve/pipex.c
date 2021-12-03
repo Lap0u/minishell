@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 12:12:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/09/28 12:29:21 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:59:00 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_pipex(t_vars *vars, char **envp)
 	pipe(end);
 	child1 = fork();
 	if (child1 < 0)
-		return (perror("Fork : "));
+		return (perror("minishell: fork"));
 	if (child1 == 0)
 		ft_1process(vars, end, envp);
 	child2 = fork();
 	if (child2 < 0)
-		return (perror("Fork : "));
+		return (perror("minishell: fork"));
 	if (child2 == 0)
 		ft_2process(vars, end, envp);
 	close(end[0]);

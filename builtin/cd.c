@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 15:45:56 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:53:31 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*make_pwd(char *prefix)
 
 	if (!getcwd(wd, PATH_MAX))
 	{
-		perror("Error");
+		perror("minishell: error");
 		return (NULL);
 	}
 	if (prefix)
@@ -52,7 +52,6 @@ char	*make_pwd(char *prefix)
 	else
 		return (ft_strdup(wd));
 }
-
 
 void	cd_curpath(t_simple_command *c_table)
 {
@@ -106,7 +105,7 @@ void	cd_classic(t_simple_command *c_table)
 	cd_curpath(c_table);
 }
 
-void	ft_bi_cd(t_simple_command *c_table) //pb avec env absolu update des vars PWD OLD PWD etc voir man
+void	ft_bi_cd(t_simple_command *c_table)
 {
 	char	*oldpwd;
 	char	*newpwd;

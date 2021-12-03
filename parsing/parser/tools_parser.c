@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_parser.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 12:15:31 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/12/03 12:17:33 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	print_args(t_simple_command *start)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("ARGS : ");
@@ -13,24 +25,24 @@ void	print_args(t_simple_command *start)
 	printf("\n");
 }
 
-void	print_redir(t_simple_command *start)
+void	print_redir(t_simple_command *c)
 {
 	t_redir	*save;
 
-	save = start->redir;
+	save = c->redir;
 	printf("REDIR : 0 = out    1 = in    2 = out_append    3 = here_doc\n");
-	while (start->redir)
+	while (c->redir)
 	{
-		printf("type : %d  vers file : %s\t", start->redir->type, start->redir->file);
-		start->redir = start->redir->next;
+		printf("type : %d  vers file : %s\t", c->redir->type, c->redir->file);
+		c->redir = c->redir->next;
 	}
 	printf("\n\n");
-	start->redir = save;
+	c->redir = save;
 }
 
 void	ft_print_sentences(t_simple_command *start)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (start)
@@ -46,9 +58,9 @@ void	ft_print_sentences(t_simple_command *start)
 
 char	*ft_var_only(char *str)
 {
-	int i;
-	int end;
-	char *res;
+	int		i;
+	int		end;
+	char	*res;
 
 	i = 0;
 	end = 0;
@@ -70,9 +82,9 @@ char	*ft_var_only(char *str)
 
 char	*ft_add_var(char *str)
 {
-	int i;
-	char *res;
-	int	j;
+	int		i;
+	char	*res;
+	int		j;
 
 	i = 0;
 	while ((ft_strncmp(str + i, "=", 1) != 0) && str[i])
@@ -90,11 +102,12 @@ char	*ft_expand_dollar(char *str, int mode, char **env, int ret)
 {
 	int		i;
 	char	*temp;
-	
+
 	i = 0;
 	if (str)
 	{
-		if ((str[0] != '$' || mode == 8 || mode == 1) || (str[0] == '$' && !str[1]))
+		if ((str[0] != '$' || mode == 8 || mode == 1)
+			|| (str[0] == '$' && !str[1]))
 			return (str);
 		if (ft_strcmp("$?", str) == 0)
 		{
@@ -116,12 +129,11 @@ char	*ft_expand_dollar(char *str, int mode, char **env, int ret)
 		}
 	}
 	return (NULL);
-
 }
 
 void	ft_free_redir(t_redir **list)
 {
-	t_redir *temp;
+	t_redir	*temp;
 
 	if (*list == NULL)
 		return ;

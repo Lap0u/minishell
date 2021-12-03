@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 10:55:37 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/09/27 15:44:02 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:58:32 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_dup2_fail(t_vars *vars)
 	if (vars->path != NULL)
 		ft_free_3dtab(vars->path);
 	free(vars);
-	perror("Error dup2, exiting with error code ");
+	perror("minishell: dup2");
 	exit(EXIT_SUCCESS);
 }
 

@@ -6,23 +6,23 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 14:04:57 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:30:12 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 #include "libft/libft.h"
 
-int	ft_get_args_size(char **args)
+int	ft_2dlen(char **tab)
 {
 	int	i;
 
-	if (!args)
-		return (-1);
 	i = 0;
-	while (args[i] != NULL)
+	if (!tab)
+		return (-1);
+	while (tab[i])
 		i++;
-	return (i - 1);
+	return (i);
 }
 
 int	ft_strcmp(char *s1, char *s2)

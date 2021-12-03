@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:21:43 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/09/28 12:33:11 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:59:26 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_1process(t_vars *vars, int end[2], char **envp)
 	if (ret < 0)
 		ft_dup2_fail(vars);
 	execve(vars->arg1[0], vars->arg1, envp);
-	perror("error ");
+	perror("minishell: execve");
 	free(vars);
 }
 
@@ -44,6 +44,6 @@ void	ft_2process(t_vars *vars, int end[2], char **envp)
 		ft_dup2_fail(vars);
 	close(vars->fd2);
 	execve(vars->arg2[0], vars->arg2, envp);
-	perror("ERROR ");
+	perror("minishell: execve");
 	free(vars);
 }

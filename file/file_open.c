@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 14:03:46 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 11:48:08 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	ft_add_input(char *file, t_simple_command *c_table)
 
 	ret = open(file, O_RDONLY);
 	if (ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}
+		return (ft_close_prev(c_table));
 	if (c_table->infile != -21000)
 		close(c_table->infile);
 	c_table->infile = ret;
@@ -43,10 +40,7 @@ void	ft_add_output(char *file, t_simple_command *c_table)
 	}
 	ret = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}	
+		return (ft_close_prev(c_table));
 	if (c_table->outfile >= 0)
 		close(c_table->outfile);
 	c_table->outfile = ret;
@@ -61,15 +55,11 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 	if (folder)
 	{
 		closedir(folder);
-		ft_close_prev(c_table);
-		return ;
+		return (ft_close_prev(c_table));
 	}
 	ret = open(file, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}	
+		return (ft_close_prev(c_table));
 	if (c_table->outfile >= 0)
 		close(c_table->outfile);
 	c_table->outfile = ret;
@@ -87,11 +77,8 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	free(index);
 	ret = open(temp_name, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}
-	while (1) /////voir quoi faire avec ctrl+D
+		return (ft_close_prev(c_table));
+	while (1)
 	{
 		str = readline("> ");
 		if (strcmp(str, delim) == 0)
@@ -103,16 +90,13 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 		write(ret, "\n", 1);
 		free(str);
 	}
-	if (c_table->infile >= 0)
-		close(c_table->infile);
 	close (ret);
 	ret = open(temp_name, O_RDONLY);
 	free(temp_name);
 	if (ret < 0)
-	{
-		ft_close_prev(c_table);
-		return ;
-	}
+		return (ft_close_prev(c_table));
+	if (c_table->infile >= 0)
+		close(c_table->infile);
 	c_table->infile = ret;
 }
 

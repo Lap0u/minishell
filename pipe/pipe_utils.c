@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 13:31:20 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:56:11 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
 		ret = dup2(left[0], STDOUT_FILENO);
 		if (ret < 0)
 		{
-			perror("dup3 ");
-			exit(42); /////a check
+			perror("minishell: dup3");
+			exit(1);
 		}
 	}
 	if (c_table->previous != NULL)
@@ -36,8 +36,8 @@ void	ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
 		ret = dup2(right[1], STDIN_FILENO);
 		if (ret < 0)
 		{
-			perror("dup4 ");
-			exit(42); ////tout exit
+			perror("minishell: dup4");
+			exit(1);
 		}
 	}
 	if (c_table->infile == -42000 || c_table->outfile == -42000)
@@ -47,7 +47,7 @@ void	ft_proccessing(t_simple_command *c_table, int right[2], int left[2])
 	}
 	if (ft_isbuiltin(c_table->cmd))
 		ft_split_builtin(&c_table);
-	else//les builtins et exec doivent renvoyer une valeur de retour pour $?
+	else
 		ft_exec_bin(c_table, c_table->env);
 	close(right[1]);
 	close(left[0]);

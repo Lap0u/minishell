@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/01 10:31:13 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:57:32 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	ft_pipe(t_simple_command *c_table)
 	childs = malloc(sizeof(pid_t) * nbr_sent);
 	if (childs == NULL)
 	{
-		perror("Malloc: ");
+		perror("minishell: malloc");
 		return (112);
 	}
 	pipefd = malloc(sizeof(int) * nbr_sent * 2);
 	if (pipefd == NULL)
 	{
-		perror("Malloc:");
+		perror("minishell: malloc");
 		free(childs);
 		return (112);
 	}
@@ -83,7 +83,7 @@ int	ft_pipe(t_simple_command *c_table)
 	{
 		if (pipe(pipefd + i * 2) < 0)
 		{
-			perror("Pipe:");
+			perror("minishell: pipe");
 			return (112);
 		}
 		i++;
@@ -94,7 +94,7 @@ int	ft_pipe(t_simple_command *c_table)
 		childs[i / 2] = fork();
 		if (childs[i / 2] < 0)
 		{
-			perror ("fork: ");
+			perror("minishell: fork");
 			return (112);
 		}
 		if (childs[i / 2] == 0)
@@ -103,7 +103,7 @@ int	ft_pipe(t_simple_command *c_table)
 			{
 				if (dup2(pipefd[i - 2], STDIN_FILENO) < 0)
 				{
-					perror("Dup4: ");
+					perror("minishell: dup4");
 					return (112);
 				}
 			}
@@ -111,7 +111,7 @@ int	ft_pipe(t_simple_command *c_table)
 			{
 				if (dup2(pipefd[i + 1], STDOUT_FILENO) < 0)
 				{
-					perror("Dup3: ");
+					perror("minishell: dup3");
 					return (112);
 				}
 			}

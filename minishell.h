@@ -62,7 +62,6 @@ typedef struct s_token
 	int		fl_space;
 }				t_token;
 
-
 t_simple_command	*ft_get_simple_command(char *str, char **env);
 
 int					ft_strcmp(char *s1, char *s2);
@@ -138,10 +137,9 @@ void				ft_write_wfolder(char *str, int i);
 
 char				*make_pwd(char *prefix);
 
-int 				check_syntax(t_token *arr_tok, int nbr_tokens);
+int					check_syntax(t_token *arr_tok, int nbr_tokens);
 
 /*parsing*/
-
 
 # define COMMANDE 1
 # define FLAG 2
@@ -156,29 +154,34 @@ int 				check_syntax(t_token *arr_tok, int nbr_tokens);
 # define COMMANDE 1
 
 /*parsing/lexer/ft_split_tokens.c*/
-int		what_is_len_s_quotes(char *str);
-int		what_is_len_double_quotes(char *str);
-int		what_is_len_simple(char *str);
-int		what_is_len_dollar(char *str);
-int		what_is_len_redir(char *str);
+int					what_is_len_s_quotes(char *str);
+int					what_is_len_double_quotes(char *str);
+int					what_is_len_simple(char *str);
+int					what_is_len_dollar(char *str);
+int					what_is_len_redir(char *str);
 
-void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
+void				check_str_double_quote(char *str, t_token *my_arr,
+						int *i, int *y);
 
-void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y);
-void	make_str_redir(char *str, t_token *my_arr, int *i, int *y);
+void				make_str_dollar_filled(char *str, t_token *my_arr,
+						int *i, int *y);
+void				make_str_redir(char *str, t_token *my_arr, int *i, int *y);
 
-
-int		what_is_len(char *str, int fl_quotes);
-char	*make_str(char *str, int fl_quotes);
-void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y);
-void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y);
-void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
-void	make_str_double_quote_filled(char *str, t_token *my_arr, int *i, int *y);
-void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y);
-void	make_str_simple(char *str, t_token *my_arr, int *i, int *y);
-void	typification(t_token *my_arr, int nbr_token);
-t_token	*ft_split_tokens(char *str, int nbr_tokens);
-int	nbr_spaces_add(char *str);
+int					what_is_len(char *str, int fl_quotes);
+char				*make_str(char *str, int fl_quotes);
+void				make_str_dollar(char *str, t_token *my_arr, int *i, int *y);
+void				make_str_s_quotes(char *str, t_token *my_arr,
+						int *i, int *y);
+void				check_str_double_quote(char *str, t_token *my_arr,
+						int *i, int *y);
+void				make_str_double_quote_filled(char *str, t_token *my_arr,
+						int *i, int *y);
+void				make_str_double_quote(char *str, t_token *my_arr,
+						int *i, int *y);
+void				make_str_simple(char *str, t_token *my_arr, int *i, int *y);
+void				typification(t_token *my_arr, int nbr_token);
+t_token				*ft_split_tokens(char *str, int nbr_tokens);
+int					nbr_spaces_add(char *str);
 
 /*parsing/lexer/nbr_tockens.c*/
 
@@ -188,11 +191,9 @@ int					nbr_words_redir(char const *str, int *i);
 int					nbr_words_dollar(char const *str, int *i);
 int					nbr_words(char const *str);
 
-
 /*parsing/lexer/nbr_words_quotes.c*/
 int					nbr_words_s_quotes(char const *str, int *i);
 int					nbr_words_double_quotes(char const *str, int *i);
-
 
 /*parsing/lexer/which_type_is_it.c*/
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -200,7 +201,8 @@ int					which_type(t_token *my_arr);
 void				typification(t_token *my_arr, int nbr_token);
 
 /*parsing/parser/preparsing.c*/
-t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int ret);
+t_simple_command	*new_elem(t_token *arr_tok, int index, int len,
+						char **env, int ret);
 void				add_new_elem(t_simple_command **st, t_token *arr_tok,
 						int ind, int len, char **env, int ret);
 void				add_env_in_elem(t_simple_command *lst_command, char **env);

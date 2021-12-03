@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stock.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 12:29:09 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/12/03 12:30:58 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 int	nbr_words_double_quotes(char const *str, int *i)
 {
 	int	words;
@@ -28,7 +40,7 @@ int	nbr_words_double_quotes(char const *str, int *i)
 			*i = *i + 1;
 		if (str[*i - 1] != '"')
 		{
-			write(2,"Error: There is not second duble quotes\n", 40);
+			write(2, "Error: There is not second duble quotes\n", 40);
 			exit(1);
 		}
 	}
@@ -37,3 +49,4 @@ int	nbr_words_double_quotes(char const *str, int *i)
 		words++;
 		*i = *i + 2;
 	}
+}

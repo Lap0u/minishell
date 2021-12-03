@@ -15,8 +15,8 @@
 
 void	ft_del_heredoc(int index)
 {
-	char *ind;
-	char *file;
+	char	*ind;
+	char	*file;
 
 	ind = ft_itoa(index);
 	file = ft_strjoin("file/.heredoc", ind);

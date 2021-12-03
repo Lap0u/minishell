@@ -6,15 +6,15 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/02 14:56:51 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:15:21 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void				ft_free_arrtok(t_token *tab, int size)
+void	ft_free_arrtok(t_token *tab, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)
@@ -38,8 +38,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int
 		my_elem->redir = ft_fill_redir(arr_tok, index, len, env, ret);
 		my_elem->args = ft_fill_args(arr_tok, index, len, env, ret);
 		my_elem->cmd = my_elem->args[0];
-		my_elem->args_num = ft_get_args_size(my_elem->args);
-		my_elem->args_num = ft_2dlen(my_elem->args); ////
+		my_elem->args_num = ft_2dlen(my_elem->args);
 		my_elem->next = (void *)0;
 	}
 	return (my_elem);
@@ -47,7 +46,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int
 
 void	add_new_elem(t_simple_command **st, t_token *arr_tok, int ind, int len, char **env, int ret)
 {
-	t_simple_command *save;
+	t_simple_command	*save;
 
 	save = *st;
 	while (save->next)
@@ -66,17 +65,17 @@ void	add_env_in_elem(t_simple_command *lst_command, char **env)
 	{
 		temp->env = env;
 		temp->pos = i++;
-		ft_open_files(temp, temp->redir); // a voir!!!
+		ft_open_files(temp, temp->redir);
 		temp = temp->next;
 	}
 }
 
-t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **env, int last_ret)
+t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len, char **env, int last_ret)
 {
-	int nbr_elem;
+	int					nbr_elem;
 	t_simple_command	*lst_command;
-	int	i;
-	int index;
+	int					i;
+	int					index;
 
 	index = 0;
 	nbr_elem = nbr_pipe(arr_tok, arr_len);
@@ -96,5 +95,5 @@ t_simple_command *creation_list_command(t_token *arr_tok, int arr_len, char **en
 	}
 	add_env_in_elem(lst_command, env);
 	ft_free_arrtok(arr_tok, arr_len);
-	return (lst_command);////
+	return (lst_command);
 }

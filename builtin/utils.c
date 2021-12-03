@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/25 14:01:12 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:54:18 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_split_builtin(t_simple_command **c_table)
 	{
 		ret = dup2((*c_table)->outfile, STDOUT_FILENO);
 		if (ret < 0)
-			perror("Error");
+			perror("minishell: error");
 	}
 	if (ft_strcmp((*c_table)->cmd, "echo") == 0)
 		ft_bi_echo(*c_table);
@@ -59,5 +59,5 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_exit(*c_table);
 	ret = dup2(stdout, STDOUT_FILENO);
 	if (ret < 0)
-		perror("Error");
+		perror("minishell: error");
 }

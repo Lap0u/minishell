@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_args_parser.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 11:55:46 by cbeaurai          #+#    #+#             */
+/*   Updated: 2021/12/03 12:06:29 by cbeaurai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-int		ft_count_args(t_token *arr_tok, int index, int len)
+int	ft_count_args(t_token *arr_tok, int index, int len)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (index < len && arr_tok[index].type != PIPE)
 	{
-		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
+		if (arr_tok[index].type >= RED_OUT
+			&& arr_tok[index].type <= RED_HERE_DOC)
 			index++;
 		else if (arr_tok[index].type == DOLLAR || arr_tok[index].type == ARG)
 			count++;
@@ -19,18 +32,19 @@ int		ft_count_args(t_token *arr_tok, int index, int len)
 int	do_var_existe(t_token **arr_tok, int len, char **env)
 {
 	int		i;
-	int 	y;
-	int 	count;
+	int		y;
+	int		count;
 	char	*str;
-	t_token *temp;
-	
+	t_token	*temp;
+
 	count = 0;
 	y = 0;
 	temp = *arr_tok;
 	while (y < len)
 	{
-		while (y < len && temp[y].type >= RED_OUT && temp[y].type <= RED_HERE_DOC)
-			y +=2;
+		while (y < len && temp[y].type >= RED_OUT
+			&& temp[y].type <= RED_HERE_DOC)
+			y += 2;
 		if (y == len)
 			break ;
 		if (temp[y].type == PIPE)
@@ -40,7 +54,9 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 		while (env[i])
 		{
 			str = ft_var_only(env[i]);
-			if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR && ft_strcmp(str, temp[y].value + 1) == 0) || ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
+			if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR
+					&& ft_strcmp(str, temp[y].value + 1) == 0)
+				|| ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
 			{
 				count++;
 				temp[y].subst = 1;
@@ -72,7 +88,6 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 	int		nbr_args;
 	int		i;
 
-	(void)ret; //utiliser pour expand $?
 	i = 0;
 	nbr_args = do_var_existe(&arr_tok, len, env);
 	args = malloc(sizeof(char *) * (nbr_args + 1));
@@ -84,11 +99,11 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 			index++;
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
-			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env, ret);//expand si dollar ou args=arr.value si arg
+			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env, ret);
 			// printf("args[i] = %s\n", args[i]);
-			while ((((arr_tok[index].fl_space == 0 && (arr_tok[index + 1].fl_quotes == 2 || arr_tok[index + 1].fl_quotes == 1)) 
-			&& index < (len - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (len - 1)))
-			&& ((arr_tok[index + 1].type < 5) || (arr_tok[index + 1].type > 8)))
+			while ((((arr_tok[index].fl_space == 0 && (arr_tok[index + 1].fl_quotes == 2 || arr_tok[index + 1].fl_quotes == 1))
+						&& index < (len - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (len - 1)))
+				&& ((arr_tok[index + 1].type < 5) || (arr_tok[index + 1].type > 8)))
 			{
 				// write(1, "jfjfj\n", 6);
 				temp = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index + 1].fl_quotes, env, ret);

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:48:17 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/30 11:18:14 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:27:01 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	ft_export_noarg(t_simple_command *c_table)
 		i++;
 	sorted = malloc(sizeof(char *) * (i + 1));
 	if (sorted == NULL)
-		return; //null;
+		return ;
 	ft_cp_env(sorted, c_table->env);
-	ft_sort_sorted(sorted); //add quote apres egal??
+	ft_sort_sorted(sorted);
 	i = 0;
 	while (sorted[i])
 	{

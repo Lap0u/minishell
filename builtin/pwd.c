@@ -6,13 +6,11 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/11/30 10:44:20 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:51:42 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 void	ft_bi_pwd(t_simple_command *c_table)
 {
@@ -20,8 +18,8 @@ void	ft_bi_pwd(t_simple_command *c_table)
 
 	if (!getcwd(wd, PATH_MAX))
 	{
-		perror("Error");
-		c_table->last_ret = 1;//quelle val
+		perror("minishell: error");
+		c_table->last_ret = 1;
 	}
 	else
 		printf("%s\n", wd);
