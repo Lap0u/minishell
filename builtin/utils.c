@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:54:18 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:18:30 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int	ft_isbuiltin(char *str)
 
 void	ft_split_builtin(t_simple_command **c_table)
 {
-	int	ret;
 	int	stdout;
 
 	stdout = dup(STDOUT_FILENO);
 	if ((*c_table)->outfile >= 0)
 	{
-		ret = dup2((*c_table)->outfile, STDOUT_FILENO);
-		if (ret < 0)
+		if (dup2((*c_table)->outfile, STDOUT_FILENO) < 0)
 			perror("minishell: error");
 	}
 	if (ft_strcmp((*c_table)->cmd, "echo") == 0)
@@ -57,7 +55,6 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_env(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
 		ft_bi_exit(*c_table);
-	ret = dup2(stdout, STDOUT_FILENO);
-	if (ret < 0)
+	if (dup2(stdout, STDOUT_FILENO) < 0)
 		perror("minishell: error");
 }

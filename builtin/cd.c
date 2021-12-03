@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:53:31 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:25:18 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	cd_classic(t_simple_command *c_table)
 	char	*temp;
 	int		i;
 	char	**path;
-	char	*complete;
 
 	i = 0;
-	while (c_table->env[i] && ft_strncmp(c_table->env[i], "CDPATH=", ft_strlen("CDPATH=")))
+	while (c_table->env[i] && ft_strncmp(c_table->env[i],
+			"CDPATH=", ft_strlen("CDPATH=")))
 		i++;
 	if (c_table->env[i] == NULL)
 	{
@@ -87,29 +87,14 @@ void	cd_classic(t_simple_command *c_table)
 	temp = ft_strjoin("/", c_table->args[1]);
 	path = ft_split(&c_table->env[i][7], ':');
 	i = 0;
-	while (path[i])
-	{
-		complete = ft_strjoin(path[i], temp);
-		c_table->last_ret = chdir(complete);
-		if (c_table->last_ret == 0)
-		{
-			ft_bi_pwd(c_table);
-			free(temp);
-			free(complete);
-			ft_free_3dtab(path);
-			return ;
-		}
-		free(complete);
-		i++;
-	}
-	cd_curpath(c_table);
+	if (cd_path(c_table, path, temp) == 0)
+		cd_curpath(c_table);
 }
 
 void	ft_bi_cd(t_simple_command *c_table)
 {
 	char	*oldpwd;
 	char	*newpwd;
-	int		i;
 
 	oldpwd = make_pwd("OLDPWD=");
 	if (c_table->args_num > 2)
@@ -129,19 +114,5 @@ void	ft_bi_cd(t_simple_command *c_table)
 		return ;
 	}
 	newpwd = make_pwd("PWD=");
-	i = 0;
-	while (c_table->env[i])
-	{
-		if (ft_strncmp("OLDPWD", c_table->env[i], ft_strlen("OLDPWD")) == 0)
-		{
-			free(c_table->env[i]);
-			c_table->env[i] = oldpwd;
-		}
-		else if (ft_strncmp("PWD=", c_table->env[i], ft_strlen("PWD=")) == 0)
-		{
-			free(c_table->env[i]);
-			c_table->env[i] = newpwd;
-		}
-		i++;
-	}
+	add_pwds(c_table, oldpwd, newpwd);
 }

@@ -80,6 +80,11 @@ void				ft_bi_echo(t_simple_command *c_table);
 
 void				ft_bi_cd(t_simple_command *c_table);
 
+int					cd_path(t_simple_command *c_table, char **path, char *temp);
+
+void				add_pwds(t_simple_command *c_table, char 
+						*oldpwd, char *newpwd);
+
 void				ft_bi_pwd(t_simple_command *c_table);
 
 void				ft_bi_export(t_simple_command **c_table);

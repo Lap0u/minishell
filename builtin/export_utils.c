@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:53:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:53:45 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:07:46 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	is_valid_export(char *str)
 	int	i;
 
 	i = 0;
-	if ((ft_isalpha(str[i]) == 0 && str[i] != '_') || (str[i] == '_' && str[i + 1] == 0))
+	if ((ft_isalpha(str[i]) == 0 && str[i] != '_')
+		|| (str[i] == '_' && str[i + 1] == 0))
 		return (1);
 	while (str[i] && str[i] != '=')
 	{
@@ -42,23 +43,24 @@ int	is_valid_export(char *str)
 	return (0);
 }
 
-void	ft_export_replace(char *str, char *full, t_simple_command **c_table, int i)///check comportement avec export ex et ex= et ex=1
+void	ft_export_replace(char *str, char *full,
+			t_simple_command **c_table, int i)
 {
-	if (str[0] == 0)///arg seul
+	if (str[0] == 0)
 		return ;
-	else if (str[0] == '=' && str[1] == 0)//arg= + rien
+	else if (str[0] == '=' && str[1] == 0)
 	{
 		free((*c_table)->env[i]);
 		(*c_table)->env[i] = ft_strdup(full);
 	}
-	else if (str[0] == '=' && str[1])//arg=xxx
+	else if (str[0] == '=' && str[1])
 	{
 		free((*c_table)->env[i]);
 		(*c_table)->env[i] = ft_strdup(full);
 	}
 	if ((*c_table)->env[i] != NULL)
 		(*c_table)->last_ret = 0;
-	else///a check
+	else
 	{
 		perror("minishell: malloc");
 		(*c_table)->last_ret = 1;
@@ -66,7 +68,7 @@ void	ft_export_replace(char *str, char *full, t_simple_command **c_table, int i)
 	}
 }
 
-void	ft_export_addone(char *str, char *full, t_simple_command **c_table)////check comportement avec export ex et ex= et ex=1
+void	ft_export_addone(char *str, char *full, t_simple_command **c_table)
 {
 	int		i;
 	char	**tab;
@@ -91,7 +93,7 @@ void	ft_export_addone(char *str, char *full, t_simple_command **c_table)////chec
 	tab[i + 1] = NULL;
 	free((*c_table)->env);
 	(*c_table)->env = tab;
-	(*c_table)->last_ret = 0;////checker les malloc foireux
+	(*c_table)->last_ret = 0;
 }
 
 void	ft_export_add(char *toadd, t_simple_command **c_table)
@@ -105,9 +107,6 @@ void	ft_export_add(char *toadd, t_simple_command **c_table)
 	i = 1;
 	while ((*c_table)->env[i])
 	{
-		// len = 0;
-		// while ((*c_table)->env[i][len] != '=' && (*c_table)->env[i][len])
-		// 	len++;
 		if (ft_strncmp(toadd, (*c_table)->env[i], len) == 0)
 		{
 			ft_export_replace(&toadd[len], toadd, c_table, i);
