@@ -17,7 +17,7 @@ int	is_nonewl(char *str, char c)
 	int i;
 
 	i = 1;
-	if (!str || str[0] != '-')
+	if (str == NULL || str[0] != '-')
 		return (0);
 	while (str[i])
 	{

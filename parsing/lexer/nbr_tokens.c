@@ -31,9 +31,11 @@ int	nbr_words_dollar(char const *str, int *i)
 		if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"')
 				|| (str[*i] == '\'' && str[*i + 1] == '\'')))
 			*i = *i + 2;
-		else if (str[*i] && (str[*i] == '?' || str[*i] == '0'))
-			*i = *i + 1;
-		else if (str[*i] && str[*i] != '$' && !ft_isdigit(str[*i]))
+		// else if (str[*i] && (str[*i] == '?' || str[*i] == '0'))
+		// 	*i = *i + 1;
+		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+			&& str[*i] != '$') && (!in_charset(str[*i]))
+		&& (str[*i] == '_' || ft_isalpha(str[*i])))
 		{
 				*i = *i + 1;
 			while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
@@ -43,7 +45,10 @@ int	nbr_words_dollar(char const *str, int *i)
 		}
 		else if (str[*i] && str[*i] == '$')
 			*i = *i + 1;
+		else if (str[*i])
+			*i = *i + 1;
 	}
+	printf("dollr words = %d, str = %c, i = %d\n", words, str[*i], *i);
 	return (words);
 }
 
