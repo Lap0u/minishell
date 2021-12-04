@@ -61,8 +61,16 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 {
 	t_token				*arr_tok;
 	t_simple_command	*c_table;
+	int					i;
 
+	i = 0;
 	arr_tok = ft_split_tokens(cmd, nbr_tok);
+	i = 0;
+	while (i < nbr_tok)/////debug
+	{
+		printf("arr_tok[i].value = %s, strlen = %d\n", arr_tok[i].value, ft_strlen(arr_tok[i].value));
+		i++;
+	}////FIN DEBUG
 	if (check_syntax(arr_tok, nbr_tok))
 	{
 		c_table = creation_list_command(arr_tok, nbr_tok, *env, *ret);

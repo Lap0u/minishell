@@ -41,6 +41,7 @@ int	what_is_len_double_quotes(char *str)
 	else
 	{
 		str++;
+		len++;
 		while (*str && *str != '"' && *str != '$')
 		{
 			len++;
@@ -83,7 +84,9 @@ int	what_is_len_dollar(char *str)
 		len++;
 	else if (*str && (*str == '_' || ft_isalpha(*str)))
 	{
-		while (*str && (*str == '_' || ft_isalpha(*str)))
+		len++;
+		str++;
+		while (*str && (*str == '_' || ft_isalpha(*str) || ft_isdigit(*str)))
 		{
 			len++;
 			str++;

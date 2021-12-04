@@ -18,9 +18,10 @@ void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y)
 			&& str[*i] != '$') && (!in_charset(str[*i]))
 		&& (str[*i] == '_' || ft_isalpha(str[*i])))
 	{
+		*i = *i + 1;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
 				&& str[*i] != '$') && (!in_charset(str[*i]))
-			&& (str[*i] == '_' || ft_isalpha(str[*i])))
+			&& (str[*i] == '_' || ft_isalpha(str[*i]) || ft_isdigit(str[*i])))
 			*i = *i + 1;
 	}
 	else
