@@ -12,12 +12,28 @@
 
 #include "../minishell.h"
 
+int	is_nonewl(char *str, char c)
+{
+	int i;
+
+	i = 1;
+	if (str[0] != '-')
+		return (0);
+	while (str[i])
+	{
+		if(str[i] != c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_bi_echo(t_simple_command *c_table)
 {
 	int	i;
 
 	i = 1;
-	if (ft_strcmp(c_table->args[1], "-n") == 0)
+	if (is_nonewl(c_table->args[1], 'n'))
 		i = 2;
 	while (c_table->args[i])
 	{
@@ -26,7 +42,7 @@ void	ft_bi_echo(t_simple_command *c_table)
 			write(1, " ", 1);
 		i++;
 	}
-	if (ft_strcmp(c_table->args[1], "-n") != 0)
+	if (is_nonewl(c_table->args[1], 'n') == 0)
 		write(1, "\n", 1);
 	c_table->last_ret = 0;
 }
