@@ -45,7 +45,8 @@ int	nbr_words_dollar(char const *str, int *i)
 		}
 		else if (str[*i] && str[*i] == '$')
 			*i = *i + 1;
-		else if (str[*i])
+		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+			&& str[*i] != '$'))
 			*i = *i + 1;
 	}
 	printf("dollr words = %d, str = %c, i = %d\n", words, str[*i], *i);
