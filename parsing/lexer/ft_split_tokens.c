@@ -72,19 +72,22 @@ void	make_str_body(char *arr, char *str, int *i, int len)
 
 int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 {
-	if (**str == '\'' && (**str + 1) == '\'')
+	printf("75: *str = %c, *str+1 = %c, str = %s\n", **str, *(*str + 1), *str);
+
+	if (**str == '\'' && *(*str + 1) == '\'')
 	{
 		arr[*i] = '\0';
 		return (0);
 	}
-	else if (**str == '"' && (**str + 1) == '"')
+	else if (**str == '"' && *(*str + 1) == '"')
 	{
+		printf("82\n");
 		arr[*i] = '\0';
 		return (0);
 	}
-	else if (**str == '\'' && (**str + 1) != '\'' && fl_quotes != 2)
+	else if (**str == '\'' && *(*str + 1) != '\'' && fl_quotes != 2)
 		*str = *str + 1;
-	else if (**str == '"' && (**str + 1) != '"')
+	else if (**str == '"' && *(*str + 1) != '"')
 		*str = *str + 1;
 	return (1);
 }

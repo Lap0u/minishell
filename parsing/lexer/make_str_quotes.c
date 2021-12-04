@@ -44,6 +44,7 @@ void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 {
 	if (str[*i + 1] != '$')
 	{
+		printf("47\n");
 		my_arr[*y].value = make_str(&str[*i], 2);
 		my_arr[*y].fl_quotes = 2;
 		my_arr[*y].fl_space = 0;
@@ -84,6 +85,7 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 		make_str_double_quote_filled(str, my_arr, i, y);
 	else if (str[*i] == '"' && str[*i + 1] == '"')
 	{
+		printf("88\n");
 		my_arr[*y].value = make_str(&str[*i], 1);
 		*i = *i + 2;
 		my_arr[*y].fl_quotes = 2;
