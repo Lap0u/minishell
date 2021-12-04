@@ -57,7 +57,9 @@ int	what_is_len_double_quotes(char *str)
 			len++;
 			str++;
 		}
+
 	}
+	printf("len = %d\n", len);
 	return (len);
 }
 
