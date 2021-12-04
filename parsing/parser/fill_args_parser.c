@@ -29,7 +29,7 @@ int	ft_count_args(t_token *arr_tok, int index, int len)
 	return (count);
 }
 
-int	do_var_existe(t_token **arr_tok, int len, char **env)
+int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 {
 	int		i;
 	int		y;
@@ -38,7 +38,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 	t_token	*temp;
 
 	count = 0;
-	y = 0;
+	y = index;
 	temp = *arr_tok;
 	while (y < len)
 	{
@@ -48,7 +48,8 @@ int	do_var_existe(t_token **arr_tok, int len, char **env)
 		if (y == len)
 			break ;
 		if (temp[y].type == PIPE)
-			y++;
+			return (count); //fix erreur segfault 
+			// y++;
 		temp[y].subst = 0;
 		i = 0;
 		while (env[i])
@@ -89,7 +90,7 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 	int		i;
 
 	i = 0;
-	nbr_args = do_var_existe(&arr_tok, len, env);
+	nbr_args = do_var_existe(&arr_tok, len, env, index);
 	args = malloc(sizeof(char *) * (nbr_args + 1));
 	if (args == (void *)0)
 		return ((void *)0);
