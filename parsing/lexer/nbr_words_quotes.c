@@ -44,6 +44,7 @@ int	mouve_index(char const *str, int *i)
 	int	words;
 
 	words = 0;
+	printf("mouve ind = %c, %i\n", str[*i], *i);
 	while (str[*i] && str[*i] != '"')
 	{
 		while (str[*i] && str[*i] != '"' && str[*i] != '$')

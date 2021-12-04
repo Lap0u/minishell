@@ -38,6 +38,16 @@ int	what_is_len_double_quotes(char *str)
 	len = 0;
 	if (*str == '\'' && *(str + 1) == '\'')
 		len++;
+	else if (*str == '"' && *(str + 1) != '"')
+	{
+		str++;
+		// len++;
+		while (*str && *str != '"' && *str != '$')
+		{
+			len++;
+			str++;
+		}
+	}
 	else
 	{
 		str++;
