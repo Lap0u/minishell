@@ -18,15 +18,15 @@ OK		EXIT STATUS	cd random_cmd ; echo $?	Doit afficher le code erreur de cd : 1
 OK		EXIT STATUS	cd random_cmd ; cd $?	exit 1 (deux erreurs affichées)			
 KO		EXIT STATUS	./file_that_is_not_an_executable	permission denied -> exit status = 126			
 OK		EXIT STATUS	cat bla	1			
-KO		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
+OK		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
 OK		EXIT STATUS	not_cmd	cmd not found -> exit status = 127			
 OK		EXIT STATUS	export test=a ; echo $test	affiche le contenu de test			
 OK		EXIT STATUS	ls bonjour ; echo $?	2			
 OK		EXPORT	export var=a ; export $var=test ; echo $var $a	a test			
 OK		EXPORT	export $var=test avec var unset	message d'erreur			
-KO		EXPORT	export la même variable	modifie la variable (si new value			
-KO		EXPORT	export var puis export var=test	verifier pas de doublon			
-KO(ret)	EXPORT	export "" test=a	export test=a et set $? à 1			
+OK		EXPORT	export la même variable	modifie la variable (si new value			
+OK		EXPORT	export var puis export var=test	verifier pas de doublon			
+OK		EXPORT	export "" test=a	export test=a et set $? à 1			
 OK		EXPORT	export "" test=a puis env				
 PAF		EXTRA	echo ~	/home/user42			facultatif
 PAF		EXTRA	export var=te"st PUIS echo $var	Multiligne			Pas à gérer
