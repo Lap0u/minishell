@@ -1,0 +1,118 @@
+OK		CD	cd ../../../../../..	pwd : /			
+OK		CD	cd /home/user42/	chemin absolu			
+OK		CD	cd $HOME/Bureau	accède au dossier Bureau			
+OK		CD	unset HOME; cd	HOME not set, exit 1			
+KO		CD	export HOME= ; cd	Ne se passe rien, exit 0			
+OK		CD	cd too many arguments	error message, exit 1			
+OK		CD	cd ./path_not_found	error message, exit 1			
+PAF		CD	cd -	Retour à OLD_PWD, écrit le CWD			
+Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro			
+OK		CD	cd home/.. avec CDPATH set à /	va a / et affiche /			
+OK		CD	cd home/dir avec CDPATH set à /	va a /home/dir			
+OK		CD	cd . avec CDPATH set	va a ./. (pas de recherche dans CDPATH)			
+OK		CD	cd .. avec CDPATH set	va a ./.. (pas de recherche dans CDPATH)			
+OK		ECHO	echo -n -n -nnnn -nnnnm ; echo a	-nnnnma			
+OK		ECHO	echo -n -nnn hello -n ; echo a	hello -na			
+OK		ENV	env puis export puis env	les variables ne doivent pas etre triées			
+OK		EXIT STATUS	cd random_cmd ; echo $?	Doit afficher le code erreur de cd : 1			
+OK		EXIT STATUS	cd random_cmd ; cd $?	exit 1 (deux erreurs affichées)			
+KO		EXIT STATUS	./file_that_is_not_an_executable	permission denied -> exit status = 126			
+OK		EXIT STATUS	cat bla	1			
+KO		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
+OK		EXIT STATUS	not_cmd	cmd not found -> exit status = 127			
+OK		EXIT STATUS	export test=a ; echo $test	affiche le contenu de test			
+OK		EXIT STATUS	ls bonjour ; echo $?	2			
+		EXPORT	export var=a ; export $var=test ; echo $var $a	a test			
+		EXPORT	export $var=test avec var unset	message d'erreur			
+		EXPORT	export la même variable	modifie la variable (si new value			
+		EXPORT	export var puis export var=test	verifier pas de doublon			
+		EXPORT	export "" test=a	export test=a et set $? à 1			
+		EXPORT	export "" test=a puis env				
+		EXTRA	echo ~	/home/user42			facultatif
+		EXTRA	export var=te"st PUIS echo $var	Multiligne			Pas à gérer
+		EXTRA	export var=te"st ; echo $var	Multiligne			Pas à gérer
+		EXTRA	.	exit 2			"." est un built in (alias for source) --> pas à gerer
+		INIT	env -i ./minishell	ouvre minishell dans un environement vierge			
+		INIT	$SHLVL	doit être incrémenté a chaque lancement de minishell			
+		INIT	env -i ./minishell puis echo $SHLVL	1			
+		PARSING	""	command not found - $?=127			
+		PARSING	echo "\s" ; echo "\\s"	should have the exact same output			
+ 		PARSING	echo "12\""	12"			
+		PARSING	echo "bip | bip ; coyotte > < \" "	[bip | bip ; coyotte >< " ]			
+		PARSING	echo \>	>			
+		PARSING	echo $USER$var\$USER$USER\$USERtest$USER	user42$USERuser42$USERtestuser42			
+		PARSING	echo bonjour \; ls	bonjour ; ls			
+		PARSING	$	command not found			
+		PARSING	$LESS$VAR	-R: command not found			
+		PARSING	..	cmd not found, exit 127			
+		PARSING	echo '"abc"'	"abc"			
+		PARSING	echo "'abc'"	['abc']			
+		PARSING (séparateurs)	echo "" bonjour	[ bonjour]			
+		PARSING (séparateurs)	echo[TAB]a	résultat attendu: [a]			
+		PARSING (séparateurs)	echo\ a	echo a': cmd not found			
+		PARSING (séparateurs)	export ""  et unset ""	erreur			
+		PARSING (séparateurs)	export "test=ici"=coucou ; echo $test	test="ici=coucou"			
+		PARSING (séparateurs)	export var="cat Makefile | grep >" ; echo $var	cat Makefile | grep >			
+		PIPE	cat | cat | cat | ls	ligne ls et 3 retour a la ligne via Entrer			
+		PIPE	cat Makefile | grep pr | head -n 5 | cd file_not_exit	file_not_exist: no such file... exit status: 1			
+		PIPE	cat Makefile | grep pr | head -n 5 | hello	hello: cmd not found... exit status: 127			
+		PIPE	ls | exit	n'affiche rien			
+		PIPE	sleep 5 | exit	n'affiche rien (attend 5 sec)			
+		REDIR	<a cat <b <c	seul le contenu de c est affiché			
+		REDIR	<a cat <b <c      avec b n'existe pas (ou pas les droits)	rien n'est affiché. message d'erreur concernant b			
+		REDIR	> test | echo blabla; rm test	blabla			
+		REDIR	>a cat <b >>c 	a est créé vide. c recoit le contenu de b			
+		REDIR	>a ls >b >>c >d	a, b, c et d sont créés. seul d recoit la redirection de ls			
+		REDIR	>a ls <machin >>c >d     avec machin n'exite pas	a est créé, il ne recoit pas la redirection (fichier vide). c et d non créés			
+		REDIR	>file	créé file (vide)			quand pas de commande, doit quand meme faire le redir
+		REDIR	cat -e > test1 < test2	meme si test2 n'existe pas test1 doit être créé			
+		REDIR	cat < test	aucun fichier ou dossier de ce type			
+		REDIR	echo 2 > out1 >> out2	efface out1			
+		REDIR	echo 2 >> out1 > out2	n'efface pas out1			
+		REDIR	echo bonjour > test\ 1	creation du fichier "test 1"			
+		REDIR	echo test > file test1	= echo test test1 > file			
+		REDIR	not_cmd bonjour > salut	create file but error msg on standard entry			
+		SIGNAUX	ctrl-\	exit 131 sur bin(ex : sleep 10)&line vide			
+		SIGNAUX	ctrl-C	exit 130 sur bin(ex : sleep 10)&line vide			
+		SUBST	export var="  truc"; echo $var	[truc]			
+		SUBST	export var="truc  "; echo $var | cat -e	[truc]			
+		SUBST	echo "$tests""Makefile"	[Makefile]			
+		SUBST	echo "$tests"Makefile	[Makefile]			
+		SUBST	echo "$tests" "Makefile"	[ Makefile]			
+		SUBST	$bla (non-export)	retour a la ligne, exit 0			
+		SUBST	echo $var bonjour ($var non export)	[bonjour]			
+		SUBST	export $var (var non export)	affiche export			
+		SUBST	export test=123\" ; echo $test	123"			
+ 		SUBST	export test=123\\ ; echo $test	123\			
+		SUBST	export test=123\' ; echo $test ; echo $test	123' 123'			
+		SUBST	export test="  foo    bar  " ; echo $test	[foo bar]			word spliting
+		SUBST	export test="  foo    bar  " ; echo ab$test	[ab foo bar]			word spliting
+		SUBST	export test="  foo    bar  " ; echo "ab"$test	[ab foo bar]			word spliting
+		SUBST	export test=" foo   bar " ; echo ab"$test" | cat -e	[ ab foo   bar ]			pas de word splitng
+		SUBST	export test=" foo   bar " ; echo "$test"	[ foo   bar ]			pas de word splitng
+		SUBST	export test=" foo   bar " ; echo ""$test""	[ foo bar ]			word splitng
+		SUBST	export test=" foo   bar " ; echo """$test"""	[ foo   bar ]			pas de word splitng
+		SUBST	export var= s\ -la ; l$var	equivalent à ls -al			word spliting (meme si l'espace est escaped, on split)
+		SUBST	export var=at ; c$var Makefile	equivalent a cat Makefile			
+		SUBST	export loop='bonjour$loop' ; echo $loop	bonjour$loop			
+		SUBST & REDIR	export test="file1 file2" ; >$test	$test: ambiguous redir			Si le word spliting du redir "expands to more than one word", error ambiguous redir
+		SUBST & REDIR	export test="file1 file2" ; >"$test"	[file1 file2] created			Si guillemets ("$test"), pas de word spliting
+		SUBST & REDIR	export test="file1 file2" ; >$test >hey	$test: ambiguous redir, hey n'est pas créé			
+		SUBST & REDIR	export test="file1 file2" ; >hey >$test	$test: ambiguous redir, hey est créé			
+		SYNTHAX	|	"synthax error" & exit 2			
+		SYNTHAX	echo bonjour ; |	"synthax error" & exit 2			
+		SYNTHAX	echo bonjour > > out	"synthax error" & exit 2			
+		SYNTHAX	echo bonjour > $test	"redirection ambigue" & exit 1			
+		SYNTHAX	echo bonjour > $test w/ test="o1 o2"	"redirection ambigue" & exit 1			
+		SYNTHAX	echo bonjour >>> test	"synthax error" & exit 2			
+		SYNTHAX	echo bonjour | |	"synthax error" & exit 2			
+		SYNTHAX	echo bonjour |;	"synthax error" & exit 2			
+ 		UNSET	unset PATH ; echo $PATH	\n			
+		UNSET	unset PATH ; ls	bash: ls: No such file or directory. Exit 127			
+		UNSET	unset "" test	unset test et set $? à 1			
+		UNSET	unset =	erreur et set $? à 1			
+		UNSET	unset PWD				
+		UNSET	unset var	var1 ne doit pas etre unset			
+		export $var=s\ -la ; l$var				
+		/bin/echo bonjour	affiche bonjour
+KO		/home/user42/	
