@@ -50,7 +50,7 @@ OK		PARSING	echo "'abc'"	['abc']
 OK		PARSING (séparateurs)	echo "" bonjour	[ bonjour]			
 ?		PARSING (séparateurs)	echo[TAB]a	résultat attendu: [a]			
 PAF		PARSING (séparateurs)	echo\ a	echo a': cmd not found			
-KO		PARSING (séparateurs)	export ""  et unset ""	erreur			
+OK		PARSING (séparateurs)	export ""  et unset ""	erreur			
 OK		PARSING (séparateurs)	export "test=ici"=coucou ; echo $test	test="ici=coucou"			
 OK		PARSING (séparateurs)	export var="cat Makefile | grep >" ; echo $var	cat Makefile | grep >			
 OK		PIPE	cat | cat | cat | ls	ligne ls et 3 retour a la ligne via Entrer			

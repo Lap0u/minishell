@@ -61,7 +61,8 @@ void	ft_bi_unset(t_simple_command **c_table)
 	(*c_table)->last_ret = 0;
 	while ((*c_table)->args[i])
 	{
-		if (is_in_env((*c_table)->args[i], (*c_table)->env))
+		if (is_in_env((*c_table)->args[i], (*c_table)->env) &&
+			is_valid_export((*c_table)->args[i]) == 0)
 			ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
 		else
 		{
