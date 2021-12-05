@@ -100,6 +100,7 @@ void	ft_export_arg(t_simple_command **c_table)
 
 void	ft_bi_export(t_simple_command **c_table)
 {
+	(*c_table)->last_ret = 0;
 	if ((*c_table)->args_num == 1)
 		ft_export_noarg(*c_table);
 	else

@@ -98,8 +98,9 @@ int	main(int ac, char **av, char **env)
 			return (soft_quit(temp_env, temp_ret));
 		else if (ft_check_space(cmd) == 1)
 		{
-			nbr_tokens = nbr_words(cmd);//////debug
-			printf("nbr = %d\n", nbr_tokens);//////
+			nbr_tokens = nbr_words(cmd);
+			// printf("nbr = %d\n", nbr_tokens);//////debug
+			add_history(cmd);
 			if (nbr_tokens >= 0)
 				launch_start(cmd, nbr_words(cmd),
 						&temp_env, &temp_ret);

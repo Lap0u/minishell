@@ -14,7 +14,7 @@
 
 void	execution(t_simple_command *c_table, char **env)
 {
-	if (access(c_table->args[0], X_OK) == 0 && c_table->args[0] != 0)
+	if (access(c_table->args[0], F_OK) == 0 && c_table->args[0] != 0) //FLAG pour fichier
 	{
 		if (c_table->outfile >= 0)
 		{
@@ -28,6 +28,7 @@ void	execution(t_simple_command *c_table, char **env)
 		}
 		execve(c_table->args[0], c_table->args, env);
 		perror("minishell :error execve");
+		exit(127); //126 si nom de fichier ou dossier et perror different
 	}
 	else
 	{
