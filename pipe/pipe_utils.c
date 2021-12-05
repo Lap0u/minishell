@@ -101,8 +101,9 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 				ft_split_builtin(&c_table);
 				exit(c_table->last_ret);
 			}
-			else
+			else if (c_table->args_num)
 				ft_bin_nofork(c_table, c_table->env);
+			exit(0);
 		}
 		i += 2;
 		c_table = c_table->next;
