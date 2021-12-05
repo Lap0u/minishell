@@ -2,10 +2,10 @@ OK		CD	cd ../../../../../..	pwd : /
 OK		CD	cd /home/user42/	chemin absolu			
 OK		CD	cd $HOME/Bureau	accède au dossier Bureau			
 OK		CD	unset HOME; cd	HOME not set, exit 1			
-KO		CD	export HOME= ; cd	Ne se passe rien, exit 0			
+OK		CD	export HOME= ; cd	Ne se passe rien, exit 0			
 OK		CD	cd too many arguments	error message, exit 1			
 OK		CD	cd ./path_not_found	error message, exit 1			
-PAF		CD	cd -	Retour à OLD_PWD, écrit le CWD			
+OK		CD	cd -	Retour à OLD_PWD, écrit le CWD			
 Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro			
 OK		CD	cd home/.. avec CDPATH set à /	va a / et affiche /			
 OK		CD	cd home/dir avec CDPATH set à /	va a /home/dir			
