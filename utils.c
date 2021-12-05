@@ -88,5 +88,4 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 	}			
 	else
 		*ret = 2;
-	add_history(cmd);
 }

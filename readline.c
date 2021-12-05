@@ -100,6 +100,7 @@ int	main(int ac, char **av, char **env)
 		{
 			nbr_tokens = nbr_words(cmd);//////debug
 			printf("nbr = %d\n", nbr_tokens);//////
+			add_history(cmd);
 			if (nbr_tokens >= 0)
 				launch_start(cmd, nbr_words(cmd),
 						&temp_env, &temp_ret);
