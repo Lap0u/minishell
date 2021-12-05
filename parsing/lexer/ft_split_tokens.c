@@ -72,8 +72,6 @@ void	make_str_body(char *arr, char *str, int *i, int len)
 
 int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 {
-	printf("75: *str = %c, *str+1 = %c, str = %s\n", **str, *(*str + 1), *str);
-
 	if (**str == '\'' && *(*str + 1) == '\'')
 	{
 		arr[*i] = '\0';
@@ -81,7 +79,6 @@ int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 	}
 	else if (**str == '"' && *(*str + 1) == '"')
 	{
-		printf("82\n");
 		arr[*i] = '\0';
 		return (0);
 	}

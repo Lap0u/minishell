@@ -68,7 +68,7 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 	i = 0;
 	while (i < nbr_tok)/////debug
 	{
-		printf("arr_tok[i].value = %s, strlen = %d\n", arr_tok[i].value, ft_strlen(arr_tok[i].value));
+		printf("arr_tok[i].value = %s, arr_tok[i].type = %d, strlen = %d\n", arr_tok[i].value, arr_tok[i].type, ft_strlen(arr_tok[i].value));
 		i++;
 	}////FIN DEBUG
 	if (check_syntax(arr_tok, nbr_tok))

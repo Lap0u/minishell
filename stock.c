@@ -17,7 +17,6 @@ int	nbr_words_double_quotes(char const *str, int *i)
 	words = 0;
 	if (str[*i] == '"' && str[*i + 1] != '"')
 	{
-		printf("87: nbr_words_double_quotes, *Str = %c\n", str[*i]);
 		*i = *i + 1;
 		if (str[*i] != '\"' && str[*i] != '$')
 			words++;
