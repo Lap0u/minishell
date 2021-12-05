@@ -33,8 +33,8 @@ void	ft_bi_echo(t_simple_command *c_table)
 	int	i;
 
 	i = 1;
-	if (is_nonewl(c_table->args[1], 'n'))
-		i = 2;
+	while (is_nonewl(c_table->args[i], 'n'))
+		i++;
 	while (c_table->args[i])
 	{
 		write(1, c_table->args[i], ft_strlen(c_table->args[i]));
