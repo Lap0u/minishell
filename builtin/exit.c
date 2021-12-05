@@ -30,7 +30,8 @@ int	check_number(char *str)
 
 void	exit_too_long(t_simple_command *c_table)
 {
-	write(1, "exit\n", 5);
+	if (c_table->pos == 0 && c_table->next == NULL)
+		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 18);
 	write(2, c_table->args[1], ft_strlen(c_table->args[1]));
 	write(2, ": numeric argument required\n", 29);
@@ -72,8 +73,9 @@ void	ft_bi_exit(t_simple_command *c_table)
 	if (c_table->args_num == 1)
 	{		
 		ret = c_table->last_ret;
+		if (c_table->pos == 0 && c_table->next == NULL)
+			write(1, "exit\n", 5);
 		ft_proper_free(c_table);
-		write(1, "exit\n", 5);
 		exit(ret);
 	}
 	else if (c_table->args_num > 2)
@@ -86,7 +88,8 @@ void	ft_bi_exit(t_simple_command *c_table)
 		exit_too_long(c_table);
 	else
 	{
-		write(1, "exit\n", 5);
+		if (c_table->pos == 0 && c_table->next == NULL)
+			write(1, "exit\n", 5);
 		ft_proper_free(c_table);
 		exit(ret);
 	}

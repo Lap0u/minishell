@@ -56,8 +56,8 @@ OK		PARSING (séparateurs)	export var="cat Makefile | grep >" ; echo $var	cat Ma
 OK		PIPE	cat | cat | cat | ls	ligne ls et 3 retour a la ligne via Entrer			
 OK		PIPE	cat Makefile | grep pr | head -n 5 | cd file_not_exit	file_not_exist: no such file... exit status: 1			
 OK		PIPE	cat Makefile | grep pr | head -n 5 | hello	hello: cmd not found... exit status: 127			
-KO		PIPE	ls | exit	n'affiche rien			
-KO		PIPE	sleep 5 | exit	n'affiche rien (attend 5 sec)			
+OK		PIPE	ls | exit	n'affiche rien			
+OK		PIPE	sleep 5 | exit	n'affiche rien (attend 5 sec)			
 OK		REDIR	<a cat <b <c	seul le contenu de c est affiché			
 OK		REDIR	<a cat <b <c      avec b n'existe pas (ou pas les droits)	rien n'est affiché. message d'erreur concernant b			
 OK		REDIR	> test | echo blabla; rm test	blabla			
