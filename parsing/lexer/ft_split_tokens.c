@@ -103,7 +103,13 @@ char	*make_str(char *str, int fl_quotes)
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (make_str_check(arr, &str, &i, fl_quotes))
 	{
-		if (fl_quotes != 2)
+		if (*str == '"' && fl_quotes != 2)
+			while (i < len)
+			{
+				arr[i] = str[i];
+				i++;
+			}
+		else if (fl_quotes != 2)
 			make_str_body(arr, str, &i, len);
 		else
 		{
