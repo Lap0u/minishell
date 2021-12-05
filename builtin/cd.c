@@ -76,6 +76,8 @@ void	cd_classic(t_simple_command *c_table)
 	char	**path;
 
 	i = 0;
+	if (c_table->args[1][0] == 0)
+		return ;
 	while (c_table->env[i] && ft_strncmp(c_table->env[i],
 			"CDPATH=", ft_strlen("CDPATH=")))
 		i++;
