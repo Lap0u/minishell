@@ -1,56 +1,110 @@
 TEST PARSING     = -> OK   / -> FAUX        * -> CORRIGE
 
 problemes:
-- "" ou '' entourees d'espaces compte comme un argument \0       ----semble fix 
+- "" ou '' entourees d'espaces compte comme un argument \0       ----semble fix
 - "" ou '' coller a une chaine = ignorer (compter les espaces apres)
 - "text" ou 'text' doit compter les espaces apres
 - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
 
-ec""ho test 	=
-""echo test 	=
-echo"" test		/ ]		 	- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
-echo "" test	=
-echo $USER		=
-echo $USE""R	=
-echo ""$USER	=
-echo "$"USER	=
-echo  $""USER	/ ] 		- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+1. ec""ho test  OK
 
-ec''ho test 	=
-''echo test 	=
-echo'' test		/ ]			- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
-echo '' test	=
-echo $USER		=
-echo $USE''R	=
-echo ''$USER	=
-echo '$'USER	= ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
-echo  $''USER	/ ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
-echo $			= ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
-echo $""		/ ]			- $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $)
+2. ""echo test  OK 
 
-echo "" "" "" test	/ ]		- "" ou '' entourees d'espaces compte comme un argument \0
-echo """""" test	/ ]		- "" ou '' entourees d'espaces compte comme un argument \0
-ls ""			/	  ]		- "" ou '' entourees d'espaces compte comme un argument \0
-echo $USER"" ''		/ ]
+3. echo"" test  OK  
 
-ls '"			=
-ls "'			=
-ls "    "		=
-ls "  ' "		=
-"ls"			=
-l"s"			=
-ls"" -la		/ ] 		- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
-ls "" -la		/ ] 		- "" ou '' entourees d'espaces compte comme un argument \0
-ls """"-la		=
-ls ""-la		=
+4. echo "" test OK 
 
-echo test""test		=
-echo test"" test	/ ]		- "" ou '' coller a une chaine = ignorer (compter les espaces apres)
-echo test ""test	=
-echo test "'"test	=
-echo $$$USER		=
-echo $$USER			=
-echo $USER$USER		=
-echo $USER""$USER	=
-echo $USER" "$USER	=
-echo "|" ls			/ ]		- "text" ou 'text' doit compter les espaces apres
+5. echo $USER   OK 
+
+6. echo $USE""R OK = ca marche! il affiche R (le meme comportement que bash --posix). La meme histoire avec '' OK
+
+7. echo ""$USER OK   = ca marche. Avec '' aussi OK
+
+8. echo "$"USER OK   = ca marche echo '$'USER, mais avec "" - segfault. resolu nbr_tokens.c, fonc. nbr_words_double_quotes. erreur de conte des tockens. (putain, ca pris 2 heures! en faite ca casse toutes dutres test de 1 a 7! et j'ai du refaire f. nbr_words_double_quotes) OK
+
+9. echo  $""USER OK    / ]         - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $) - OK
+
+
+10. ec''ho test OK   = ca marche OK
+
+11. ''echo test OK     = ca marche OK
+
+12. echo'' test OK     / ]            - "" ou '' coller a une chaine = ignorer (compter les espaces apres)- ca marche OK
+
+13. echo '' test OK   = ca marche OK
+
+14. echo $USER 	OK       = ca marche OK
+
+15. echo $USE''R OK   = ca marche OK
+
+16. echo ''$USER OK   = ca marche OK
+
+17. echo '$'USER OK   = ]            - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $) - ca marche avec echo '$'USER mais pas avec echo $'' (ou "") OK
+
+
+18. echo  $''USER  OK  / ]            - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $) - OK
+
+19. echo $      OK      = ]            - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $) = echo $ ca marche OK
+
+20. echo $""   OK     / ]            - $VAR "" ou '' met fin au nom de la VAR (echo $"" different de echo $) - OK
+
+21. echo "" "" "" test OK / ]        - "" ou '' entourees d'espaces compte comme un argument \0 - ca marche OK
+
+22. echo """""" test OK   / ]        - "" ou '' entourees d'espaces compte comme un argument \0 - ca marche OK
+
+23. ls ""      OK      /      ]        - "" ou '' entourees d'espaces compte comme un argument \0 - ca marche OK
+
+24. echo $USER"" ''   OK     / ] - ca marche OK
+
+25. ls '"     OK       = "le notre : Error: There is not second single quotes, le bash attand qch, comme heredoc
+
+26. ls "'     OK       = "meme chose que 25.
+
+27. ls "    "  OK      = ca marche OK
+
+28. ls "  ' "   OK     = ca marche OK
+
+29. "ls"    OK        = ca marche OK
+
+30. l"s"    OK        = ca marche OK
+
+31. ls"" -la   OK     / ]         - "" ou '' coller a une chaine = ignorer (compter les espaces apres) ca marche OK
+
+32. ls "" -la  OK      / ]         - "" ou '' entourees d'espaces compte comme un argument \0     ca marche OK'
+
+33. ls """"-la  OK      = ca marche OK
+
+34. ls ""-la   OK     = ca marche OK
+
+35. echo test""test   OK     = ca marche OK
+
+36. echo test"" test OK   / ]        - "" ou '' coller a une chaine = ignorer (compter les espaces apres) - ca marche OK
+
+37. echo test ""test OK   = ca marche OK
+38. echo test "'"test OK   = ca marche OK
+39. echo $$$USER   OK     = bash le voit comm var $$ et $USER
+40. echo $$USER    OK        = le meme probleme que 39.
+41. echo $USER$USER   OK     = ca marche OK
+42. echo $USER""$USER  OK  = ca marche OK
+43. echo $USER" "$USER  OK  = ca marche OK
+
+44. echo "|" ls     OK       / ]        - marche, mais mit pas espace apre | J'ai trouve erreur (make_str_double_quote - fl_space ajouer pour y-1.)'
+
+45. echo test$1test   OK
+46. echo test$var_qui_nexiste_pas  OK
+47. echo "$USER>>" OK
+48. echo "$USER11111fjfjfjf" - dois rien afficher parce que 11 etc envisage comme nom de var OK
+49. echo $\"echo - ne marche pas, renvoi erreuer -2 mais c'est normale'
+
+50. echo "test$<test" KO
+
+51. echo test$<test - KO
+52. echo "test$-r" OK
+53. echo "test$-?" OK
+54. echo $-1$USER OK
+55. echo $1 OK
+56. echo "$1" OK
+57. echo  $"USER" OK
+58. echo  $'USER' OK
+59. echo "$NULL" test OK
+60. echo '"abc"'

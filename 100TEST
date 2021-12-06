@@ -36,7 +36,9 @@ OK		INIT	env -i ./minishell	ouvre minishell dans un environement vierge
 OK		INIT	$SHLVL	doit être incrémenté a chaque lancement de minishell			
 OK		INIT	env -i ./minishell puis echo $SHLVL	1			
 OK		PARSING	""	command not found - $?=127			
-PAF		PARSING	echo "\s" ; echo "\\s"	should have the exact same output			
+PAF		PARSING	echo "\s" ; echo "\\s"	should have the exact same output
+KO		PARSING	echo "test$<test"	output: test$<test
+KO		PARSING	echo test$<test		cree un fichier		
 PAF		PARSING	echo "12\""	12"			
 OK		PARSING	echo "bip | bip ; coyotte > < \" "	[bip | bip ; coyotte >< " ]			
 OK		PARSING	echo \>	>			
@@ -45,7 +47,7 @@ PAF		PARSING	echo bonjour \; ls	bonjour ; ls
 OK		PARSING	$	command not found			
 OK		PARSING	$LESS$VAR	-R: command not found			
 KO		PARSING	..	cmd not found, exit 127			
-KO		PARSING	echo '"abc"'	"abc"			
+OK		PARSING	echo '"abc"'	"abc"			
 OK		PARSING	echo "'abc'"	['abc']			
 OK		PARSING (séparateurs)	echo "" bonjour	[ bonjour]			
 ?		PARSING (séparateurs)	echo[TAB]a	résultat attendu: [a]			
