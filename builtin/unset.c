@@ -12,6 +12,15 @@
 
 #include "../minishell.h"
 
+int	ft_strccmp(char *s1, char *s2, char c)
+{
+	int i;
+
+	while (s1[i] && s1[i] != c && s2[i] && s2[i] != c)
+		i++;
+	return (1);
+}
+
 int	is_in_env(char *str, char **env)
 {
 	int	i;
@@ -19,7 +28,7 @@ int	is_in_env(char *str, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
+		if (ft_strccmp(str, env[i], '=') == 0)
 			return (1);
 		else
 			i++;
@@ -43,7 +52,7 @@ void	ft_remove_from_env(char *str, char ***env)
 	i = 0;
 	while ((*env)[j])
 	{
-		if (ft_strncmp(str, (*env)[j], ft_strlen(str)) != 0)
+		if (ft_strccmp(str, (*env)[j], '=') != 0)
 			res[i++] = (*env)[j++];
 		else
 			free((*env)[j++]);

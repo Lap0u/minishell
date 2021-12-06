@@ -101,12 +101,15 @@ void	ft_export_add(char *toadd, t_simple_command **c_table)
 	len = 0;
 	while (toadd[len] != '=' && toadd[len])
 		len++;
+	if (toadd[len] == '=')
+		len++;
 	i = 1;
 	while ((*c_table)->env[i])
 	{
 		if (ft_strncmp(toadd, (*c_table)->env[i], len) == 0)
 		{
-			ft_export_replace(&toadd[len], toadd, c_table, i);
+			printf("passe");
+			ft_export_replace(&toadd[len - 1], toadd, c_table, i);
 			return ;
 		}
 		i++;
