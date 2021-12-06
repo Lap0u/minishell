@@ -86,18 +86,27 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 	char	**args;
 	char	*temp;
 	char	*temp1;
-	int		nbr_args;
+	// int		nbr_args;
 	int		i;
 
 	i = 0;
-	nbr_args = do_var_existe(&arr_tok, len, env, index);
-	args = malloc(sizeof(char *) * (nbr_args + 1));
+	do_var_existe(&arr_tok, len, env, index);
+	args = malloc(sizeof(char *) * (len + 1));
 	if (args == (void *)0)
 		return ((void *)0);
 	while (index < len && arr_tok[index].type != PIPE)
 	{
 		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
 			index++;
+		if (arr_tok[index].type == DOLLAR && arr_tok[index].subst == 0 && arr_tok[index].fl_space == 1)
+		{
+			write(1, "amamam\n", 7);
+			args[i] = malloc(sizeof(char) * 2);
+			args[i][0] = '\0';
+			args[i][1] = '\0';
+			// index++;
+			i++;
+		}
 		else if (((arr_tok[index].type == DOLLAR && arr_tok[index].subst == 1) || arr_tok[index].type == ARG))
 		{
 			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env, ret);
