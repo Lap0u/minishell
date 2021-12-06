@@ -24,9 +24,11 @@
 # include <limits.h> 
 # include "libft/libft.h"
 # include <string.h>
+# include <signal.h>
+#include <sys/types.h>
 
 # define PROMPT ">minishell "
-
+#define _XOPEN_SOURCE 700
 //type 0 = output, type 1 = input, type 2 = output_append, type 3 = here_doc
 
 typedef struct s_redir
