@@ -98,7 +98,7 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 	{
 		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
 			index++;
-		if (arr_tok[index].type == DOLLAR && arr_tok[index].subst == 0 && arr_tok[index].fl_space == 1)
+		else if (arr_tok[index].type == DOLLAR && arr_tok[index].subst == 0 && arr_tok[index].fl_space == 1)
 		{
 			write(1, "amamam\n", 7);
 			args[i] = malloc(sizeof(char) * 2);
