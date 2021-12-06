@@ -66,10 +66,17 @@ void	write_heredoc(char *delim, int ret)
 	while (1)
 	{
 		str = readline("> ");
+		if (str == NULL)
+		{
+			write(2, "minishell: warning: \"heredoc\" closed by EOF (instead of \" ", 59);
+			write(2, delim, ft_strlen(delim));
+			write(2, " \"\n", 4);
+			return ;
+		}
 		if (strcmp(str, delim) == 0)
 		{
 			free(str);
-			break ;
+			return ;
 		}
 		write(ret, str, ft_strlen(str));
 		write(ret, "\n", 1);
