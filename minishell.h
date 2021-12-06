@@ -152,6 +152,8 @@ void				ft_cp_env(char **sorted, char **env);
 
 void				ft_write_wfolder(char *str, int i);
 
+int					ft_strccmp(char *s1, char *s2, char c);
+
 char				*make_pwd(char *prefix);
 
 int					soft_quit(char **temp_env, int ret);
