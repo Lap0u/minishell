@@ -103,17 +103,19 @@ OK		SUBST & REDIR	export test="file1 file2" ; >"$test"	[file1 file2] created			S
 OK		SYNTHAX	|	"synthax error" & exit 2			
 PAF		SYNTHAX	echo bonjour ; |	"synthax error" & exit 2			
 OK		SYNTHAX	echo bonjour > > out	"synthax error" & exit 2			
-KO		SYNTHAX	echo bonjour > $test	"redirection ambigue" & exit 1			
+KO*		SYNTHAX echo bonjour > $test	"redirection ambigue" & exit 1			
 PAF		SYNTHAX	echo bonjour > $test w/ test="o1 o2"	"redirection ambigue" & exit 1			
 OK		SYNTHAX	echo bonjour >>> test	"synthax error" & exit 2			
 OK		SYNTHAX	echo bonjour | |	"synthax error" & exit 2			
 PAF		SYNTHAX	echo bonjour |;	"synthax error" & exit 2			
 OK		UNSET	unset PATH ; echo $PATH	\n			
 OK		UNSET	unset PATH ; ls	bash: ls: No such file or directory. Exit 127			
-KO		UNSET	unset "" test	unset test et set $? à 1			
+OK		UNSET	unset "" test	unset test et set $? à 1			
 OK		UNSET	unset =	erreur et set $? à 1			
 OK		UNSET	unset PWD	(leak si on fait cd apres)			
 KO		UNSET	unset var	var1 ne doit pas etre unset			
 OK		export $var=s\ -la ; l$var				
 OK		/bin/echo bonjour	affiche bonjour
 KO		/home/user42/	
+
+*AJOUTER MESSAGE D'ERREUR DANS PARSING (+ leak)
