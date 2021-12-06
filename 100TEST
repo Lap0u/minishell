@@ -113,7 +113,7 @@ OK		UNSET	unset PATH ; ls	bash: ls: No such file or directory. Exit 127
 OK		UNSET	unset "" test	unset test et set $? à 1			
 OK		UNSET	unset =	erreur et set $? à 1			
 OK		UNSET	unset PWD	(leak si on fait cd apres)			
-KO		UNSET	unset var	var1 ne doit pas etre unset			
+OK		UNSET	unset var	var1 ne doit pas etre unset			
 OK		export $var=s\ -la ; l$var				
 OK		/bin/echo bonjour	affiche bonjour
 KO		/home/user42/	
