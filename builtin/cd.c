@@ -53,12 +53,38 @@ char	*make_pwd(char *prefix)
 		return (ft_strdup(wd));
 }
 
+int	cd_get_dash(t_simple_command *c_table)
+{
+	int i;
+
+	i = 0;
+	if (ft_strncmp(c_table->args[1], "-", 1) != 0)
+		return (0);
+	while (c_table->env[i] && ft_strncmp("OLDPWD=", c_table->env[i], 7))
+		i++;
+	if (c_table->env[i] == NULL)
+	{
+		free(c_table->args[1]);
+		return (-1);
+	}
+	free(c_table->args[1]);
+	c_table->args[1] = ft_strdup(&c_table->env[i][7]);
+	return (1);
+}
+
 void	cd_curpath(t_simple_command *c_table)
 {
-	int	ret;
-
-	ret = chdir(c_table->args[1]);
-	if (ret == -1)
+	int		temp;
+	char	*display;
+	
+	temp = cd_get_dash(c_table);
+	if (c_table->args[1] == NULL)
+	{
+		write(2, "minishell: cd: OLDPWD not set\n", 31);
+		c_table->last_ret = 1;
+		return ;
+	}
+	if (chdir(c_table->args[1]) == -1)
 	{
 		c_table->last_ret = 1;
 		write(2, "minishell: cd: ", 16);
@@ -67,6 +93,13 @@ void	cd_curpath(t_simple_command *c_table)
 	}
 	else
 		c_table->last_ret = 0;
+	if (temp == 1 && c_table->last_ret == 0)
+	{
+		display = make_pwd(NULL);
+		write(1, display, ft_strlen(display));
+		write(1, "\n", 1);
+		free(display);
+	}
 }
 
 void	cd_classic(t_simple_command *c_table)
@@ -76,6 +109,8 @@ void	cd_classic(t_simple_command *c_table)
 	char	**path;
 
 	i = 0;
+	if (c_table->args[1][0] == 0)
+		return ;
 	while (c_table->env[i] && ft_strncmp(c_table->env[i],
 			"CDPATH=", ft_strlen("CDPATH=")))
 		i++;
@@ -104,7 +139,7 @@ void	ft_bi_cd(t_simple_command *c_table)
 	}
 	else if (c_table->args_num <= 1)
 		cd_noarg(c_table);
-	else if (c_table->args[1][0] == '/' || c_table->args[1][0] == '.')
+	else if (c_table->args[1][0] == '/' || c_table->args[1][0] == '.' || ft_strcmp("-", c_table->args[1]) == 0)
 		cd_curpath(c_table);
 	else
 		cd_classic(c_table);

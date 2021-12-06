@@ -2,10 +2,10 @@ OK		CD	cd ../../../../../..	pwd : /
 OK		CD	cd /home/user42/	chemin absolu			
 OK		CD	cd $HOME/Bureau	accède au dossier Bureau			
 OK		CD	unset HOME; cd	HOME not set, exit 1			
-KO		CD	export HOME= ; cd	Ne se passe rien, exit 0			
+OK		CD	export HOME= ; cd	Ne se passe rien, exit 0			
 OK		CD	cd too many arguments	error message, exit 1			
 OK		CD	cd ./path_not_found	error message, exit 1			
-PAF		CD	cd -	Retour à OLD_PWD, écrit le CWD			
+OK		CD	cd -	Retour à OLD_PWD, écrit le CWD			
 Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro			
 OK		CD	cd home/.. avec CDPATH set à /	va a / et affiche /			
 OK		CD	cd home/dir avec CDPATH set à /	va a /home/dir			
@@ -18,15 +18,15 @@ OK		EXIT STATUS	cd random_cmd ; echo $?	Doit afficher le code erreur de cd : 1
 OK		EXIT STATUS	cd random_cmd ; cd $?	exit 1 (deux erreurs affichées)			
 KO		EXIT STATUS	./file_that_is_not_an_executable	permission denied -> exit status = 126			
 OK		EXIT STATUS	cat bla	1			
-KO		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
+OK		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
 OK		EXIT STATUS	not_cmd	cmd not found -> exit status = 127			
 OK		EXIT STATUS	export test=a ; echo $test	affiche le contenu de test			
 OK		EXIT STATUS	ls bonjour ; echo $?	2			
 OK		EXPORT	export var=a ; export $var=test ; echo $var $a	a test			
 OK		EXPORT	export $var=test avec var unset	message d'erreur			
-KO		EXPORT	export la même variable	modifie la variable (si new value			
-KO		EXPORT	export var puis export var=test	verifier pas de doublon			
-KO(ret)	EXPORT	export "" test=a	export test=a et set $? à 1			
+OK		EXPORT	export la même variable	modifie la variable (si new value			
+OK		EXPORT	export var puis export var=test	verifier pas de doublon			
+OK		EXPORT	export "" test=a	export test=a et set $? à 1			
 OK		EXPORT	export "" test=a puis env				
 PAF		EXTRA	echo ~	/home/user42			facultatif
 PAF		EXTRA	export var=te"st PUIS echo $var	Multiligne			Pas à gérer
@@ -50,14 +50,14 @@ OK		PARSING	echo "'abc'"	['abc']
 OK		PARSING (séparateurs)	echo "" bonjour	[ bonjour]			
 ?		PARSING (séparateurs)	echo[TAB]a	résultat attendu: [a]			
 PAF		PARSING (séparateurs)	echo\ a	echo a': cmd not found			
-KO		PARSING (séparateurs)	export ""  et unset ""	erreur			
+OK		PARSING (séparateurs)	export ""  et unset ""	erreur			
 OK		PARSING (séparateurs)	export "test=ici"=coucou ; echo $test	test="ici=coucou"			
 OK		PARSING (séparateurs)	export var="cat Makefile | grep >" ; echo $var	cat Makefile | grep >			
 OK		PIPE	cat | cat | cat | ls	ligne ls et 3 retour a la ligne via Entrer			
 OK		PIPE	cat Makefile | grep pr | head -n 5 | cd file_not_exit	file_not_exist: no such file... exit status: 1			
 OK		PIPE	cat Makefile | grep pr | head -n 5 | hello	hello: cmd not found... exit status: 127			
-KO		PIPE	ls | exit	n'affiche rien			
-KO		PIPE	sleep 5 | exit	n'affiche rien (attend 5 sec)			
+OK		PIPE	ls | exit	n'affiche rien			
+OK		PIPE	sleep 5 | exit	n'affiche rien (attend 5 sec)			
 OK		REDIR	<a cat <b <c	seul le contenu de c est affiché			
 OK		REDIR	<a cat <b <c      avec b n'existe pas (ou pas les droits)	rien n'est affiché. message d'erreur concernant b			
 OK		REDIR	> test | echo blabla; rm test	blabla			
@@ -80,7 +80,7 @@ OK		SUBST	echo "$tests""Makefile"	[Makefile]
 OK		SUBST	echo "$tests"Makefile	[Makefile]			
 KO		SUBST	echo "$tests" "Makefile"	[ Makefile]			
 KO		SUBST	echo "$tests" Makefile 		[ Makefile]
-KO (ret)SUBST	$bla (non-export)	retour a la ligne, exit 0			
+OK		SUBST	$bla (non-export)	retour a la ligne, exit 0			
 OK		SUBST	echo $var bonjour ($var non export)	[bonjour]			
 OK		SUBST	export $var (var non export)	affiche export			
 PAF		SUBST	export test=123\" ; echo $test	123"			
@@ -103,17 +103,19 @@ OK		SUBST & REDIR	export test="file1 file2" ; >"$test"	[file1 file2] created			S
 OK		SYNTHAX	|	"synthax error" & exit 2			
 PAF		SYNTHAX	echo bonjour ; |	"synthax error" & exit 2			
 OK		SYNTHAX	echo bonjour > > out	"synthax error" & exit 2			
-KO		SYNTHAX	echo bonjour > $test	"redirection ambigue" & exit 1			
+KO*		SYNTHAX echo bonjour > $test	"redirection ambigue" & exit 1			
 PAF		SYNTHAX	echo bonjour > $test w/ test="o1 o2"	"redirection ambigue" & exit 1			
 OK		SYNTHAX	echo bonjour >>> test	"synthax error" & exit 2			
 OK		SYNTHAX	echo bonjour | |	"synthax error" & exit 2			
 PAF		SYNTHAX	echo bonjour |;	"synthax error" & exit 2			
 OK		UNSET	unset PATH ; echo $PATH	\n			
 OK		UNSET	unset PATH ; ls	bash: ls: No such file or directory. Exit 127			
-KO		UNSET	unset "" test	unset test et set $? à 1			
+OK		UNSET	unset "" test	unset test et set $? à 1			
 OK		UNSET	unset =	erreur et set $? à 1			
 OK		UNSET	unset PWD	(leak si on fait cd apres)			
 KO		UNSET	unset var	var1 ne doit pas etre unset			
 OK		export $var=s\ -la ; l$var				
 OK		/bin/echo bonjour	affiche bonjour
 KO		/home/user42/	
+
+*AJOUTER MESSAGE D'ERREUR DANS PARSING (+ leak)
