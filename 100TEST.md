@@ -6,7 +6,7 @@ OK		CD	export HOME= ; cd	Ne se passe rien, exit 0
 OK		CD	cd too many arguments	error message, exit 1			
 OK		CD	cd ./path_not_found	error message, exit 1			
 OK		CD	cd -	Retour à OLD_PWD, écrit le CWD			
-Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro'			
+OK	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro'			
 OK		CD	cd home/.. avec CDPATH set à /	va a / et affiche /			
 OK		CD	cd home/dir avec CDPATH set à /	va a /home/dir			
 OK		CD	cd . avec CDPATH set	va a ./. (pas de recherche dans CDPATH)			

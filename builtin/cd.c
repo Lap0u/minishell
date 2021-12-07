@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/07 14:49:57 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:29:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*make_pwd(char *prefix)
 
 	if (!getcwd(wd, PATH_MAX))
 	{
-		perror("minishell: error");
-		return (NULL);
+		perror("minishell: cd: ");
+		return (ft_strdup(prefix));
 	}
 	if (prefix)
 		return (ft_strjoin(prefix, wd));
