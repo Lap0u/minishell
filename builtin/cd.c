@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 13:25:18 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:49:57 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	cd_get_dash(t_simple_command *c_table)
 	if (c_table->env[i] == NULL)
 	{
 		free(c_table->args[1]);
+		c_table->args[1] = NULL;
 		return (-1);
 	}
 	free(c_table->args[1]);
