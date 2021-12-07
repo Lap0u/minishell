@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:51:42 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:00:11 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	ft_bi_pwd(t_simple_command *c_table)
 		c_table->last_ret = 1;
 	}
 	else
-		printf("%s\n", wd);
-	(void)c_table;
+	{
+		write(1, wd, ft_strlen(wd));
+		write(1, "\n", 2);
+		c_table->last_ret = 0;
+	}
 }
