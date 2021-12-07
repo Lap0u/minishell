@@ -162,6 +162,14 @@ int					soft_quit(char **temp_env, int ret);
 
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
 
+
+void	sig_ctrlc(int signo, siginfo_t *info, void *uap);
+void signal_ger(struct sigaction*sa, sigset_t *set);
+// void 	signal_enfant(struct sigaction	*sa, sigset_t *set);
+void	sig_ctrlc_enfant(int signo, siginfo_t *info, void *uap);
+
+
+
 /*parsing*/
 
 # define COMMANDE 1

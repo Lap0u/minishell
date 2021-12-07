@@ -86,7 +86,7 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 			int *pipefd, int size)
 {
 	int	i;
-
+	
 	i = 0;
 	while (c_table)
 	{

@@ -12,6 +12,10 @@
 
 #include "./minishell.h"
 
+int pid = 0;
+// struct sigaction	sa;
+// sigset_t			set;
+
 int	ft_check_space(char *str)
 {
 	int	i;
@@ -86,13 +90,18 @@ int	main(int ac, char **av, char **env)
 	char				**temp_env;
 	int					temp_ret;
 	int					nbr_tokens;
+	struct sigaction	sa;
+	sigset_t			set;
 
 	temp_ret = 0;
+	pid = getpid();
 	if (ac != 1 || !av[0])
 		return (write(2, "No arguments for this beauty\n", 30));
 	temp_env = ft_copy_env(env);
 	while (1)
 	{
+		signal_ger(&sa, &set);
+		// signal_parent(&sa, &set);
 		cmd = readline(PROMPT);
 		if (cmd == NULL)
 			return (soft_quit(temp_env, temp_ret));
