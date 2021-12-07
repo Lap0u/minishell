@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 14:43:32 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 18:25:00 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,38 +69,43 @@ void	sig_ctrlc(int signo, siginfo_t *info, void *uap)
 {
 	(void)info;
 	(void)uap;
-	int id;
-
-	id = getpid();
-	if (id == pid)
-	{
-		if (signo == SIGINT)
-		{
-			printf("execution parent\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-			return ;
-		}
-		else if (signo == SIGQUIT)
-		{
-			// printf("execution ctrlback\n");
-			rl_redisplay();
-			return ;
-		}
-	}
-	else
-	{
-		if (signo == SIGINT)
-		{
-			printf("execution enfant\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-			return ;
-		}
 	
+	printf("parent avant prompt : %d", info->si_pid);
+	if (signo == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
+}
+
+
+void	sig_ctrlc2(int signo, siginfo_t *info, void *uap)
+{
+	(void)info;
+	(void)uap;
+	(void)signo;
+
+	rl_on_new_line();
+	printf("goss %d", info->si_pid);
+	// if (signo == SIGINT)
+	// {
+	// 	rl_on_new_line();
+	// 	rl_replace_line("", 0);
+	// 	rl_redisplay();
+	// }
+	// printf("parent apres prompt : %d", info->si_pid);
+
+}
+
+void	sig_ctrlc3(int signo, siginfo_t *info, void *uap)
+{
+	(void)info;
+	(void)uap;
+	(void)signo;
+
+	printf("Je suis un bebe");
+
 }
 
 // void	sig_ctrlc_enfant(int signo, siginfo_t *info, void *uap)
@@ -132,7 +137,7 @@ void signal_ger(struct sigaction*sa, sigset_t *set)
 
 	// printf("hello parent, id = %d\n", getpid());
 	ft_memset(sa, 0, sizeof(sa));
-	(*sa).sa_flags = SA_SIGINFO;
+	(*sa).sa_flags = SA_NODEFER;
 	(*sa).sa_sigaction = &sig_ctrlc;
 	sigemptyset(set);
 	sigaddset(set, SIGINT);
@@ -156,6 +161,36 @@ void signal_ger(struct sigaction*sa, sigset_t *set)
 // 	sigaction(SIGQUIT, sa, 0);
 // }
 
+void signal_ger2(struct sigaction*sa, sigset_t *set)
+{
+
+	// printf("hello parent, id = %d\n", getpid());
+	ft_memset(sa, 0, sizeof(sa));
+	(*sa).sa_flags = SA_NODEFER;
+	(*sa).sa_sigaction = &sig_ctrlc2;
+	sigemptyset(set);
+	sigaddset(set, SIGINT);
+	sigaddset(set, SIGQUIT);
+	(*sa).sa_mask = *set;
+	sigaction(SIGINT, sa, 0);
+	sigaction(SIGQUIT, sa, 0);	
+}
+
+void signal_ger3(void)
+{
+	struct sigaction	sa;
+	sigset_t			set;
+	
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_flags = SA_NODEFER;
+	sa.sa_sigaction = &sig_ctrlc3;
+	sigemptyset(&set);
+	sigaddset(&set, SIGINT);
+	sigaddset(&set, SIGQUIT);
+	sa.sa_mask = set;
+	sigaction(SIGINT, &sa, 0);
+	sigaction(SIGQUIT, &sa, 0);	
+}
 
 void	ft_exec_bin(t_simple_command *c_table, char **env)
 {
@@ -168,6 +203,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 
 	// signal_parent(&sa, &set);
 	// id = getpid();
+	signal_ger2(&sa, &set);
 	path = ft_get_paths(env);
 	if (path == NULL)
 	{
@@ -187,7 +223,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 		{
 			// id = getpid();
 			// printf("pid_enf = %d\n", id);
-			signal_ger(&sa, &set);
+			signal_ger3();
 			execution(c_table, env);
 		}
 		else if (child > 0)
