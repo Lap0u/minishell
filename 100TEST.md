@@ -80,8 +80,8 @@ PAF		SUBST	export var="  truc"; echo $var	[truc]
 PAF		SUBST	export var="truc  "; echo $var | cat -e	[truc]			
 OK		SUBST	echo "$tests""Makefile"	[Makefile]			
 OK		SUBST	echo "$tests"Makefile	[Makefile]			
-KO		SUBST	echo "$tests" "Makefile"	[ Makefile]			
-KO		SUBST	echo "$tests" Makefile 		[ Makefile]
+OK		SUBST	echo "$tests" "Makefile"	[ Makefile]			
+OK		SUBST	echo "$tests" Makefile 		[ Makefile]
 OK		SUBST	$bla (non-export)	retour a la ligne, exit 0			
 OK		SUBST	echo $var bonjour ($var non export)	[bonjour]			
 OK		SUBST	export $var (var non export)	affiche export			
