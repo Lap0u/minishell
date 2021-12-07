@@ -23,6 +23,8 @@ void	ft_add_path(t_simple_command *c_table, char **path)
 		ft_free_3dtab(path);
 		return ;
 	}
+	if (ft_strcmp(c_table->cmd, "..") == 0 || c_table->cmd[0] == '.')
+		return (ft_free_3dtab(path));
 	while (path[i])
 	{
 		temp = ft_strjoin(path[i], c_table->args[0]);

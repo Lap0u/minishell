@@ -6,7 +6,7 @@ OK		CD	export HOME= ; cd	Ne se passe rien, exit 0
 OK		CD	cd too many arguments	error message, exit 1			
 OK		CD	cd ./path_not_found	error message, exit 1			
 OK		CD	cd -	Retour à OLD_PWD, écrit le CWD			
-Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro			
+Grrr	CD	mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..	message d'erreur mais change quand meme de directory, PWD et OLDPWD sont update, $? à zéro'			
 OK		CD	cd home/.. avec CDPATH set à /	va a / et affiche /			
 OK		CD	cd home/dir avec CDPATH set à /	va a /home/dir			
 OK		CD	cd . avec CDPATH set	va a ./. (pas de recherche dans CDPATH)			
@@ -16,14 +16,14 @@ OK		ECHO	echo -n -nnn hello -n ; echo a	hello -na
 OK		ENV	env puis export puis env	les variables ne doivent pas etre triées			
 OK		EXIT STATUS	cd random_cmd ; echo $?	Doit afficher le code erreur de cd : 1			
 OK		EXIT STATUS	cd random_cmd ; cd $?	exit 1 (deux erreurs affichées)			
-KO		EXIT STATUS	./file_that_is_not_an_executable	permission denied -> exit status = 126			
+OK		EXIT STATUS	./file_that_is_not_an_executable	permission denied -> exit status = 126			
 OK		EXIT STATUS	cat bla	1			
 OK		EXIT STATUS	file_name	cmd not found (pbm avec stat() pour les binaires) - exit 127			
 OK		EXIT STATUS	not_cmd	cmd not found -> exit status = 127			
 OK		EXIT STATUS	export test=a ; echo $test	affiche le contenu de test			
 OK		EXIT STATUS	ls bonjour ; echo $?	2			
 OK		EXPORT	export var=a ; export $var=test ; echo $var $a	a test			
-OK		EXPORT	export $var=test avec var unset	message d'erreur			
+OK		EXPORT	export $var=test avec var unset	message d'erreur		
 OK		EXPORT	export la même variable	modifie la variable (si new value			
 OK		EXPORT	export var puis export var=test	verifier pas de doublon			
 OK		EXPORT	export "" test=a	export test=a et set $? à 1			
@@ -46,7 +46,7 @@ PAF		PARSING	echo $USER$var\$USER$USER\$USERtest$USER	user42$USERuser42$USERtest
 PAF		PARSING	echo bonjour \; ls	bonjour ; ls			
 OK		PARSING	$	command not found			
 OK		PARSING	$LESS$VAR	-R: command not found			
-KO		PARSING	..	cmd not found, exit 127			
+OK		PARSING	..	cmd not found, exit 127			
 OK		PARSING	echo '"abc"'	"abc"			
 OK		PARSING	echo "'abc'"	['abc']			
 OK		PARSING (séparateurs)	echo "" bonjour	[ bonjour]			
@@ -118,6 +118,6 @@ OK		UNSET	unset PWD	(leak si on fait cd apres)
 OK		UNSET	unset var	var1 ne doit pas etre unset			
 OK		export $var=s\ -la ; l$var				
 OK		/bin/echo bonjour	affiche bonjour
-KO		/home/user42/	
+OK		/home/user42/	
 
 *AJOUTER MESSAGE D'ERREUR DANS PARSING (+ leak)

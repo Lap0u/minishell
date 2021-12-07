@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 16:54:01 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:21:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 			exit_free_val(cmd, 0);
 		if (check_files(c_table) == 0)
 			c_table->last_ret = 1;
-		else if (c_table->args_num == 0)
+		else if (c_table->args_num == 0 && c_table->next == NULL)
 			c_table->last_ret = 0;
 		else
 			c_table->last_ret = ft_pipe(c_table);
