@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <signal.h>
 
 void	ft_putchar(char c)
 {
@@ -79,16 +78,4 @@ void	*ft_memset(void *b, int c, size_t len)
 		i++;
 	}
 	return (b);
-}
-
-void	waiting(void)
-{
-	while (1)
-	{
-		if (g_pings.flag == 1)
-		{
-			g_pings.flag = 0;
-			break ;
-		}
-	}
 }

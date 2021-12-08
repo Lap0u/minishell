@@ -6,11 +6,13 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 14:43:32 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/07 18:25:00 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern int pid;
 
 void	execution(t_simple_command *c_table, char **env)
 {
@@ -77,6 +79,8 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 			return (perror("minishell: fork : "));
 		if (child == 0)
 			execution(c_table, env);
+		else if (child > 0)
+			set_signals2();
 		waitpid(child, &c_table->last_ret, 0);
 		c_table->last_ret = WEXITSTATUS(c_table->last_ret);
 	}

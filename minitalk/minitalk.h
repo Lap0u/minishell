@@ -26,7 +26,7 @@ typedef struct s_ping
 	int	flag;
 }				t_ping;
 
-t_ping	g_pings;
+// t_ping	g_pings;
 
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);

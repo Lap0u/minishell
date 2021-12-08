@@ -24,9 +24,11 @@
 # include <limits.h> 
 # include "libft/libft.h"
 # include <string.h>
+# include <signal.h>
+#include <sys/types.h>
 
 # define PROMPT ">minishell "
-
+#define _XOPEN_SOURCE 700
 //type 0 = output, type 1 = input, type 2 = output_append, type 3 = here_doc
 
 typedef struct s_redir
@@ -159,6 +161,16 @@ char				*make_pwd(char *prefix);
 int					soft_quit(char **temp_env, int ret);
 
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
+
+/*signals/sig_handlers.c*/
+
+void    set_signals(void);
+void    set_signals2(void);
+
+void    inthandler(int sig);
+void    quithandler(int sig);
+void    inthandler2(int sig);
+void    quithandler2(int sig);
 
 /*parsing*/
 
