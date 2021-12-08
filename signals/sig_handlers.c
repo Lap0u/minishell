@@ -20,7 +20,7 @@ void    inthandler(int sig)
 	(void)sig;
 
     g_signum = 130;
-    write(1, "\n", 1);
+    write(2, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -48,5 +48,5 @@ void    quithandler2(int sig)//a faire
 	(void)sig;
 
     g_signum = 131;
-	write(1, "Quit (core dumped)\n", 19);
+	write(2, "Quit (core dumped)\n", 19);
 }
