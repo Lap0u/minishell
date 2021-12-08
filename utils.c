@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 16:54:01 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:16:54 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,6 @@ int	ft_2dlen(char **tab)
 	return (i);
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (1);
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	if (s1[i] != s2[i])
-		return (1);
-	return (0);
-}
-
 int	check_files(t_simple_command *c_table)
 {
 	while (c_table)
@@ -83,7 +65,7 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 			exit_free_val(cmd, 0);
 		if (check_files(c_table) == 0)
 			c_table->last_ret = 1;
-		else if (c_table->args_num == 0)
+		else if (c_table->args_num == 0 && c_table->next == NULL)
 			c_table->last_ret = 0;
 		else
 			c_table->last_ret = ft_pipe(c_table);

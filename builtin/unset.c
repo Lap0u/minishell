@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:57:47 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:28:41 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:40:23 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int	ft_strccmp(char *s1, char *s2, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] && s1[i] != c && s2[i] && s2[i] != c && s1[i] == s2[i])
 		i++;
-	if (s1[i] == s2[i] || (s2[i] == 0 && s1[i] == c) || (s1[i] == 0 && s2[i] == c))
+	if (s1[i] == s2[i] || (s2[i] == 0 && s1[i] == c)
+		|| (s1[i] == 0 && s2[i] == c))
 		return (0);
 	return (1);
 }
@@ -73,8 +74,8 @@ void	ft_bi_unset(t_simple_command **c_table)
 	(*c_table)->last_ret = 0;
 	while ((*c_table)->args[i])
 	{
-		if (is_in_env((*c_table)->args[i], (*c_table)->env) &&
-			is_valid_export((*c_table)->args[i]) == 0)
+		if (is_in_env((*c_table)->args[i], (*c_table)->env)
+			&& is_valid_export((*c_table)->args[i]) == 0)
 			ft_remove_from_env((*c_table)->args[i], &(*c_table)->env);
 		else
 		{

@@ -12,17 +12,26 @@
 
 #include "../minishell.h"
 
+void	cant_exec(char *file, char *message, int vexit)
+{
+	write(2, "minishell: ", 12);
+	write(2, file, ft_strlen(file));
+	write(2, message, ft_strlen(message));
+	exit(vexit);
+}
+
 void	ft_add_path(t_simple_command *c_table, char **path)
 {
 	int		i;
 	char	*temp;
 
 	i = 0;
-	if (c_table->args[0][0] == 0)
-	{
-		ft_free_3dtab(path);
+	if (!path)
 		return ;
-	}
+	if (c_table->args[0][0] == 0)
+		return (ft_free_3dtab(path));
+	if (ft_strcmp(c_table->cmd, "..") == 0 || c_table->cmd[0] == '.')
+		return (ft_free_3dtab(path));
 	while (path[i])
 	{
 		temp = ft_strjoin(path[i], c_table->args[0]);

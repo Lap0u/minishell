@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:20 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/02 12:31:39 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:40:48 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	is_nonewl(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (str == NULL || str[0] != '-')
 		return (0);
 	while (str[i])
 	{
-		if(str[i] != c)
+		if (str[i] != c)
 			return (0);
 		i++;
 	}

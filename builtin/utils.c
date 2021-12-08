@@ -6,11 +6,26 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 13:18:30 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:38:02 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*make_pwd(char *prefix)
+{
+	char	wd[PATH_MAX];
+
+	if (!getcwd(wd, PATH_MAX))
+	{
+		perror("minishell: cd: ");
+		return (ft_strdup(prefix));
+	}
+	if (prefix)
+		return (ft_strjoin(prefix, wd));
+	else
+		return (ft_strdup(wd));
+}
 
 int	ft_isbuiltin(char *str)
 {
