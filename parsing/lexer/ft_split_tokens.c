@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/08 11:30:44 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:47:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	make_str_body(char *arr, char *str, int *i, int len)
 
 int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 {
+	// printf("75: *str = %c, *str+1 = %c, str = %s\n", **str, *(*str + 1), *str);
 	if (**str == '\'' && *(*str + 1) == '\'')
 	{
 		arr[*i] = '\0';
@@ -95,20 +96,26 @@ char	*make_str(char *str, int fl_quotes)
 	char	*arr;
 	int		len;
 
-	i = -1;
+	i = 0;
 	len = what_is_len(str, fl_quotes);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (make_str_check(arr, &str, &i, fl_quotes))
 	{
 		if (*str == '"' && fl_quotes != 2)
-			while (++i < len)
+			while (i < len)
+			{
 				arr[i] = str[i];
+				i++;
+			}
 		else if (fl_quotes != 2)
 			make_str_body(arr, str, &i, len);
 		else
 		{
-			while (++i < len && str[i] != '"')
+			while (i < len && str[i] != '"')
+			{
 				arr[i] = str[i];
+				i++;
+			}
 		}
 	}
 	arr[i] = '\0';
