@@ -105,6 +105,8 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 				ft_bin_nofork(c_table, c_table->env);
 			exit(0);
 		}
+		else if (childs[i / 2] > 0)
+			set_signals2();
 		i += 2;
 		c_table = c_table->next;
 	}
