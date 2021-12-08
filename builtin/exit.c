@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:52 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 13:10:17 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:41:31 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	ft_bi_exit(t_simple_command *c_table)
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);
 		c_table->last_ret = 1;
-		return ;
 	}
 	else if (ret < 0 && c_table->args_num == 2)
 		exit_too_long(c_table);

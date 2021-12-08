@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:25 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/07 15:29:10 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:37:47 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,9 @@ void	cd_noarg(t_simple_command *c_table)
 	c_table->last_ret = 1;
 }
 
-char	*make_pwd(char *prefix)
-{
-	char	wd[PATH_MAX];
-
-	if (!getcwd(wd, PATH_MAX))
-	{
-		perror("minishell: cd: ");
-		return (ft_strdup(prefix));
-	}
-	if (prefix)
-		return (ft_strjoin(prefix, wd));
-	else
-		return (ft_strdup(wd));
-}
-
 int	cd_get_dash(t_simple_command *c_table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strncmp(c_table->args[1], "-", 1) != 0)
@@ -77,17 +62,16 @@ void	cd_curpath(t_simple_command *c_table)
 {
 	int		temp;
 	char	*display;
-	
+
+	c_table->last_ret = 1;
 	temp = cd_get_dash(c_table);
 	if (c_table->args[1] == NULL)
 	{
 		write(2, "minishell: cd: OLDPWD not set\n", 31);
-		c_table->last_ret = 1;
 		return ;
 	}
 	if (chdir(c_table->args[1]) == -1)
 	{
-		c_table->last_ret = 1;
 		write(2, "minishell: cd: ", 16);
 		write(2, c_table->args[1], ft_strlen(c_table->args[1]));
 		perror(" ");
@@ -140,7 +124,8 @@ void	ft_bi_cd(t_simple_command *c_table)
 	}
 	else if (c_table->args_num <= 1)
 		cd_noarg(c_table);
-	else if (c_table->args[1][0] == '/' || c_table->args[1][0] == '.' || ft_strcmp("-", c_table->args[1]) == 0)
+	else if (c_table->args[1][0] == '/' || c_table->args[1][0] == '.'
+		|| ft_strcmp("-", c_table->args[1]) == 0)
 		cd_curpath(c_table);
 	else
 		cd_classic(c_table);

@@ -85,6 +85,8 @@ void				ft_bi_cd(t_simple_command *c_table);
 
 int					cd_path(t_simple_command *c_table, char **path, char *temp);
 
+char				*make_pwd(char *prefix);
+
 void				add_pwds(t_simple_command *c_table, char
 						*oldpwd, char *newpwd);
 
@@ -160,6 +162,8 @@ char				*make_pwd(char *prefix);
 int					soft_quit(char **temp_env, int ret);
 
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
+
+void				cant_exec(char *file, char *message, int vexit);
 
 /*parsing*/
 

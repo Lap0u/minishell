@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/07 10:45:20 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:20:15 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	write_heredoc(char *delim, int ret)
 		str = readline("> ");
 		if (str == NULL)
 		{
-			write(2, "minishell: warning: \"heredoc\" closed by EOF (instead of \" ", 59);
+			write(2, "minishell: warning: \"heredoc\"", 30);
+			write(2, "closed by EOF (instead of \" ", 29);
 			write(2, delim, ft_strlen(delim));
 			write(2, " \")\n", 5);
 			return ;
