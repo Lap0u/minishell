@@ -39,6 +39,8 @@ int	get_stat(char *str)
 	return (ret);
 }
 
+extern int pid;
+
 void	execution(t_simple_command *c_table, char **env)
 {
 	int	mode;
@@ -105,6 +107,8 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 			return (perror("minishell: fork : "));
 		if (child == 0)
 			execution(c_table, env);
+		else if (child > 0)
+			set_signals2();
 		waitpid(child, &c_table->last_ret, 0);
 		c_table->last_ret = WEXITSTATUS(c_table->last_ret);
 	}

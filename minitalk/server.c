@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <signal.h>
 
 void	display_pid(void)
 {
@@ -34,11 +33,13 @@ void	handle_sigusr(int signo, siginfo_t *info, void *uap)
 	{
 		c |= counter;
 		counter >>= 1;
+		printf("info->si_pid = %d\n", info->si_pid);
 		kill(info->si_pid, SIGUSR1);
 	}
 	else
 	{
 		counter >>= 1;
+		printf("info->si_pid = %d\n", info->si_pid);
 		kill(info->si_pid, SIGUSR1);
 	}
 	if (counter == 0)

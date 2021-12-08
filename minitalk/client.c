@@ -12,6 +12,22 @@
 
 #include "minitalk.h"
 
+t_ping	g_pings;
+
+
+void	waiting(void)
+{
+	while (1)
+	{
+		if (g_pings.flag == 1)
+		{
+			g_pings.flag = 0;
+			break ;
+		}
+	}
+}
+
+
 void	send_recep(int signo, siginfo_t *info, void *uap)
 {
 	(void)info;
