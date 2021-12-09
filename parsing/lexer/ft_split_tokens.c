@@ -140,7 +140,7 @@ t_token	*ft_split_tokens(char *str, int nbr_tokens)
 		make_str_s_quotes(str, my_arr, &i, &y);
 		make_str_double_quote(str, my_arr, &i, &y);
 	}
-	my_arr[nbr_tokens].fl_quotes = -1;
+	fill_size_tokens(my_arr, nbr_tokens);
 	typification(my_arr, nbr_tokens);
 	return (my_arr);
 }

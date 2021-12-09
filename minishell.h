@@ -57,6 +57,7 @@ typedef struct s_simple_command
 
 typedef struct s_token
 {
+	int		size;
 	int		type;
 	char	*value;
 	int		fl_quotes;
@@ -252,6 +253,7 @@ int					what_is_len_dollar(char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					which_type(t_token *my_arr);
 void				typification(t_token *my_arr, int nbr_token);
+void				fill_size_tokens(t_token *my_arr, int nbr_tokens);
 
 /*parsing/parser/preparsing.c*/
 t_simple_command	*new_elem(t_token *arr_tok, int index, int len,

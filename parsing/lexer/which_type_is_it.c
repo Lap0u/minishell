@@ -60,3 +60,16 @@ void	typification(t_token *my_arr, int nbr_token)
 		i++;
 	}
 }
+
+void	fill_size_tokens(t_token *my_arr, int nbr_tokens)
+{
+	int	i;
+
+	i = 0;
+	while (i < nbr_tokens)
+	{
+		my_arr[i].size = nbr_tokens;
+		i++;
+	}
+	my_arr[nbr_tokens].fl_quotes = -1;
+}
