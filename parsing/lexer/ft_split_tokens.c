@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int	what_is_len(char *str, int fl_quotes)
+int	what_is_len(char *str, int fl_q)
 {
 	int		i;
 	char	*arr;
@@ -21,9 +21,9 @@ int	what_is_len(char *str, int fl_quotes)
 	arr = str;
 	if (*arr == '\0')
 		return (0);
-	if (*arr == '\'' && fl_quotes == 1)
+	if (*arr == '\'' && fl_q == 1)
 		i = what_is_len_s_quotes(str);
-	else if (*arr == '"' || fl_quotes == 2)
+	else if (*arr == '"' || fl_q == 2)
 		i = what_is_len_double_quotes(str);
 	else if (*arr != '$' && (*arr != '<' && *arr != '>'))
 		i = what_is_len_simple(arr);
@@ -70,7 +70,7 @@ void	make_str_body(char *arr, char *str, int *i, int len)
 	}
 }
 
-int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
+int	make_str_check(char *arr, char **str, int *i, int fl_q)
 {
 	if (**str == '\'' && *(*str + 1) == '\'')
 	{
@@ -82,27 +82,27 @@ int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 		arr[*i] = '\0';
 		return (0);
 	}
-	else if (**str == '\'' && *(*str + 1) != '\'' && fl_quotes != 2)
+	else if (**str == '\'' && *(*str + 1) != '\'' && fl_q != 2)
 		*str = *str + 1;
 	else if (**str == '"' && *(*str + 1) != '"')
 		*str = *str + 1;
 	return (1);
 }
 
-char	*make_str(char *str, int fl_quotes)
+char	*make_str(char *str, int fl_q)
 {
 	int		i;
 	char	*arr;
 	int		len;
 
 	i = 0;
-	len = what_is_len(str, fl_quotes);
+	len = what_is_len(str, fl_q);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
-	if (make_str_check(arr, &str, &i, fl_quotes))
+	if (make_str_check(arr, &str, &i, fl_q))
 	{
-		if (*str == '"' && fl_quotes != 2)
+		if (*str == '"' && fl_q != 2)
 			make_str_dq_cons(arr, str, &i, len);
-		else if (fl_quotes != 2)
+		else if (fl_q != 2)
 			make_str_body(arr, str, &i, len);
 		else
 		{
@@ -135,7 +135,7 @@ t_token	*ft_split_tokens(char *str, int nbr_tokens)
 		make_str_simple(str, my_arr, &i, &y);
 		make_str_redir(str, my_arr, &i, &y);
 		if (str[i] == '$')
-			my_arr[y].fl_quotes = 0;
+			my_arr[y].fl_q = 0;
 		make_str_dollar(str, my_arr, &i, &y);
 		make_str_s_quotes(str, my_arr, &i, &y);
 		make_str_double_quote(str, my_arr, &i, &y);

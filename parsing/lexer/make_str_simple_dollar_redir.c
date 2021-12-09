@@ -26,7 +26,7 @@ void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y)
 	}
 	else
 		*i = *i + 1;
-	if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+	if (str[*i] == ' ' && my_arr[*y].fl_q != 2)
 		my_arr[*y].fl_space = 1;
 }
 
@@ -41,7 +41,7 @@ void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 				|| (str[*i] == '\'' && str[*i + 1] == '\'')))
 		{
 			*i = *i + 2;
-			if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+			if (str[*i] == ' ' && my_arr[*y].fl_q != 2)
 				my_arr[*y].fl_space = 1;
 		}			
 		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
@@ -50,7 +50,7 @@ void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 		else if (str[*i] && str[*i] == '$')
 		{
 			*i = *i + 1;
-			if (str[*i] == ' ' && my_arr[*y].fl_quotes != 2)
+			if (str[*i] == ' ' && my_arr[*y].fl_q != 2)
 				my_arr[*y].fl_space = 1;
 		}
 		*y = *y + 1;
@@ -66,7 +66,7 @@ void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)
 		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<')
 	{
 		my_arr[*y].value = make_str(&str[*i], 0);
-		my_arr[*y].fl_quotes = 0;
+		my_arr[*y].fl_q = 0;
 		my_arr[*y].fl_space = 0;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 			&& (!in_charset(str[*i])) && str[*i] != '>' && str[*i] != '<')
@@ -85,7 +85,7 @@ void	make_str_redir(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i] == '>' || str[*i] == '<')
 	{
 		len = what_is_len(&str[*i], 0);
-		my_arr[*y].fl_quotes = 0;
+		my_arr[*y].fl_q = 0;
 		my_arr[*y].fl_space = 1;
 		my_arr[*y].value = make_str(&str[*i], 0);
 		*y = *y + 1;

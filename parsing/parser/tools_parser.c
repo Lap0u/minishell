@@ -61,7 +61,7 @@ char	*new_var(char *temp, char *str, char *new)
 	return (ft_add_var(new));
 }
 
-char	*ft_expand_dollar(char *str, int mode, char **env, int ret)
+char	*ft_exp_dol(char *str, int mode, char **env, int ret)
 {
 	int		i;
 	char	*temp;

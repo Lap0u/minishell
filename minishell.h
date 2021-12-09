@@ -60,7 +60,7 @@ typedef struct s_token
 	int		size;
 	int		type;
 	char	*value;
-	int		fl_quotes;
+	int		fl_q;
 	int		nbr_spaces;
 	int		subst;
 	int		fl_space;
@@ -196,10 +196,10 @@ void				set_signals2(void);
 # define COMMANDE 1
 
 /*parsing/lexer/ft_split_tokens.c*/
-int					what_is_len(char *str, int fl_quotes);
+int					what_is_len(char *str, int fl_q);
 void				make_str_body(char *arr, char *str, int *i, int len);
-int					make_str_check(char *arr, char **str, int *i, int fl_quotes);
-char				*make_str(char *str, int fl_quotes);
+int					make_str_check(char *arr, char **str, int *i, int fl_q);
+char				*make_str(char *str, int fl_q);
 t_token				*ft_split_tokens(char *str, int nbr_tokens);
 
 
@@ -274,11 +274,25 @@ void				print_redir(t_simple_command *start);
 void				ft_print_sentences(t_simple_command *start);
 void				ft_free_3dtab(char **tab);
 void				ft_free_redir(t_redir **list);
-char				*ft_expand_dollar(char *str, int mode, char **env, int ret);
+char				*ft_exp_dol(char *str, int mode, char **env, int ret);
+
 /*parsing/parser/fill_args_parser.c*/
 int					ft_count_args(t_token *arr_tok, int index, int len);
+void				ft_fill_args_var_not_exist(char	**args, int *i);
+void				ft_fill_args_join(char **args, char *temp, int *i, int *j);
+char				**ft_fill_args_finita(char **args, int i);
 char				**ft_fill_args(t_token *arr_tok, int index,
 						char **env, int ret);
+
+/*parsing/parser/fill_args_parser_check.c*/
+int					ft_fill_args_check_var_not_exist(t_token *arr_tok, int ind);
+int					ft_fill_args_check_expand(t_token *arr_tok, int ind);
+int					ft_fill_args_check_spaces(t_token *arr_tok, int ind);
+
+
+/*parsing/parser/do_var_existe.c*/
+int					do_var_existe(t_token **arr_tok, int len,
+							char **env, int index);
 
 /*parsing/parser/fill_redir_parser.c*/
 int					is_there_red(t_token *arr_tok, int index,
