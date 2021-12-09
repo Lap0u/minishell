@@ -41,7 +41,7 @@ void    inthandler2(int sig)
     write(2, "\n", 1);
 }
 
-void    quithandler2(int sig)//a faire
+void    quithandler2(int sig)
 {
     extern int g_signum;
 	(void)sig;
