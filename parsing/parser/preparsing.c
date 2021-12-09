@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/03 12:15:21 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 15:56:31 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, int len, char **env, int
 	{
 		my_elem->last_ret = ret;
 		my_elem->redir = ft_fill_redir(arr_tok, index, len, env, ret);
-		my_elem->args = ft_fill_args(arr_tok, index, len, env, ret);
+		my_elem->args = ft_fill_args(arr_tok, index, env, ret);
 		my_elem->cmd = my_elem->args[0];
 		my_elem->args_num = ft_2dlen(my_elem->args);
 		my_elem->next = (void *)0;
