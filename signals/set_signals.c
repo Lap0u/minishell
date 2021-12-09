@@ -1,51 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_handlers.c                                     :+:      :+:    :+:   */
+/*   set_signals.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 15:57:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:57:03 by okushnir         ###   ########.fr       */
+/*   Created: 2021/12/09 15:56:48 by okushnir          #+#    #+#             */
+/*   Updated: 2021/12/09 15:56:54 by okushnir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	inthandler(int sig)
+int	sig_val(int ret)
 {
 	extern int	g_signum;
 
-	(void)sig;
-	g_signum = 130;
-	write(2, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (g_signum != -1)
+	{
+		ret = g_signum;
+		g_signum = -1;
+	}
+	return (ret);
 }
 
-void	quithandler(int sig)
+void	set_signals(void)
 {
-	extern int	g_signum;
-
-	(void)sig;
-	write(0, "\b\b  \b\b", 6);
+	signal(SIGINT, inthandler);
+	signal(SIGQUIT, quithandler);
 }
 
-void	inthandler2(int sig)
+void	set_signals2(void)
 {
-	extern int	g_signum;
-
-	(void)sig;
-	g_signum = 130;
-	write(2, "\n", 1);
-}
-
-void	quithandler2(int sig)
-{
-	extern int	g_signum;
-
-	(void)sig;
-	g_signum = 131;
-	write(2, "Quit (core dumped)\n", 19);
+	signal(SIGINT, inthandler2);
+	signal(SIGQUIT, quithandler2);
 }
