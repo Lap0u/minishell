@@ -29,6 +29,7 @@
 
 # define PROMPT ">minishell "
 # define _XOPEN_SOURCE 700
+
 //type 0 = output, type 1 = input, type 2 = output_append, type 3 = here_doc
 
 /*parsing*/
@@ -37,11 +38,11 @@
 # define FLAG 2
 # define ARG 3
 # define PIPE 4
-# define RED_OUT 5 // > 
-# define RED_IN 6 // <
-# define RED_OUT_APP 7 // >>
-# define RED_HERE_DOC 8 // <<
-# define DOLLAR 9 // substitution
+# define RED_OUT 5 
+# define RED_IN 6
+# define RED_OUT_APP 7
+# define RED_HERE_DOC 8
+# define DOLLAR 9
 
 typedef struct s_redir
 {
@@ -302,10 +303,9 @@ int					ft_fill_args_check_var_not_exist(t_token *arr_tok, int ind);
 int					ft_fill_args_check_expand(t_token *arr_tok, int ind);
 int					ft_fill_args_check_spaces(t_token *arr_tok, int ind);
 
-
 /*parsing/parser/do_var_existe.c*/
 int					do_var_existe(t_token **arr_tok, int len,
-							char **env, int index);
+						char **env, int index);
 
 /*parsing/parser/fill_redir_parser.c*/
 int					is_there_red(t_token *arr_tok, int index,

@@ -12,6 +12,13 @@
 
 #include "../../minishell.h"
 
+int	skip_redir(t_token *temp, int len, int y)
+{
+	while (y < len && temp[y].type >= RED_OUT && temp[y].type <= RED_HERE_DOC)
+		y += 2;
+	return (y);
+}
+
 int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 {
 	int		i;
@@ -25,14 +32,9 @@ int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 	temp = *arr_tok;
 	while (y < len)
 	{
-		while (y < len && temp[y].type >= RED_OUT
-			&& temp[y].type <= RED_HERE_DOC)
-			y += 2;
-		if (y == len)
-			break ;
-		if (temp[y].type == PIPE)
-			return (count); //fix erreur segfault 
-			// y++;
+		y = skip_redir(temp, len, y);
+		if (y == len || temp[y].type == PIPE)
+			return (count);
 		temp[y].subst = 0;
 		i = 0;
 		while (env[i])
