@@ -27,21 +27,21 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int	which_type(t_token *my_arr)
 {
 	if (ft_strlen(my_arr->value) == 1 && *(my_arr->value) == '|'
-		&& my_arr->fl_quotes == 0)
+		&& my_arr->fl_q == 0)
 		return (PIPE);
 	else if (ft_strlen(my_arr->value) == 1 && *(my_arr->value) == '>'
-		&& my_arr->fl_quotes == 0)
+		&& my_arr->fl_q == 0)
 		return (RED_OUT);
 	else if (ft_strlen(my_arr->value) == 1 && *(my_arr->value) == '<'
-		&& my_arr->fl_quotes == 0)
+		&& my_arr->fl_q == 0)
 		return (RED_IN);
 	else if (ft_strlen(my_arr->value) == 2
-		&& (ft_strncmp(">>", my_arr->value, 2) == 0) && my_arr->fl_quotes == 0)
+		&& (ft_strncmp(">>", my_arr->value, 2) == 0) && my_arr->fl_q == 0)
 		return (RED_OUT_APP);
 	else if (ft_strlen(my_arr->value) == 2
-		&& (ft_strncmp("<<", my_arr->value, 2) == 0) && my_arr->fl_quotes == 0)
+		&& (ft_strncmp("<<", my_arr->value, 2) == 0) && my_arr->fl_q == 0)
 		return (RED_HERE_DOC);
-	else if ((ft_strncmp("$", my_arr->value, 1) == 0) && my_arr->fl_quotes != 1
+	else if ((ft_strncmp("$", my_arr->value, 1) == 0) && my_arr->fl_q != 1
 		&& ft_strlen(my_arr->value) != 1)
 		return (DOLLAR);
 	else
@@ -71,5 +71,5 @@ void	fill_size_tokens(t_token *my_arr, int nbr_tokens)
 		my_arr[i].size = nbr_tokens;
 		i++;
 	}
-	my_arr[nbr_tokens].fl_quotes = -1;
+	my_arr[nbr_tokens].fl_q = -1;
 }

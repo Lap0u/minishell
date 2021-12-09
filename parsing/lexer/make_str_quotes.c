@@ -17,7 +17,7 @@ void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i] == '\'' && str[*i + 1] != '\'')
 	{
 		my_arr[*y].value = make_str(&str[*i], 1);
-		my_arr[*y].fl_quotes = 1;
+		my_arr[*y].fl_q = 1;
 		my_arr[*y].fl_space = 0;
 		*i = *i + 1;
 		while (str[*i] != '\'' && str[*i])
@@ -32,7 +32,7 @@ void	make_str_s_quotes(char *str, t_token *my_arr, int *i, int *y)
 	{
 		my_arr[*y].value = make_str(&str[*i], 1);
 		*i = *i + 2;
-		my_arr[*y].fl_quotes = 1;
+		my_arr[*y].fl_q = 1;
 		my_arr[*y].fl_space = 0;
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;
@@ -45,7 +45,7 @@ void	check_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	if (str[*i + 1] != '$')
 	{
 		my_arr[*y].value = make_str(&str[*i], 2);
-		my_arr[*y].fl_quotes = 2;
+		my_arr[*y].fl_q = 2;
 		my_arr[*y].fl_space = 0;
 		*y = *y + 1;
 		*i = *i + 1;
@@ -62,13 +62,13 @@ void	make_str_double_quote_filled(char *str, t_token *my_arr, int *i, int *y)
 		while (str[*i] != '\0' && str[*i] != '"' && str[*i] != '$')
 			*i = *i + 1;
 		if (str[*i] == '$')
-			my_arr[*y].fl_quotes = 2;
+			my_arr[*y].fl_q = 2;
 		make_str_dollar(str, my_arr, i, y);
 		if (str[*i] != '\0' && str[*i] != '\"' && str[*i] != '$')
 		{
 			my_arr[*y].fl_space = 0;
-			my_arr[*y].fl_quotes = 2;
-			my_arr[*y].value = make_str(&str[*i], my_arr[*y].fl_quotes);
+			my_arr[*y].fl_q = 2;
+			my_arr[*y].value = make_str(&str[*i], my_arr[*y].fl_q);
 			*y = *y + 1;
 		}
 	}
@@ -86,7 +86,7 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 	{
 		my_arr[*y].value = make_str(&str[*i], 1);
 		*i = *i + 2;
-		my_arr[*y].fl_quotes = 2;
+		my_arr[*y].fl_q = 2;
 		my_arr[*y].fl_space = 0;
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;

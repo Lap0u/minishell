@@ -36,6 +36,25 @@ int	is_expandable(char *str, int red, int quote, char **env)
 	return (0);
 }
 
+int	is_there_red(t_token *tok, int ind, int len, char **env)
+{
+	while (ind < len && tok[ind].type != PIPE)
+	{
+		if (tok[ind].type == RED_HERE_DOC)
+			return (0);
+		else if (tok[ind].type >= RED_OUT
+			&& tok[ind].type <= RED_HERE_DOC
+			&& tok[ind + 1].fl_q == 1)
+			return (0);
+		else if (tok[ind].type >= RED_OUT
+			&& tok[ind].type <= RED_HERE_DOC
+			&& is_expandable(tok[ind + 1].value, 0, 0, env))
+			return (0);
+		ind++;
+	}
+	return (1);
+}
+
 void	new_redir(t_token *tok, t_redir **start)
 {
 	t_redir	*save;
@@ -57,7 +76,7 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 {
 	(*start)->type = tok[ind].type -5;
 	(*start)->next = NULL;
-	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_quotes == 1)
+	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_q == 1)
 	{
 		(*start)->file = tok[ind + 1].value;
 		return (0);
@@ -65,7 +84,21 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 	return (-1);
 }
 
-t_redir	*ft_fill_redir(t_token *tok, int ind, char **env, int ret)
+int	is_good_redir(t_token *tok, int ind, char **env)
+{
+	if (tok[ind].type >= RED_OUT && tok[ind].type <= RED_HERE_DOC
+		&& is_expandable(tok[ind + 1].value, tok[ind].type,
+			tok[ind + 1].fl_q, env))
+		return (1);
+	return (0);
+}
+
+char	*call_expand(t_token *tok, int ind, char **env, int ret)
+{
+	return (ft_exp_dol(tok[ind + 1].value, tok[ind].type, env, ret));
+}
+
+t_redir	*ft_fill_redir(t_token *tok, int ind, int len, char **env, int ret)
 {
 	t_redir	*start;
 	int		bool_start;

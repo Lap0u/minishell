@@ -24,7 +24,9 @@ SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				libft/ft_strjoin.c libft/ft_split.c file/file_open.c \
 				file/file_utils.c builtin/export_utils.c builtin/cd_utils.c \
 				signals/sig_handlers.c signals/set_signals.c \
-				parsing/parser/parser_print.c parsing/parser/fill_redir_utils.c
+				parsing/parser/parser_print.c parsing/parser/do_var_existe.c \
+				parsing/parser/fill_args_parser_check.c parsing/parser/fill_redir_utils.c \
+
 
 OBJS		= $(SRCS:.c=.o)
 
