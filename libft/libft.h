@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:58:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/09/29 10:44:29 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:07:28 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int				ft_strcmp(char *s1, char *s2);
 
 char			*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
