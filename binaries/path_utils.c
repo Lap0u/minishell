@@ -17,7 +17,8 @@ void	cant_exec(char *file, char *message, int vexit)
 	write(2, "minishell: ", 12);
 	write(2, file, ft_strlen(file));
 	write(2, message, ft_strlen(message));
-	exit(vexit);
+	if (vexit != -1)
+		exit(vexit);
 }
 
 void	ft_add_path(t_simple_command *c_table, char **path)

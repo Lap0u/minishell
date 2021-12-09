@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 14:28:55 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:04:46 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 			int *pipefd, int size)
 {
 	int	i;
-	
+
 	i = 0;
 	while (c_table)
 	{
