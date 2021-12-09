@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <dirent.h>
 # include <sys/wait.h>
-// # include "./libft/libft.h" //a commenter pour compiler parser/lexer
 # include <limits.h> 
 # include "libft/libft.h"
 # include <string.h>
@@ -31,6 +30,18 @@
 # define PROMPT ">minishell "
 # define _XOPEN_SOURCE 700
 //type 0 = output, type 1 = input, type 2 = output_append, type 3 = here_doc
+
+/*parsing*/
+
+# define COMMANDE 1
+# define FLAG 2
+# define ARG 3
+# define PIPE 4
+# define RED_OUT 5 // > 
+# define RED_IN 6 // <
+# define RED_OUT_APP 7 // >>
+# define RED_HERE_DOC 8 // <<
+# define DOLLAR 9 // substitution
 
 typedef struct s_redir
 {
@@ -66,110 +77,131 @@ typedef struct s_token
 	int		fl_space;
 }				t_token;
 
-void				launch_start(char *cmd, int nbr_tok, char ***env, int *ret);
+/*binaries/main_bin.c*/
 
-t_simple_command	*ft_get_simple_command(char *str, char **env);
-
-int					ft_strcmp(char *s1, char *s2);
-
-int					ft_isbuiltin(char *str);
-
-char				*ft_get_command(char *str);
-
-char				**ft_get_args(char *str, char **env);
-
-int					ft_get_args_size(char **args);
-
-void				ft_split_builtin(t_simple_command **c_table);
-
-void				ft_bi_echo(t_simple_command *c_table);
-
-void				ft_bi_cd(t_simple_command *c_table);
-
-int					cd_path(t_simple_command *c_table, char **path, char *temp);
-
-char				*make_pwd(char *prefix);
-
-void				add_pwds(t_simple_command *c_table, char
-						*oldpwd, char *newpwd);
-
-void				ft_bi_pwd(t_simple_command *c_table);
-
-void				ft_bi_export(t_simple_command **c_table);
-
-void				ft_bi_unset(t_simple_command **c_table);
-
-void				ft_bi_env(t_simple_command *c_table);
-
-void				ft_bi_exit(t_simple_command *c_table);
-
+void				stat_management(char *bin, int mode);
+int					get_stat(char *str);
+void				execution(t_simple_command *c_table, char **env);
+void				ft_bin_nofork(t_simple_command *c_table, char **env);
 void				ft_exec_bin(t_simple_command *c_table, char **env);
 
-char				**ft_get_paths(char **envp);
-
-char				*ft_add_slash(char *res);
-
-char				*ft_rm_path(char *str);
-
-void				ft_add_path(t_simple_command *c_table, char **path);
-
-int					ft_proper_free(t_simple_command *c_table);
-
-char				**ft_copy_env(char **env);
-
-void				ft_open_files(t_simple_command *c_table, t_redir *list);
-
-void				write_heredoc(char *delim, int ret);
-
-int					ft_pipe(t_simple_command *c_table);
-
-int					onec_exec(t_simple_command *c_table);
-
-void				close_pipes(int *tab, int size);
-
-int					*init_pipes(int nbr_sent, pid_t *childs);
-
-pid_t				*init_childs(int nbr_sent);
-
-void				launch_exec(t_simple_command *c_table, pid_t *childs,
-						int *pipefd, int size);
-
-void				ft_free_2dstr(char **str);
-
-void				ft_bin_nofork(t_simple_command *c_table, char **env);
-
-void				ft_close_prev(t_simple_command *c_table);
-
-int					ft_isfolder(char *file, int ret);
-
-void				ft_file_error(t_simple_command *c_table);
-
-int					is_valid_export(char *str);
-
-void				ft_export_replace(char *str, char *full,
-						t_simple_command **c_table, int i);
-
-void				ft_export_addone(char *str, char *full,
-						t_simple_command **c_table);
-
-void				ft_export_add(char *toadd, t_simple_command **c_table);
-
-void				ft_cp_env(char **sorted, char **env);
-
-void				ft_write_wfolder(char *str, int i);
-
-int					ft_strccmp(char *s1, char *s2, char c);
-
-char				*make_pwd(char *prefix);
-
-int					soft_quit(char **temp_env, int ret);
-
-int					check_syntax(t_token *arr_tok, int nbr_tokens);
+/*binaries/path_utils.c*/
 
 void				cant_exec(char *file, char *message, int vexit);
+void				ft_add_path(t_simple_command *c_table, char **path);
+char				**ft_get_paths(char **envp);
+char				*ft_add_slash(char *res);
+char				*ft_rm_path(char *str);
+
+/*builtin/cd_utils.c*/
+
+void				add_pwds(t_simple_command *c_table, char *oldpwd,
+						char *newpwd);
+int					cd_path(t_simple_command *c_table, char **path, char *temp);
+
+/*builtin/cd.c*/
+void				cd_noarg(t_simple_command *c_table);
+int					cd_get_dash(t_simple_command *c_table);
+void				cd_curpath(t_simple_command *c_table);
+void				cd_classic(t_simple_command *c_table);
+void				ft_bi_cd(t_simple_command *c_table);
+
+/*builtin/echo.c*/
+int					is_nonewl(char *str, char c);
+void				ft_bi_echo(t_simple_command *c_table);
+
+/*builtin/env.c*/
+void				ft_bi_env(t_simple_command *c_table);
+
+/*builtin/exit.c*/
+
+int					check_number(char *str);
+void				exit_too_long(t_simple_command *c_table);
+int					ft_exitreturn(char *str);
+void				ft_bi_exit(t_simple_command *c_table);
+
+/*builtin/export_utils.c*/
+void				ft_cp_env(char **sorted, char **env);
+int					is_valid_export(char *str);
+void				ft_export_replace(char *str, char *full,
+						t_simple_command **c_table, int i);
+void				ft_export_addone(char *str, char *full,
+						t_simple_command **c_table);
+void				ft_export_add(char *toadd, t_simple_command **c_table);
+
+/*builtin/export.c*/
+void				ft_sort_sorted(char **tab);
+void				print_expformat(const char *str);
+void				ft_export_noarg(t_simple_command *c_table);
+void				ft_export_arg(t_simple_command **c_table);
+void				ft_bi_export(t_simple_command **c_table);
+
+/*builtin/pwd.c*/
+void				ft_bi_pwd(t_simple_command *c_table);
+
+/*builtin/unset.c*/
+int					ft_strccmp(char *s1, char *s2, char c);
+int					is_in_env(char *str, char **env);
+void				ft_remove_from_env(char *str, char ***env);
+void				ft_bi_unset(t_simple_command **c_table);
+
+/*builtin/utils.c*/
+char				*make_pwd(char *prefix);
+int					ft_isbuiltin(char *str);
+void				ft_split_builtin(t_simple_command **c_table);
+
+/*env/env_init.c*/
+char				*ft_add_shlvl(char *env);
+char				**ft_empty_env(void);
+char				**ft_copy_env(char **env);
+
+/*exit/exit.c*/
+void				ft_del_heredoc(int index);
+void				ft_free_2dstr(char **str);
+int					ft_proper_free(t_simple_command *c_table);
+
+/*file/file_open.c*/
+void				ft_add_input(char *file, t_simple_command *c_table);
+void				ft_add_output(char *file, t_simple_command *c_table);
+void				ft_add_append(char *file, t_simple_command *c_table);
+void				ft_add_heredoc(char *delim, t_simple_command *c_table);
+void				ft_open_files(t_simple_command *c_table, t_redir *list);
+
+/*file/file_utils.c*/
+void				ft_write_wfolder(char *str, int i);
+void				ft_file_error(t_simple_command *c_table);
+int					ft_isfolder(char *file, int ret);
+void				ft_close_prev(t_simple_command *c_table);
+void				write_heredoc(char *delim, int ret);
+
+/*pipe/pipe_utils.c*/
+int					onec_exec(t_simple_command *c_table);
+pid_t				*init_childs(int nbr_sent);
+int					*init_pipes(int nbr_sent, pid_t *childs);
+void				dup_fds(int *pipefd, int i,
+						t_simple_command *c_table, int size);
+void				launch_exec(t_simple_command *c_table, pid_t *childs,
+						int *pipefd, int size);
+/*pipe/pipe.c*/
+int					ft_lstcmd(t_simple_command *list);
+void				close_pipes(int *tab, int size);
+int					ft_pipe(t_simple_command *c_table);
+
+/*utils.c*/
+int					exit_free_val(char *cmd, int ret);
+int					soft_quit(char **temp_env, int ret);
+int					ft_2dlen(char **tab);
+int					check_files(t_simple_command *c_table);
+void				launch_start(char *cmd, int nbr_tok, char ***env, int *ret);
+
+/*readline.c*/
+
+int					ft_check_space(char *str);
+void				ft_init_ctable(t_simple_command **list, char **env);
+int					syntax_error(t_token *arr_token, int size, char *error);
+int					check_syntax(t_token *arr_tok, int nbr_tokens);
 
 /*signals/sig_handlers.c*/
-
 
 void				inthandler(int sig);
 void				quithandler(int sig);
@@ -181,34 +213,20 @@ int					sig_val(int ret);
 void				set_signals(void);
 void				set_signals2(void);
 
-/*parsing*/
-
-# define COMMANDE 1
-# define FLAG 2
-# define ARG 3
-# define PIPE 4
-# define RED_OUT 5 // > 
-# define RED_IN 6 // <
-# define RED_OUT_APP 7 // >>
-# define RED_HERE_DOC 8 // <<
-# define DOLLAR 9 // substitution
-
-# define COMMANDE 1
-
 /*parsing/lexer/ft_split_tokens.c*/
 int					what_is_len(char *str, int fl_q);
 void				make_str_body(char *arr, char *str, int *i, int len);
 int					make_str_check(char *arr, char **str, int *i, int fl_q);
 char				*make_str(char *str, int fl_q);
+
 t_token				*ft_split_tokens(char *str, int nbr_tokens);
 
-
+/*parsing/lexer/what_is_len.c*/
 int					what_is_len_s_quotes(char *str);
 int					what_is_len_double_quotes(char *str);
 int					what_is_len_simple(char *str);
 int					what_is_len_dollar(char *str);
 int					what_is_len_redir(char *str);
-
 
 /*parsing/lexer/make_str_quotes.c*/
 void				make_str_s_quotes(char *str, t_token *my_arr,
@@ -220,7 +238,6 @@ void				make_str_double_quote_filled(char *str, t_token *my_arr,
 void				make_str_double_quote(char *str, t_token *my_arr,
 						int *i, int *y);
 void				make_str_dq_cons(char *arr, char *str, int *i, int len);
-
 
 /*parsing/lexer/make_str_simple_dollar_redir.c*/
 void				make_str_dollar_filled(char *str, t_token *my_arr,
@@ -251,7 +268,6 @@ int					what_is_len_simple(char *str);
 int					what_is_len_dollar_var(char *str);
 int					what_is_len_dollar(char *str);
 
-
 /*parsing/lexer/which_type_is_it.c*/
 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -260,23 +276,20 @@ void				typification(t_token *my_arr, int nbr_token);
 void				fill_size_tokens(t_token *my_arr, int nbr_tokens);
 
 /*parsing/parser/preparsing.c*/
-t_simple_command	*new_elem(t_token *arr_tok, int index, int len,
+t_simple_command	*new_elem(t_token *arr_tok, int index,
 						char **env, int ret);
-void				add_new_elem(t_simple_command **st, t_token *arr_tok,
-						int ind, int len, char **env, int ret);
 void				add_env_in_elem(t_simple_command *lst_command, char **env);
 t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len,
 						char **env, int last_ret);
 
 /*parsing/parser/tools_parser.c*/
-void				print_args(t_simple_command *start);
-void				print_redir(t_simple_command *start);
-void				ft_print_sentences(t_simple_command *start);
+
 void				ft_free_3dtab(char **tab);
 void				ft_free_redir(t_redir **list);
 char				*ft_exp_dol(char *str, int mode, char **env, int ret);
-
+char				*ft_var_only(char *str);
 /*parsing/parser/fill_args_parser.c*/
+
 int					ft_count_args(t_token *arr_tok, int index, int len);
 void				ft_fill_args_var_not_exist(char	**args, int *i);
 void				ft_fill_args_join(char **args, char *temp, int *i, int *j);
@@ -299,7 +312,18 @@ int					is_there_red(t_token *arr_tok, int index,
 						int len, char **env);
 void				new_redir(t_token *arr_tok, t_redir **start);
 t_redir				*ft_fill_redir(t_token *arr_tok, int index,
-						int len, char **env, int ret);
+						char **env, int ret);
+int					is_expandable(char *str, int red, int quote, char **env);
+
+/*parsing/parser_print.c*/
+void				print_args(t_simple_command *start);
+void				print_redir(t_simple_command *c);
+void				ft_print_sentences(t_simple_command *start);
+
+/*parsing/parser/fill_redir_utils.c*/
+int					is_good_redir(t_token *tok, int ind, char **env);
+int					is_there_red(t_token *tok, int ind, int len, char **env);
+char				*call_expand(t_token *tok, int ind, char **env, int ret);
 
 /*parsing/parser/verif_parsing.c*/
 
@@ -308,7 +332,5 @@ int					is_text(t_token arr_tok);
 int					nbr_pipe(t_token *arr_tok, int len);
 int					skip_topipe(t_token *arr_tok, int index, int len);
 int					ft_2dlen(char **tab);
-
-char				*ft_var_only(char *str);
 
 #endif

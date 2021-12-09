@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 14:46:37 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:22:26 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ t_redir	*ft_fill_redir(t_token *tok, int ind, int len, char **env, int ret)
 	int		bool_start;
 
 	bool_start = -1;
-	if (is_there_red(tok, ind, len, env) == 1)
+	if (is_there_red(tok, ind, tok[0].size, env) == 1)
 		return (NULL);
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
 		return (NULL);
-	while (ind < len && tok[ind].type != PIPE)
+	while (ind < tok[0].size && tok[ind].type != PIPE)
 	{
 		if (is_good_redir(tok, ind++, env))
 		{
