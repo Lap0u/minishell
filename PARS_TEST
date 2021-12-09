@@ -108,3 +108,4 @@ problemes:
 58. echo  $'USER' OK
 59. echo "$NULL" test OK
 60. echo '"abc"'
+61. echo $NULL test OK
