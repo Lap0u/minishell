@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   nbr_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/05/20 13:24:12 by okushnir         ###   ########.fr       */
+/*   Created: 2021/12/09 15:17:44 by okushnir          #+#    #+#             */
+/*   Updated: 2021/12/09 15:17:48 by okushnir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	in_charset(char letter)
+void	nbr_words_dollar_body(char const *str, int *i)
 {
-	if (letter == ' ' || letter == '\t' || letter == '\n')
-		return (1);
-	return (0);
+	if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"')
+			|| (str[*i] == '\'' && str[*i + 1] == '\'')))
+		*i = *i + 2;
+	else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+			&& str[*i] != '$') && (!in_charset(str[*i]))
+		&& (str[*i] == '_' || ft_isalpha(str[*i])))
+	{
+		*i = *i + 1;
+		while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+				&& str[*i] != '$') && (!in_charset(str[*i]))
+			&& (str[*i] == '_' || ft_isalpha(str[*i])
+				|| ft_isdigit(str[*i])))
+			*i = *i + 1;
+	}
+	else if (str[*i] && str[*i] == '$')
+		*i = *i + 1;
+	else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
+			&& str[*i] != '$'))
+		*i = *i + 1;
 }
 
 int	nbr_words_dollar(char const *str, int *i)
@@ -28,28 +44,8 @@ int	nbr_words_dollar(char const *str, int *i)
 	{
 		words++;
 		*i = *i + 1;
-		if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"')
-				|| (str[*i] == '\'' && str[*i + 1] == '\'')))
-			*i = *i + 2;
-		// else if (str[*i] && (str[*i] == '?' || str[*i] == '0'))
-		// 	*i = *i + 1;
-		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-			&& str[*i] != '$') && (!in_charset(str[*i]))
-		&& (str[*i] == '_' || ft_isalpha(str[*i])))
-		{
-				*i = *i + 1;
-			while (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-					&& str[*i] != '$') && (!in_charset(str[*i]))
-				&& (str[*i] == '_' || ft_isalpha(str[*i]) || ft_isdigit(str[*i])))
-					*i = *i + 1;
-		}
-		else if (str[*i] && str[*i] == '$')
-			*i = *i + 1;
-		else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-			&& str[*i] != '$'))
-			*i = *i + 1;
+		nbr_words_dollar_body(str, i);
 	}
-	// printf("dollr words = %d, str = %c, i = %d\n", words, str[*i], *i);
 	return (words);
 }
 

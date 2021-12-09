@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/03 15:47:05 by cbeaurai         ###   ########.fr       */
+/*   Created: 2021/12/09 15:16:57 by okushnir          #+#    #+#             */
+/*   Updated: 2021/12/09 15:17:16 by okushnir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	make_str_body(char *arr, char *str, int *i, int len)
 
 int	make_str_check(char *arr, char **str, int *i, int fl_quotes)
 {
-	// printf("75: *str = %c, *str+1 = %c, str = %s\n", **str, *(*str + 1), *str);
 	if (**str == '\'' && *(*str + 1) == '\'')
 	{
 		arr[*i] = '\0';
@@ -102,11 +101,7 @@ char	*make_str(char *str, int fl_quotes)
 	if (make_str_check(arr, &str, &i, fl_quotes))
 	{
 		if (*str == '"' && fl_quotes != 2)
-			while (i < len)
-			{
-				arr[i] = str[i];
-				i++;
-			}
+			make_str_dq_cons(arr, str, &i, len);
 		else if (fl_quotes != 2)
 			make_str_body(arr, str, &i, len);
 		else

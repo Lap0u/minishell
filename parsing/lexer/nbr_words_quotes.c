@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nbr_words_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 11:51:44 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 11:51:46 by cbeaurai         ###   ########.fr       */
+/*   Created: 2021/12/09 15:17:54 by okushnir          #+#    #+#             */
+/*   Updated: 2021/12/09 15:17:56 by okushnir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,33 @@ int	nbr_words_double_quotes(char const *str, int *i)
 		}
 	}
 	return (words);
+}
+
+int	in_charset(char letter)
+{
+	if (letter == ' ' || letter == '\t' || letter == '\n')
+		return (1);
+	return (0);
+}
+
+int	what_is_len_redir(char *str)
+{
+	int	len;
+
+	len = 0;
+	if (*str == '>')
+	{
+		len++;
+		str++;
+		if (*str == '>')
+			len++;
+	}
+	else if (*str == '<')
+	{
+		len++;
+		str++;
+		if (*str == '<')
+			len++;
+	}
+	return (len);
 }
