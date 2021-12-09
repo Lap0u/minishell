@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   make_str_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/05/20 13:24:12 by okushnir         ###   ########.fr       */
+/*   Created: 2021/12/09 15:17:22 by okushnir          #+#    #+#             */
+/*   Updated: 2021/12/09 15:17:29 by okushnir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,14 @@ void	make_str_double_quote(char *str, t_token *my_arr, int *i, int *y)
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;
 		*y = *y + 1;
+	}
+}
+
+void	make_str_dq_cons(char *arr, char *str, int *i, int len)
+{
+	while (*i < len)
+	{
+		arr[*i] = str[*i];
+		*i += 1;
 	}
 }
