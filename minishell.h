@@ -167,15 +167,19 @@ int					soft_quit(char **temp_env, int ret);
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
 
 void				cant_exec(char *file, char *message, int vexit);
+
 /*signals/sig_handlers.c*/
 
-void				set_signals(void);
-void				set_signals2(void);
-int					sig_val(int ret);
+
 void				inthandler(int sig);
 void				quithandler(int sig);
 void				inthandler2(int sig);
 void				quithandler2(int sig);
+
+/*signals/set_signals.c*/
+int					sig_val(int ret);
+void				set_signals(void);
+void				set_signals2(void);
 
 /*parsing*/
 
