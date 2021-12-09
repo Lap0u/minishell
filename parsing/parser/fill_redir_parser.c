@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:25:45 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:46:37 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,26 @@ int	is_expandable(char *str, int red, int quote, char **env)
 	return (0);
 }
 
-int	is_there_red(t_token *arr_tok, int index, int len, char **env)
+int	is_there_red(t_token *tok, int ind, int len, char **env)
 {
-	while (index < len && arr_tok[index].type != PIPE)
+	while (ind < len && tok[ind].type != PIPE)
 	{
-		if (arr_tok[index].type == RED_HERE_DOC)
+		if (tok[ind].type == RED_HERE_DOC)
 			return (0);
-		else if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC
-			&& arr_tok[index + 1].fl_quotes == 1)
+		else if (tok[ind].type >= RED_OUT
+			&& tok[ind].type <= RED_HERE_DOC
+			&& tok[ind + 1].fl_quotes == 1)
 			return (0);
-		else if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC
-			&& is_expandable(arr_tok[index + 1].value, 0, 0, env))
+		else if (tok[ind].type >= RED_OUT
+			&& tok[ind].type <= RED_HERE_DOC
+			&& is_expandable(tok[ind + 1].value, 0, 0, env))
 			return (0);
-		index++;
+		ind++;
 	}
 	return (1);
 }
 
-void	new_redir(t_token *arr_tok, t_redir **start)
+void	new_redir(t_token *tok, t_redir **start)
 {
 	t_redir	*save;
 	t_redir	*new;
@@ -64,44 +66,63 @@ void	new_redir(t_token *arr_tok, t_redir **start)
 	new = malloc(sizeof(t_redir));
 	if (new == NULL)
 		return ;
-	new->type = arr_tok[0].type - 5;
-	new->file = arr_tok[1].value;
+	new->type = tok[0].type - 5;
+	new->file = tok[1].value;
 	new->next = NULL;
 	save->next = new;
 }
 
-t_redir	*ft_fill_redir(t_token *arr_tok, int index, int len, char **env, int ret)
+int	first_redir(t_redir **start, t_token *tok, int ind)
+{
+	(*start)->type = tok[ind].type -5;
+	(*start)->next = NULL;
+	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_quotes == 1)
+	{
+		(*start)->file = tok[ind + 1].value;
+		return (0);
+	}
+	return (-1);
+}
+
+int	is_good_redir(t_token *tok, int ind, char **env)
+{
+	if (tok[ind].type >= RED_OUT && tok[ind].type <= RED_HERE_DOC
+		&& is_expandable(tok[ind + 1].value, tok[ind].type,
+			tok[ind + 1].fl_quotes, env))
+		return (1);
+	return (0);
+}
+
+char	*call_expand(t_token *tok, int ind, char **env, int ret)
+{
+	return (ft_expand_dollar(tok[ind + 1].value, tok[ind].type, env, ret));
+}
+
+t_redir	*ft_fill_redir(t_token *tok, int ind, int len, char **env, int ret)
 {
 	t_redir	*start;
 	int		bool_start;
 
 	bool_start = -1;
-	if (is_there_red(arr_tok, index, len, env) == 1)
+	if (is_there_red(tok, ind, len, env) == 1)
 		return (NULL);
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
 		return (NULL);
-	while (index < len && arr_tok[index].type != PIPE)
+	while (ind < len && tok[ind].type != PIPE)
 	{
-		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC
-			&& is_expandable(arr_tok[index + 1].value, arr_tok[index].type,
-				arr_tok[index + 1].fl_quotes, env))
+		if (is_good_redir(tok, ind++, env))
 		{
 			if (bool_start == -1)
 			{
-				start->type = arr_tok[index].type - 5;
-				if (arr_tok[index].type == RED_HERE_DOC || arr_tok[index +1].fl_quotes == 1)
-					start->file = arr_tok[index + 1].value;
-				else
-					start->file = ft_expand_dollar(arr_tok[index + 1].value, arr_tok[index].type, env, ret);
-				start->next = NULL;
-				bool_start = 0;
+				if (first_redir(&start, tok, ind - 1) != 0)
+					start->file = call_expand(tok, ind - 1, env, ret);
 			}
 			else
-				new_redir(&arr_tok[index], &start);
-			index++;
+				new_redir(&tok[ind - 1], &start);
+			bool_start = 0;
+			ind++;
 		}
-		index++;
 	}
 	return (start);
 }

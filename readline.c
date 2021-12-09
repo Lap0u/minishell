@@ -6,13 +6,13 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 13:02:42 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:57:42 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int g_signum = -1;
+int	g_signum = -1;
 
 int	ft_check_space(char *str)
 {
@@ -82,22 +82,11 @@ int	check_syntax(t_token *arr_tok, int nbr_tokens)
 	return (1);
 }
 
-int	sig_val(int ret)
-{
-	if (g_signum != -1)
-	{
-		ret = g_signum;
-		g_signum = -1;
-	}
-	return (ret);
-}
-
 int	main(int ac, char **av, char **env)
 {	
 	char				*cmd;
 	char				**temp_env;
 	int					temp_ret;
-	int					nbr_tokens;
 
 	temp_ret = 0;
 	if (ac != 1 || !av[0])
@@ -112,11 +101,9 @@ int	main(int ac, char **av, char **env)
 			return (soft_quit(temp_env, temp_ret));
 		else if (ft_check_space(cmd) == 1)
 		{
-			nbr_tokens = nbr_words(cmd);
 			add_history(cmd);
-			if (nbr_tokens >= 0)
-				launch_start(cmd, nbr_words(cmd),
-						&temp_env, &temp_ret);
+			if (nbr_words(cmd) >= 0)
+				launch_start(cmd, nbr_words(cmd), &temp_env, &temp_ret);
 		}
 		free(cmd);
 	}

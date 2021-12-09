@@ -6,55 +6,11 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:15:31 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:17:33 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:57:46 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	print_args(t_simple_command *start)
-{
-	int	i;
-
-	i = 0;
-	printf("ARGS : ");
-	while (start->args[i])
-	{
-		printf("%s\t", start->args[i++]);
-	}
-	printf("\n");
-}
-
-void	print_redir(t_simple_command *c)
-{
-	t_redir	*save;
-
-	save = c->redir;
-	printf("REDIR : 0 = out    1 = in    2 = out_append    3 = here_doc\n");
-	while (c->redir)
-	{
-		printf("type : %d  vers file : %s\t", c->redir->type, c->redir->file);
-		c->redir = c->redir->next;
-	}
-	printf("\n\n");
-	c->redir = save;
-}
-
-void	ft_print_sentences(t_simple_command *start)
-{
-	int	i;
-
-	i = 0;
-	while (start)
-	{
-		printf("SENTENCE : %d\n\n", i++);
-		printf("COMMANDE : %s\n", start->cmd);
-		print_args(start);
-		print_redir(start);
-		printf("index : %d\n", start->pos);
-		start = start->next;
-	}
-}
 
 char	*ft_var_only(char *str)
 {
@@ -98,35 +54,36 @@ char	*ft_add_var(char *str)
 	return (res);
 }
 
+char	*new_var(char *temp, char *str, char *new)
+{
+	free(temp);
+	free(str);
+	return (ft_add_var(new));
+}
+
 char	*ft_expand_dollar(char *str, int mode, char **env, int ret)
 {
 	int		i;
 	char	*temp;
 
 	i = 0;
-	if (str)
+	if (!str)
+		return (NULL);
+	if ((str[0] != '$' || mode == 8 || mode == 1)
+		|| (str[0] == '$' && !str[1]))
+		return (str);
+	if (ft_strcmp("$?", str) == 0)
 	{
-		if ((str[0] != '$' || mode == 8 || mode == 1)
-			|| (str[0] == '$' && !str[1]))
-			return (str);
-		if (ft_strcmp("$?", str) == 0)
-		{
-			free(str);
-			return (ft_itoa(ret));
-		}
-		while (env[i])
-		{
-			temp = ft_var_only(env[i]);
-			if (ft_strcmp(temp, str + 1) == 0)
-			{
-				free(temp);
-				free(str);
-				str = ft_add_var(env[i]);
-				return (str);
-			}
-			free(temp);
-			i++;
-		}
+		free(str);
+		return (ft_itoa(ret));
+	}
+	while (env[i])
+	{
+		temp = ft_var_only(env[i]);
+		if (ft_strcmp(temp, str + 1) == 0)
+			return (new_var(temp, str, env[i]));
+		free(temp);
+		i++;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 #    By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 21:17:45 by cbeaurai          #+#    #+#              #
-#    Updated: 2021/12/03 13:18:13 by cbeaurai         ###   ########.fr        #
+#    Updated: 2021/12/09 14:58:14 by cbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				parsing/parser/fill_redir_parser.c parsing/parser/verif_parsing.c\
 				libft/ft_strjoin.c libft/ft_split.c file/file_open.c \
 				file/file_utils.c builtin/export_utils.c builtin/cd_utils.c \
-				signals/sig_handlers.c
+				signals/sig_handlers.c parsing/parser/parser_print.c
 
 OBJS		= $(SRCS:.c=.o)
 

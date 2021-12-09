@@ -1,5 +1,17 @@
 #include "../minishell.h"
 
+int    sig_val(int ret)
+{
+	extern int g_signum;
+
+    if (g_signum != -1)
+    {
+        ret = g_signum;
+        g_signum = -1;
+    }
+    return (ret);
+}
+
 void    set_signals(void)
 {
     signal(SIGINT, inthandler);

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/08 11:18:55 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:03:43 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	get_stat(char *str)
 	free(buf);
 	return (ret);
 }
-
-extern int pid;
 
 void	execution(t_simple_command *c_table, char **env)
 {
@@ -75,12 +73,7 @@ void	ft_bin_nofork(t_simple_command *c_table, char **env)
 
 	path = ft_get_paths(env);
 	if (path == NULL && c_table->cmd[0] != '/')
-	{
-		write(2, "minishell: ", 12);
-		write(2, c_table->cmd, ft_strlen(c_table->cmd));
-		write(2, ": No such file or directory\n", 29);
-		exit(127);
-	}
+		cant_exec(c_table->cmd, ": No such file or directory\n", 127);
 	ft_add_path(c_table, path);
 	execution(c_table, env);
 }
@@ -93,9 +86,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 	path = ft_get_paths(env);
 	if (path == NULL && c_table->cmd[0] != '/')
 	{
-		write(2, "minishell: ", 12);
-		write(2, c_table->cmd, ft_strlen(c_table->cmd));
-		write(2, ": No such file or directory\n", 29);
+		cant_exec(c_table->cmd, ": No such file or directory\n", -1);
 		c_table->last_ret = 127;
 		return ;
 	}
