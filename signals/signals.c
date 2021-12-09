@@ -6,8 +6,6 @@
 
 #define _XOPEN_SOURCE 700
 
-int pid = 0;
-
 void	*ft_memset(void *b, int c, size_t len)
 {
 	size_t	i;

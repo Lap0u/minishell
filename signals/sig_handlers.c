@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 void    set_signals(void)
 {
     signal(SIGINT, inthandler);
@@ -30,7 +29,7 @@ void    quithandler(int sig)
 {
     extern int g_signum;
 	(void)sig;
-    g_signum = 131;
+	write(0, "\b\b  \b\b", 6);
 }
 
 void    inthandler2(int sig)

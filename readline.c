@@ -6,13 +6,13 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/07 18:22:13 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 13:02:42 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int g_signum;
+int g_signum = -1;
 
 int	ft_check_space(char *str)
 {
@@ -82,6 +82,16 @@ int	check_syntax(t_token *arr_tok, int nbr_tokens)
 	return (1);
 }
 
+int	sig_val(int ret)
+{
+	if (g_signum != -1)
+	{
+		ret = g_signum;
+		g_signum = -1;
+	}
+	return (ret);
+}
+
 int	main(int ac, char **av, char **env)
 {	
 	char				*cmd;
@@ -95,9 +105,9 @@ int	main(int ac, char **av, char **env)
 	temp_env = ft_copy_env(env);
 	while (1)
 	{
-		g_signum = 0;
 		set_signals();
 		cmd = readline(PROMPT);
+		temp_ret = sig_val(temp_ret);
 		if (cmd == NULL)
 			return (soft_quit(temp_env, temp_ret));
 		else if (ft_check_space(cmd) == 1)
