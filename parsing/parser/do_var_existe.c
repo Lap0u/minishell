@@ -19,12 +19,38 @@ int	skip_redir(t_token *temp, int len, int y)
 	return (y);
 }
 
+int	check_var_env(char **env, t_token *temp, int y)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		str = ft_var_only(env[i]);
+		if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR
+				&& ft_strcmp(str, temp[y].value + 1) == 0)
+			|| ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
+		{
+			temp[y].subst = 1;
+			free(str);
+			return (1);
+		}
+		else if (temp[y].type == ARG)
+		{
+			free(str);
+			return (1);
+		}
+		free(str);
+		i++;
+	}
+	return (0);
+}
+
 int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 {
-	int		i;
 	int		y;
 	int		count;
-	char	*str;
 	t_token	*temp;
 
 	count = 0;
@@ -36,26 +62,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 		if (y == len || temp[y].type == PIPE)
 			return (count);
 		temp[y].subst = 0;
-		i = 0;
-		while (env[i])
-		{
-			str = ft_var_only(env[i]);
-			if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR
-					&& ft_strcmp(str, temp[y].value + 1) == 0)
-				|| ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
-			{
-				count++;
-				temp[y].subst = 1;
-			}
-			else if (temp[y].type == ARG)
-			{
-				count++;
-				free(str);
-				break ;
-			}
-			free(str);
-			i++;
-		}
+		count += check_var_env(env, temp, y);
 		if (temp[y].type == DOLLAR && temp[y].subst == 0)
 		{
 			free(temp[y].value);
