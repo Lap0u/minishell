@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:55:46 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 12:06:29 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/09 15:56:22 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	do_var_existe(t_token **arr_tok, int len, char **env, int index)
 	return (count);
 }
 
-char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
+char	**ft_fill_args(t_token *arr_tok, int index, char **env, int ret)
 {
 	char	**args;
 	char	*temp;
@@ -90,11 +90,11 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 	int		i;
 
 	i = 0;
-	do_var_existe(&arr_tok, len, env, index);
-	args = malloc(sizeof(char *) * (len + 1));
+	do_var_existe(&arr_tok, arr_tok[0].size, env, index);
+	args = malloc(sizeof(char *) * (arr_tok[0].size + 1));
 	if (args == (void *)0)
 		return ((void *)0);
-	while (index < len && arr_tok[index].type != PIPE)
+	while (index < arr_tok[0].size && arr_tok[index].type != PIPE)
 	{
 		if (arr_tok[index].type >= RED_OUT && arr_tok[index].type <= RED_HERE_DOC)
 			index++;
@@ -113,7 +113,7 @@ char	**ft_fill_args(t_token *arr_tok, int index, int len, char **env, int ret)
 			args[i] = ft_expand_dollar(arr_tok[index].value, arr_tok[index].fl_quotes, env, ret);
 			// printf("args[i] = %s\n", args[i]);
 			while ((((arr_tok[index].fl_space == 0 && (arr_tok[index + 1].fl_quotes == 2 || arr_tok[index + 1].fl_quotes == 1))
-						&& index < (len - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (len - 1)))
+						&& index < (arr_tok[0].size - 1)) || ((arr_tok[index].fl_space == 0 && arr_tok[index + 1].fl_quotes == 0) && index < (arr_tok[0].size - 1)))
 				&& ((arr_tok[index + 1].type < 5) || (arr_tok[index + 1].type > 8)))
 			{
 				// write(1, "jfjfj\n", 6);

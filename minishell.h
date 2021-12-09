@@ -274,7 +274,7 @@ char				*ft_expand_dollar(char *str, int mode, char **env, int ret);
 /*parsing/parser/fill_args_parser.c*/
 int					ft_count_args(t_token *arr_tok, int index, int len);
 char				**ft_fill_args(t_token *arr_tok, int index,
-						int len, char **env, int ret);
+						char **env, int ret);
 
 /*parsing/parser/fill_redir_parser.c*/
 int					is_there_red(t_token *arr_tok, int index,
