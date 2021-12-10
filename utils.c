@@ -6,17 +6,19 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 14:50:09 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:54:42 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 #include "libft/libft.h"
 
-int	exit_free_val(char *cmd, int ret)
+int	exit_free_val(char *cmd, int ret, char **env)
 {
 	if (cmd)
 		free(cmd);
+	rl_clear_history();
+	ft_free_2dstr(env);
 	exit(ret);
 }
 
@@ -60,7 +62,7 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 	{
 		c_table = creation_list_command(arr_tok, nbr_tok, *env, *ret);
 		if (c_table == NULL)
-			exit_free_val(cmd, 0);
+			exit_free_val(cmd, 0, *env);
 		if (check_files(c_table) == 0)
 			c_table->last_ret = 1;
 		else if (c_table->args_num == 0 && c_table->next == NULL)
@@ -69,7 +71,7 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 			c_table->last_ret = ft_pipe(c_table);
 		*env = c_table->env;
 		*ret = c_table->last_ret;
-		ft_proper_free(c_table);
+		ft_proper_free(c_table, NULL);
 		c_table = NULL;
 	}			
 	else

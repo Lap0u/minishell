@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 16:22:26 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:23:18 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	is_expandable(char *str, int red, int quote, char **env)
 		free(temp);
 		i++;
 	}
+	free(str);
 	return (0);
 }
 

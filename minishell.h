@@ -155,12 +155,14 @@ void				ft_split_builtin(t_simple_command **c_table);
 char				*ft_add_shlvl(char *env);
 char				**ft_empty_env(void);
 char				**ft_copy_env(char **env);
+void				free_tab_pipes(pid_t *tab, int *pipes);
+void				no_path(t_simple_command *c_table, int ret);
 
 /*exit/exit.c*/
 int					check_exec(int mode, t_simple_command *c_table);
 void				ft_del_heredoc(int index);
 void				ft_free_2dstr(char **str);
-int					ft_proper_free(t_simple_command *c_table);
+int					ft_proper_free(t_simple_command *c_table, char **env);
 
 /*file/file_open.c*/
 void				ft_add_input(char *file, t_simple_command *c_table);
@@ -193,7 +195,7 @@ int					free_one_memb(t_simple_command *c_table, pid_t *tab,
 void				ft_add_prev(t_simple_command *c_table);
 
 /*utils.c*/
-int					exit_free_val(char *cmd, int ret);
+int					exit_free_val(char *cmd, int ret, char **env);
 int					soft_quit(char **temp_env, int ret);
 int					ft_2dlen(char **tab);
 int					check_files(t_simple_command *c_table);

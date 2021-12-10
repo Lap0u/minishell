@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:00:52 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/08 11:41:31 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:53:59 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exit_too_long(t_simple_command *c_table)
 	write(2, "minishell: exit: ", 18);
 	write(2, c_table->args[1], ft_strlen(c_table->args[1]));
 	write(2, ": numeric argument required\n", 29);
-	ft_proper_free(c_table);
+	ft_proper_free(c_table, c_table->env);
 	exit(2);
 }
 
@@ -75,7 +75,7 @@ void	ft_bi_exit(t_simple_command *c_table)
 		ret = c_table->last_ret;
 		if (c_table->pos == 0 && c_table->next == NULL)
 			write(1, "exit\n", 5);
-		ft_proper_free(c_table);
+		ft_proper_free(c_table, c_table->env);
 		exit(ret);
 	}
 	else if (c_table->args_num > 2)
@@ -89,7 +89,7 @@ void	ft_bi_exit(t_simple_command *c_table)
 	{
 		if (c_table->pos == 0 && c_table->next == NULL)
 			write(1, "exit\n", 5);
-		ft_proper_free(c_table);
+		ft_proper_free(c_table, c_table->env);
 		exit(ret);
 	}
 }

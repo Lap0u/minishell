@@ -6,12 +6,26 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 11:59:11 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:43:28 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
+
+void	free_tab_pipes(pid_t *tab, int *pipes)
+{
+	if (tab)
+		free(tab);
+	if (pipes)
+		free(pipes);
+}
+
+void	no_path(t_simple_command *c_table, int ret)
+{
+	c_table->last_ret = ret;
+	cant_exec(c_table->cmd, ": No such file or directory\n", -1);
+}
 
 char	*ft_add_shlvl(char *env)
 {

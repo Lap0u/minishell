@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 14:55:10 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:19:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	g_signum = -1;
 
 t_simple_command	*get_first(t_simple_command *memb)
 {
+	if (memb->previous == NULL)
+		return (memb);
 	while (memb->previous)
 	{
 		memb = memb->previous;

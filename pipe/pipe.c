@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 14:54:04 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:42:00 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	close_pipes(int *tab, int size)
 
 void	ft_add_prev(t_simple_command *c_table)
 {
-	c_table->previous = NULL;
+	t_simple_command	*start;
+
+	start = c_table;
 	while (c_table->next)
 	{
 		c_table->next->previous = c_table;
 		c_table = c_table->next;
 	}
+	start->previous = NULL;
 }
 
 int	free_one_memb(t_simple_command *c_table, pid_t *tab, int *pipes, int ret)
@@ -68,8 +71,7 @@ int	free_one_memb(t_simple_command *c_table, pid_t *tab, int *pipes, int ret)
 		c_table = c_table->next;
 		free(temp);
 	}
-	free(tab);
-	free(pipes);
+	free_tab_pipes(tab, pipes);
 	return (ret);
 }
 
@@ -81,6 +83,7 @@ int	ft_pipe(t_simple_command *c_table)
 	int		status;
 	int		i;
 
+	ft_add_prev(c_table);
 	if (c_table->next == NULL)
 		return (onec_exec(c_table));
 	nbr_sent = ft_lstcmd(c_table);

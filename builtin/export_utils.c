@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:53:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 11:09:14 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:54:50 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_export_replace(char *str, char *full,
 	{
 		perror("minishell: malloc");
 		(*c_table)->last_ret = 1;
-		ft_proper_free(*c_table);
+		ft_proper_free(*c_table, NULL);
 	}
 }
 

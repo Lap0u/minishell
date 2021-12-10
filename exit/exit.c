@@ -49,12 +49,14 @@ void	ft_free_2dstr(char **str)
 	str = NULL;
 }
 
-int	ft_proper_free(t_simple_command *c_table)
+int	ft_proper_free(t_simple_command *c_table, char **env)
 {
 	t_simple_command	*temp;
 
 	if (c_table == NULL)
 		return (0);
+	if (env)
+		ft_free_2dstr(env);
 	temp = c_table;
 	while (c_table)
 	{
@@ -71,5 +73,5 @@ int	ft_proper_free(t_simple_command *c_table)
 		c_table = c_table->next;
 		free(temp);
 	}
-	return (0);
+	return (1);
 }

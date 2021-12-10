@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 14:56:16 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:43:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,7 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 
 	path = ft_get_paths(env);
 	if (path == NULL && c_table->cmd[0] != '/')
-	{
-		cant_exec(c_table->cmd, ": No such file or directory\n", -1);
-		c_table->last_ret = 127;
-		return ;
-	}
+		return (no_path(c_table, 127));
 	ft_add_path(c_table, path);
 	if (c_table->args_num != 0)
 	{
@@ -99,7 +95,10 @@ void	ft_exec_bin(t_simple_command *c_table, char **env)
 		if (child < 0)
 			return (perror("minishell: fork : "));
 		if (child == 0)
+		{
 			execution(c_table, env);
+			exit(free_one_memb(c_table, NULL, NULL, c_table->last_ret));
+		}
 		else if (child > 0)
 			set_signals2();
 		waitpid(child, &c_table->last_ret, 0);

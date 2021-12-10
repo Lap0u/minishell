@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:15:31 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 14:57:46 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:22:41 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*ft_exp_dol(char *str, int mode, char **env, int ret)
 		free(temp);
 		i++;
 	}
+	free(str);
 	return (NULL);
 }
 
