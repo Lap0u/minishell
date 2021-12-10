@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nbr_words_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:17:54 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:17:56 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:27:54 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	nbr_words_s_quotes(char const *str, int *i)
 			*i = *i + 1;
 		else if (str[*i] == 0)
 		{
-			write(2, "Error: There is not second single quotes\n", 41);
+			write(2, "Error: There is not second single quotes\n", 42);
 			return (-1);
 		}
 	}
@@ -75,7 +75,7 @@ int	nbr_words_double_quotes(char const *str, int *i)
 			*i = *i + 1;
 		else
 		{
-			write(2, "Error: There is not second duble quotes\n", 40);
+			write(2, "Error: There is not second double quotes\n", 42);
 			return (-2);
 		}
 	}
