@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 14:04:46 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:48:30 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 			if (ft_isbuiltin(c_table->cmd))
 			{
 				ft_split_builtin(&c_table);
-				exit(c_table->last_ret);
+				exit(free_one_memb(c_table, childs, pipefd, c_table->last_ret));
 			}
 			else if (c_table->args_num)
 				ft_bin_nofork(c_table, c_table->env);
-			exit(0);
+			exit(free_one_memb(c_table, childs, pipefd, c_table->last_ret));
 		}
 		else if (childs[i / 2] > 0)
 			set_signals2();

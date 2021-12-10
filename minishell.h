@@ -80,7 +80,7 @@ typedef struct s_token
 
 /*binaries/main_bin.c*/
 
-void				stat_management(char *bin, int mode);
+int					stat_management(char *bin, int mode);
 int					get_stat(char *str);
 void				execution(t_simple_command *c_table, char **env);
 void				ft_bin_nofork(t_simple_command *c_table, char **env);
@@ -88,7 +88,7 @@ void				ft_exec_bin(t_simple_command *c_table, char **env);
 
 /*binaries/path_utils.c*/
 
-void				cant_exec(char *file, char *message, int vexit);
+int					cant_exec(char *file, char *message, int vexit);
 void				ft_add_path(t_simple_command *c_table, char **path);
 char				**ft_get_paths(char **envp);
 char				*ft_add_slash(char *res);
@@ -157,6 +157,7 @@ char				**ft_empty_env(void);
 char				**ft_copy_env(char **env);
 
 /*exit/exit.c*/
+int					check_exec(int mode, t_simple_command *c_table);
 void				ft_del_heredoc(int index);
 void				ft_free_2dstr(char **str);
 int					ft_proper_free(t_simple_command *c_table);
@@ -187,6 +188,9 @@ void				launch_exec(t_simple_command *c_table, pid_t *childs,
 int					ft_lstcmd(t_simple_command *list);
 void				close_pipes(int *tab, int size);
 int					ft_pipe(t_simple_command *c_table);
+int					free_one_memb(t_simple_command *c_table, pid_t *tab,
+						int *pipes, int ret);
+void				ft_add_prev(t_simple_command *c_table);
 
 /*utils.c*/
 int					exit_free_val(char *cmd, int ret);
@@ -198,9 +202,9 @@ void				launch_start(char *cmd, int nbr_tok, char ***env, int *ret);
 /*readline.c*/
 
 int					ft_check_space(char *str);
-void				ft_init_ctable(t_simple_command **list, char **env);
 int					syntax_error(t_token *arr_token, int size, char *error);
 int					check_syntax(t_token *arr_tok, int nbr_tokens);
+t_simple_command	*get_first(t_simple_command *memb);
 
 /*signals/sig_handlers.c*/
 

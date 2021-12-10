@@ -6,13 +6,22 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:05:36 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 17:19:52 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:55:10 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 int	g_signum = -1;
+
+t_simple_command	*get_first(t_simple_command *memb)
+{
+	while (memb->previous)
+	{
+		memb = memb->previous;
+	}
+	return (memb);
+}
 
 int	ft_check_space(char *str)
 {
@@ -26,15 +35,6 @@ int	ft_check_space(char *str)
 		i++;
 	}
 	return (0);
-}
-
-void	ft_init_ctable(t_simple_command **list, char **env)
-{
-	*list = malloc(sizeof(t_simple_command));
-	if (*list == NULL)
-		return ;
-	(*list)->env = ft_copy_env(env);
-	return ;
 }
 
 int	syntax_error(t_token *arr_token, int size, char *error)

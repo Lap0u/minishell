@@ -13,6 +13,15 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+int	check_exec(int mode, t_simple_command *c_table)
+{
+	if (c_table->args[0] != 0 && (mode != 0
+			|| ft_strncmp(c_table->args[0], "./", 2) == 0
+			|| c_table->args[0][0] == '/'))
+		return (1);
+	return (0);
+}
+
 void	ft_del_heredoc(int index)
 {
 	char	*ind;
@@ -31,7 +40,11 @@ void	ft_free_2dstr(char **str)
 
 	i = 0;
 	while (str[i])
-		free(str[i++]);
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
 	free(str);
 	str = NULL;
 }

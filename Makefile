@@ -6,7 +6,7 @@
 #    By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/05 21:17:45 by cbeaurai          #+#    #+#              #
-#    Updated: 2021/12/09 16:22:59 by cbeaurai         ###   ########.fr        #
+#    Updated: 2021/12/10 13:34:48 by cbeaurai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ RM			= rm -rf
 
 LFT			= ./libft
 
-CFLAGS		= -Wall -Werror -Wextra -no-pie -g -I. -fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -no-pie -g -I.
 
 LIBS		= -lreadline -L ./libft -lft
 

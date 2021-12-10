@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 14:27:47 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:54:04 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,44 @@ void	close_pipes(int *tab, int size)
 		close(tab[i++]);
 }
 
+void	ft_add_prev(t_simple_command *c_table)
+{
+	c_table->previous = NULL;
+	while (c_table->next)
+	{
+		c_table->next->previous = c_table;
+		c_table = c_table->next;
+	}
+}
+
+int	free_one_memb(t_simple_command *c_table, pid_t *tab, int *pipes, int ret)
+{
+	t_simple_command	*temp;
+
+	c_table = get_first(c_table);
+	temp = c_table;
+	if (c_table->env)
+		ft_free_2dstr(c_table->env);
+	while (c_table)
+	{
+		temp = c_table;
+		if (c_table->args)
+			ft_free_2dstr(c_table->args);
+		if (c_table->redir)
+			ft_free_redir(&(c_table->redir));
+		if (c_table->infile >= 0)
+			close(c_table->infile);
+		if (c_table->outfile >= 0)
+			close(c_table->outfile);
+		ft_del_heredoc(c_table->pos);
+		c_table = c_table->next;
+		free(temp);
+	}
+	free(tab);
+	free(pipes);
+	return (ret);
+}
+
 int	ft_pipe(t_simple_command *c_table)
 {
 	pid_t	*childs;
@@ -43,12 +81,12 @@ int	ft_pipe(t_simple_command *c_table)
 	int		status;
 	int		i;
 
-	i = 0;
 	if (c_table->next == NULL)
 		return (onec_exec(c_table));
 	nbr_sent = ft_lstcmd(c_table);
 	childs = init_childs(nbr_sent);
 	pipefd = init_pipes(nbr_sent, childs);
+	ft_add_prev(c_table);
 	if (childs == NULL || pipefd == NULL)
 		return (1);
 	launch_exec(c_table, childs, pipefd, nbr_sent);
