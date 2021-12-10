@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:53:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 16:42:00 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:09:14 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_export_add(char *toadd, t_simple_command **c_table)
 	{
 		if (ft_strccmp(toadd, (*c_table)->env[i], '=') == 0)
 		{
-			printf("passe");
 			ft_export_replace(&toadd[len], toadd, c_table, i);
 			return ;
 		}
