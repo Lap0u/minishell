@@ -163,6 +163,7 @@ int					check_exec(int mode, t_simple_command *c_table);
 void				ft_del_heredoc(int index);
 void				ft_free_2dstr(char **str);
 int					ft_proper_free(t_simple_command *c_table, char **env);
+int					check_tty(void);
 
 /*file/file_open.c*/
 void				ft_add_input(char *file, t_simple_command *c_table);

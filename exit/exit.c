@@ -13,6 +13,16 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+int	check_tty()
+{
+	if (isatty(STDIN_FILENO) == 0)
+	{
+		write(2, "can't read from a file, exiting.. \n", 36);
+		exit (1);
+	}
+	return (0);
+}
+
 int	check_exec(int mode, t_simple_command *c_table)
 {
 	if (c_table->args[0] != 0 && (mode != 0

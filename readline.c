@@ -91,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	int					temp_ret;
 
 	temp_ret = 0;
-	if (ac != 1 || !av[0])
+	if (ac != 1 || !av[0] || check_tty())
 		return (write(2, "No arguments for this beauty\n", 30));
 	temp_env = ft_copy_env(env);
 	while (1)
