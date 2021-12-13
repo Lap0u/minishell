@@ -149,6 +149,7 @@ void				ft_bi_unset(t_simple_command **c_table);
 /*builtin/utils.c*/
 char				*make_pwd(char *prefix);
 int					ft_isbuiltin(char *str);
+void				start_builtin(t_simple_command **c_table);
 void				ft_split_builtin(t_simple_command **c_table);
 
 /*env/env_init.c*/

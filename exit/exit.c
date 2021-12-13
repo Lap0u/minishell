@@ -13,7 +13,7 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 
-int	check_tty()
+int	check_tty(void)
 {
 	if (isatty(STDIN_FILENO) == 0)
 	{

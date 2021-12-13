@@ -46,16 +46,8 @@ int	ft_isbuiltin(char *str)
 	return (0);
 }
 
-void	ft_split_builtin(t_simple_command **c_table)
+void	start_builtin(t_simple_command **c_table)
 {
-	int	stdout;
-
-	stdout = dup(STDOUT_FILENO);
-	if ((*c_table)->outfile >= 0)
-	{
-		if (dup2((*c_table)->outfile, STDOUT_FILENO) < 0)
-			perror("minishell: error");
-	}
 	if (ft_strcmp((*c_table)->cmd, "echo") == 0)
 		ft_bi_echo(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "cd") == 0)
@@ -70,6 +62,25 @@ void	ft_split_builtin(t_simple_command **c_table)
 		ft_bi_env(*c_table);
 	else if (ft_strcmp((*c_table)->cmd, "exit") == 0)
 		ft_bi_exit(*c_table);
+}
+
+void	ft_split_builtin(t_simple_command **c_table)
+{
+	int	stdout;
+
+	if (ft_strcmp((*c_table)->cmd, "exit") != 0)
+	{
+		stdout = dup(STDOUT_FILENO);
+		if (stdout < 0)
+			return (perror("minishell : dup"));
+	}
+	if ((*c_table)->outfile >= 0)
+	{
+		if (dup2((*c_table)->outfile, STDOUT_FILENO) < 0)
+			return (perror("minishell: dup2"));
+	}
+	start_builtin(c_table);
 	if (dup2(stdout, STDOUT_FILENO) < 0)
-		perror("minishell: error");
+		perror("minishell: dup2");
+	close (stdout);
 }
