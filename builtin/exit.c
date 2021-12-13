@@ -21,7 +21,7 @@ int	check_number(char *str)
 		i = 1;
 	while (str[i])
 	{
-		if (ft_isdigit(str[0]) == 0)
+		if (ft_isdigit(str[i]) == 0)
 			return (1);
 		i++;
 	}
@@ -50,7 +50,7 @@ int	ft_exitreturn(char *str)
 	neg = 1;
 	res = 0;
 	if (check_number(str) == 1)
-		return (-1);
+		return (-420);
 	i = 0;
 	if (str[0] == '-')
 	{
@@ -78,13 +78,13 @@ void	ft_bi_exit(t_simple_command *c_table)
 		ft_proper_free(c_table, c_table->env);
 		exit(ret);
 	}
+	else if (ret == -420)
+		exit_too_long(c_table);
 	else if (c_table->args_num > 2)
 	{
-		write(2, "minishell: exit: too many arguments\n", 37);
+		write(2, "exit\nminishell: exit: too many arguments\n", 42);
 		c_table->last_ret = 1;
 	}
-	else if (ret < 0 && c_table->args_num == 2)
-		exit_too_long(c_table);
 	else
 	{
 		if (c_table->pos == 0 && c_table->next == NULL)
