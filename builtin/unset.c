@@ -85,8 +85,8 @@ void	ft_bi_unset(t_simple_command **c_table)
 				write(2, (*c_table)->args[i], ft_strlen((*c_table)->args[i]));
 				write(2, "': not a valid identifier", 26);
 				write(2, "\n", 1);
+				(*c_table)->last_ret = 1;
 			}
-			(*c_table)->last_ret = 1;
 		}
 		i++;
 	}
