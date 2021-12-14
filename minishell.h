@@ -174,7 +174,8 @@ void				ft_add_heredoc(char *delim, t_simple_command *c_table);
 void				ft_open_files(t_simple_command *c_table, t_redir *list);
 
 /*file/file_utils.c*/
-void				ft_write_wfolder(char *str, int i);
+void				ft_write_wfolder(t_redir *wrong,
+						t_simple_command *c_table);
 void				ft_file_error(t_simple_command *c_table);
 int					ft_isfolder(char *file, int ret);
 void				ft_close_prev(t_simple_command *c_table);

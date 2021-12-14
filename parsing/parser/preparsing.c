@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 16:20:59 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:20:35 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	add_env_in_elem(t_simple_command *lst_command, char **env)
 	temp = lst_command;
 	while (temp)
 	{
+		temp->outfile = -21000;
+		temp->infile = -21000;
+		temp->badfd = 0;
 		temp->env = env;
 		temp->pos = i++;
 		ft_open_files(temp, temp->redir);

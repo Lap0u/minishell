@@ -6,19 +6,25 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/08 11:20:15 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:17:40 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
 
-void	ft_write_wfolder(char *str, int i)
+void	ft_write_wfolder(t_redir *wrong, t_simple_command *c_table)
 {
+	if (wrong->type == 0)
+		ft_add_output(wrong->file, c_table);
+	else if (wrong->type == 1)
+		ft_add_input(wrong->file, c_table);
+	else if (wrong->type == 2)
+		ft_add_append(wrong->file, c_table);
 	write(2, "minishell: ", 12);
-	write(2, str, ft_strlen(str));
+	write(2, wrong->file, ft_strlen(wrong->file));
 	write(2, ": ", 2);
-	if (i == 1)
+	if (c_table->badfd == 1)
 		write(2, "Is a folder\n", 13);
 	else
 		perror(NULL);
@@ -69,7 +75,7 @@ void	write_heredoc(char *delim, int ret)
 		if (str == NULL)
 		{
 			write(2, "minishell: warning: \"heredoc\"", 30);
-			write(2, "closed by EOF (instead of \" ", 29);
+			write(2, " closed by EOF (instead of \" ", 30);
 			write(2, delim, ft_strlen(delim));
 			write(2, " \")\n", 5);
 			return ;

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/03 13:35:53 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:23:00 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,8 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 
 void	ft_open_files(t_simple_command *c_table, t_redir *list)
 {
-	int	i;
+	t_redir	*wrong;
 
-	i = 0;
-	c_table->outfile = -21000;
-	c_table->infile = -21000;
-	c_table->badfd = 0;
 	while (list && c_table->outfile != -42000 && c_table->infile != -42000)
 	{
 		if (list->type == 0)
@@ -106,9 +102,15 @@ void	ft_open_files(t_simple_command *c_table, t_redir *list)
 			ft_add_append(list->file, c_table);
 		else if (list->type == 3)
 			ft_add_heredoc(list->file, c_table);
-		if (c_table->outfile == -42000 || c_table->infile == -42000)
-			ft_write_wfolder(list->file, c_table->badfd);
-		i++;
+		wrong = list;
 		list = list->next;
 	}
+	while (list)
+	{
+		if (list->type == 3)
+			ft_add_heredoc(list->file, c_table);
+		list = list->next;
+	}
+	if (c_table->outfile == -42000 || c_table->infile == -42000)
+		ft_write_wfolder(wrong, c_table);
 }
