@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 15:43:28 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:51:24 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ char	**ft_empty_env(void)
 
 	res = malloc(sizeof(char *) * 4);
 	if (res == NULL)
-		return (NULL);
+	{
+		write(2, "env error with malloc, exiting minishell..\n", 44);
+		exit(1);
+	}
 	res[0] = ft_strdup("OLDPWD");
 	res[1] = make_pwd("PWD=");
 	res[2] = ft_strdup("SHLVL=1");
@@ -71,7 +74,7 @@ char	**ft_copy_env(char **env)
 		i++;
 	res = malloc(sizeof(char *) * (i + 1));
 	if (res == NULL)
-		return (NULL);
+		exit(write(2, "env error with malloc, exiting minishell..\n", 44));
 	while (j < i)
 	{
 		if (ft_strncmp("SHLVL=", env[j], ft_strlen("SHLVL=")) == 0)

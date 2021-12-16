@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 16:23:18 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:48:01 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 	return (-1);
 }
 
+t_redir	*free_red(t_token *tok, int ind, int size)
+{
+	while (ind < size && tok[ind].type != PIPE)
+	{
+		if (tok[ind].type >= RED_OUT && tok[ind].type <= RED_HERE_DOC)
+		{
+			ind++;
+			free(tok[ind].value);
+		}
+		ind++;
+	}
+	return (NULL);
+}
+
 t_redir	*ft_fill_redir(t_token *tok, int ind, char **env, int ret)
 {
 	t_redir	*start;
@@ -76,7 +90,7 @@ t_redir	*ft_fill_redir(t_token *tok, int ind, char **env, int ret)
 		return (NULL);
 	start = malloc(sizeof(t_redir));
 	if (start == NULL)
-		return (NULL);
+		return (free_red(tok, ind, tok->size));
 	while (ind < tok[0].size && tok[ind].type != PIPE)
 	{
 		if (is_good_redir(tok, ind++, env))

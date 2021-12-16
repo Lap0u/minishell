@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:57:47 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/08 11:40:23 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 10:39:52 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_remove_from_env(char *str, char ***env)
 		i++;
 	res = malloc(sizeof(char *) * i);
 	if (res == NULL)
-		return ((void)ft_free_3dtab((*env)));
+		return ;
 	i = 0;
 	while ((*env)[j])
 	{
