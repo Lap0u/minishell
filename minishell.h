@@ -188,12 +188,11 @@ void				ft_close_prev(t_simple_command *c_table);
 void				write_heredoc(char *delim, int ret, char **env);
 
 /*file/heredoc_utils.c*/
-int	sizetochar(char *str, char c);
-int skip_expand(char *str);
-char *get_exp(char *str);
-char	*expended(char *str, char **env);
-void	write_exp_heredoc(char *str, char **env, int fd);
-
+int					sizetochar(char *str, char c);
+int					skip_expand(char *str);
+char				*get_exp(char *str);
+char				*expended(char *str, char **env);
+void				write_exp_heredoc(char *str, char **env, int fd);
 
 /*pipe/pipe_utils.c*/
 int					onec_exec(t_simple_command *c_table);
