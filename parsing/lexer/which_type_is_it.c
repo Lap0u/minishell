@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:18:18 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/10 16:18:01 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:52:20 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ int	which_type(t_token *my_arr)
 	return (0);
 }
 
+void	free_ttoken(t_token *tab, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(tab[i].value);
+		i++;
+	}
+	write(2, "Error with malloc, exiting minishell\n", 38);
+}
+
 void	typification(t_token *my_arr, int nbr_token)
 {
 	int	i;
@@ -56,6 +69,11 @@ void	typification(t_token *my_arr, int nbr_token)
 	i = 0;
 	while (i < nbr_token)
 	{
+		if (my_arr[i].value == NULL)
+		{
+			free_ttoken(my_arr, nbr_token);
+			exit(1);
+		}
 		my_arr[i].type = which_type(&(my_arr[i]));
 		i++;
 	}

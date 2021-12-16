@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 15:43:10 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 10:32:57 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	get_stat(char *str)
 	int			ret;
 
 	buf = malloc(sizeof(struct stat));
+	if (buf == NULL)
+		return (-1);
 	buf->st_mode = 0;
 	if (buf == NULL)
 		return (0);

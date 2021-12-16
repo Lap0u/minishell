@@ -30,7 +30,7 @@ int	check_var_env(char **env, t_token *temp, int y)
 		str = ft_var_only(env[i]);
 		if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR
 				&& ft_strcmp(str, temp[y].value + 1) == 0)
-			|| ((*(temp[y].value) == '$') && !*(temp[y].value + 1)))
+			|| ((temp[y].value != NULL) && (*(temp[y].value) == '$') && !*(temp[y].value + 1)))
 		{
 			temp[y].subst = 1;
 			free(str);

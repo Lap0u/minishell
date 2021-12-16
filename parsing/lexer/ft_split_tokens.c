@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:57 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:17:16 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:00:44 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ char	*make_str(char *str, int fl_q)
 	i = 0;
 	len = what_is_len(str, fl_q);
 	arr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!arr)
+		return (NULL);
 	if (make_str_check(arr, &str, &i, fl_q))
 	{
 		if (*str == '"' && fl_q != 2)
@@ -113,8 +115,7 @@ char	*make_str(char *str, int fl_q)
 			}
 		}
 	}
-	arr[i] = '\0';
-	return (arr);
+	return (add_arr_zer(arr, i));
 }
 
 t_token	*ft_split_tokens(char *str, int nbr_tokens)
