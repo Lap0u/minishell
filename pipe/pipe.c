@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 10:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 15:42:00 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:05:06 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	ft_pipe(t_simple_command *c_table)
 		return (onec_exec(c_table));
 	nbr_sent = ft_lstcmd(c_table);
 	childs = init_childs(nbr_sent);
-	pipefd = init_pipes(nbr_sent, childs);
+	if (childs)
+		pipefd = init_pipes(nbr_sent, childs);
 	ft_add_prev(c_table);
 	if (childs == NULL || pipefd == NULL)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:24:10 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/14 11:20:35 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:00:31 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, char **env, int ret)
 		my_elem->last_ret = ret;
 		my_elem->redir = ft_fill_redir(arr_tok, index, env, ret);
 		my_elem->args = ft_fill_args(arr_tok, index, env, ret);
-		my_elem->cmd = my_elem->args[0];
+		if (my_elem->args)
+			my_elem->cmd = my_elem->args[0];
 		my_elem->args_num = ft_2dlen(my_elem->args);
 		my_elem->next = (void *)0;
 	}
@@ -98,6 +99,6 @@ t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len,
 		i++;
 	}
 	add_env_in_elem(lst_command, env);
-	ft_free_arrtok(arr_tok, arr_len);
+	ft_check_nullarg(lst_command, arr_tok, arr_len);
 	return (lst_command);
 }

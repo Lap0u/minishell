@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 14:04:34 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/10 16:54:42 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:49:58 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	launch_start(char *cmd, int nbr_tok, char ***env, int *ret)
 	t_simple_command	*c_table;
 
 	arr_tok = ft_split_tokens(cmd, nbr_tok);
+	if (arr_tok == NULL)
+		exit(write(2, "Error with malloc, exiting minishell..\n", 40));
 	if (check_syntax(arr_tok, nbr_tok))
 	{
 		c_table = creation_list_command(arr_tok, nbr_tok, *env, *ret);

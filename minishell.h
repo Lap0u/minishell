@@ -166,6 +166,12 @@ void				ft_free_2dstr(char **str);
 int					ft_proper_free(t_simple_command *c_table, char **env);
 int					check_tty(void);
 
+/*exit/malloc_error.c*/
+void				free_alltok(t_token *tab, int size);
+void				ft_check_nullarg(t_simple_command *lst,
+						t_token *arr_tok, int size);
+char				*add_arr_zer(char *arr, int i);
+
 /*file/file_open.c*/
 void				ft_add_input(char *file, t_simple_command *c_table);
 void				ft_add_output(char *file, t_simple_command *c_table);
@@ -291,6 +297,7 @@ t_simple_command	*new_elem(t_token *arr_tok, int index,
 void				add_env_in_elem(t_simple_command *lst_command, char **env);
 t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len,
 						char **env, int last_ret);
+void				ft_free_arrtok(t_token *tab, int size);
 
 /*parsing/parser/tools_parser.c*/
 
