@@ -81,6 +81,15 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 		(*start)->file = tok[ind + 1].value;
 		return (0);
 	}
+	while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0 && (ind + 2 + i) < tok->size) 
+	{
+		if ((tok[ind + 2 + i].value[0]) == '\0')
+		{
+			free(tok[ind + 2 + i].value);
+			tok[ind + 2 + i].value = NULL;
+		}
+		i++;
+	}
 	return (-1);
 }
 
