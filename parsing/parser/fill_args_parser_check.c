@@ -23,8 +23,7 @@ int	ft_fill_args_check_var_not_exist(t_token *arr_tok, int ind)
 
 int	ft_fill_args_check_expand(t_token *arr_tok, int ind)
 {
-	if (((arr_tok[ind].type == DOLLAR && arr_tok[ind].subst == 1)
-			|| arr_tok[ind].type == ARG))
+	if (((arr_tok[ind].type == DOLLAR && arr_tok[ind].subst == 1) || (arr_tok[ind].type == ARG && arr_tok[ind].value != NULL)))
 		return (1);
 	else
 		return (0);

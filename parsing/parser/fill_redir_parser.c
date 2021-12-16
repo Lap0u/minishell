@@ -49,6 +49,12 @@ void	new_redir(t_token *tok, t_redir **start)
 	if (new == NULL)
 		return ;
 	new->type = tok[0].type - 5;
+	printf("%s\n", tok[0].value);
+	if (tok[2].value && tok[1].fl_space == 0)
+	{
+		free(tok[2].value);
+		tok[2].value = NULL;
+	}
 	new->file = tok[1].value;
 	new->next = NULL;
 	save->next = new;
@@ -56,10 +62,22 @@ void	new_redir(t_token *tok, t_redir **start)
 
 int	first_redir(t_redir **start, t_token *tok, int ind)
 {
+	int i;
+
+	i = 0;
 	(*start)->type = tok[ind].type - 5;
 	(*start)->next = NULL;
 	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_q == 1)
 	{
+		while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0 && (ind + 2 + i) < tok->size) 
+		{
+			if ((tok[ind + 2 + i].value[0]) == '\0')
+			{
+				free(tok[ind + 2 + i].value);
+				tok[ind + 2 + i].value = NULL;
+			}
+			i++;
+		}
 		(*start)->file = tok[ind + 1].value;
 		return (0);
 	}
