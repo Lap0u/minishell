@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/14 11:23:00 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:15:06 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	ret = open(temp_name, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (ret < 0)
 		return (ft_close_prev(c_table));
-	write_heredoc(delim, ret);
+	write_heredoc(delim, ret, c_table->env);
 	close (ret);
 	ret = open(temp_name, O_RDONLY);
 	free(temp_name);

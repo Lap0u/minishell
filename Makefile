@@ -1,14 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/10/05 21:17:45 by cbeaurai          #+#    #+#              #
-#    Updated: 2021/12/16 12:00:20 by cbeaurai         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+
 
 NAME		= minishell
 
@@ -26,7 +16,8 @@ SRCS		= readline.c utils.c builtin/utils.c builtin/cd.c builtin/echo.c \
 				signals/sig_handlers.c signals/set_signals.c \
 				parsing/parser/parser_print.c parsing/parser/do_var_existe.c \
 				parsing/parser/fill_args_parser_check.c parsing/parser/fill_redir_utils.c \
-				exit/malloc_error.c
+				file/heredoc_utils.c exit/malloc_error.c
+
 
 
 OBJS		= $(SRCS:.c=.o)
