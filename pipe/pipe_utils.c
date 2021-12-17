@@ -106,7 +106,11 @@ void	launch_exec(t_simple_command *c_table, pid_t *childs,
 			exit(free_one_memb(c_table, childs, pipefd, c_table->last_ret));
 		}
 		else if (childs[i / 2] > 0)
-			set_signals2();
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGSEGV, SIG_IGN);
+		}
 		i += 2;
 		c_table = c_table->next;
 	}

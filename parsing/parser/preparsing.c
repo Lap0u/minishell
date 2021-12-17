@@ -35,7 +35,6 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, char **env, int ret)
 	if (my_elem != (void *)0)
 	{
 		my_elem->last_ret = ret;
-		// my_elem->args = ft_fill_args(arr_tok, index, env, ret);
 		my_elem->redir = ft_fill_redir(arr_tok, index, env, ret);
 		my_elem->args = ft_fill_args(arr_tok, index, env, ret);
 		if (my_elem->args)
@@ -43,12 +42,6 @@ t_simple_command	*new_elem(t_token *arr_tok, int index, char **env, int ret)
 		my_elem->args_num = ft_2dlen(my_elem->args);
 		my_elem->next = (void *)0;
 	}
-	// int i = 0;
-	// while ( my_elem->args[i] != NULL)
-	// {
-	// 	printf("%s, i = %i\n", my_elem->args[i], i);
-	// 	i++;
-	// }
 	return (my_elem);
 }
 
