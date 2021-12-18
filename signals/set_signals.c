@@ -34,4 +34,6 @@ void	set_signals2(void)
 {
 	signal(SIGINT, inthandler2);
 	signal(SIGQUIT, quithandler2);
+	signal(SIGSEGV, segvhandler2);
+
 }

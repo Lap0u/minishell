@@ -230,6 +230,7 @@ void				inthandler(int sig);
 void				quithandler(int sig);
 void				inthandler2(int sig);
 void				quithandler2(int sig);
+void				segvhandler2(int sig);
 
 /*signals/set_signals.c*/
 int					sig_val(int ret);

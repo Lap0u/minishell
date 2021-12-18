@@ -37,6 +37,7 @@ void	inthandler2(int sig)
 	extern int	g_signum;
 
 	(void)sig;
+	signal(SIGINT, SIG_IGN);
 	g_signum = 130;
 	write(2, "\n", 1);
 }
@@ -46,6 +47,17 @@ void	quithandler2(int sig)
 	extern int	g_signum;
 
 	(void)sig;
+	signal(SIGQUIT, SIG_IGN);
 	g_signum = 131;
 	write(2, "Quit (core dumped)\n", 19);
+}
+
+void	segvhandler2(int sig)
+{
+	extern int	g_signum;
+
+	(void)sig;
+	signal(SIGSEGV, SIG_IGN);
+	g_signum = 139;
+	write(2, "Segmentation fault (core dumped)\n", 34);
 }
