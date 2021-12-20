@@ -24,7 +24,7 @@ void	make_str_dollar_filled(char *str, t_token *my_arr, int *i, int *y)
 			&& (str[*i] == '_' || ft_isalpha(str[*i]) || ft_isdigit(str[*i])))
 			*i = *i + 1;
 	}
-	else
+	else if (str[*i] && ((str[*i] != '<') && (str[*i] != '>')))
 		*i = *i + 1;
 	if (str[*i] == ' ' && my_arr[*y].fl_q != 2)
 		my_arr[*y].fl_space = 1;

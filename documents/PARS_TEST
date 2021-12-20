@@ -96,7 +96,7 @@ problemes:
 48. echo "$USER11111fjfjfjf" - dois rien afficher parce que 11 etc envisage comme nom de var OK
 49. echo $\"echo - ne marche pas, renvoi erreuer -2 mais c'est normale'
 
-50. echo "test$<test" KO
+50. echo "test$<test" OK
 
 51. echo test$<test - KO
 52. echo "test$-r" OK
@@ -109,3 +109,17 @@ problemes:
 59. echo "$NULL" test OK
 60. echo '"abc"'
 61. echo $NULL test OK
+
+
+signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGSEGV, SIG_IGN);
+			//SIGBUS
+			//SIGABRT
+			//SIGTRAP
+			// set_signals2();
+
+else if (str[*i] && ((str[*i] == '<') && (str[*i] == '>')))
+		{
+			while ((str[*i] == '<') && (str[*i] == '>'))
+		}

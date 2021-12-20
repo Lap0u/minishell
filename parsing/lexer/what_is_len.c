@@ -98,6 +98,8 @@ int	what_is_len_dollar(char *str)
 	if (*str && ((*str == '"' && *(str + 1) == '"')
 			|| (*str == '\'' && *(str + 1) == '\'')))
 		len += 2;
+	else if (*str && (*str == '<' || *str == '>'))
+		return (len);
 	else if (*str && ((*str == '"' && *(str + 1) != '"' && *(str - 2) != '"')
 			|| (*str == '\'' && *(str + 1) != '\'' && *(str - 2) != '\'')))
 		len += 1;
