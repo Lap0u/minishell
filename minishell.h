@@ -348,6 +348,7 @@ void				ft_print_sentences(t_simple_command *start);
 int					is_good_redir(t_token *tok, int ind, char **env);
 int					is_there_red(t_token *tok, int ind, int len, char **env);
 char				*call_expand(t_token *tok, int ind, char **env, int ret);
+void				free_endred(t_token *tok, int ind, int i);
 
 /*parsing/parser/verif_parsing.c*/
 

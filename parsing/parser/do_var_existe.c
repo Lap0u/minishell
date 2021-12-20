@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_args_parser.c                                 :+:      :+:    :+:   */
+/*   do_var_existe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 11:55:46 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 15:56:22 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:49:41 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_var_env(char **env, t_token *temp, int y)
 		str = ft_var_only(env[i]);
 		if ((ft_strcmp(temp[y].value, "$?") == 0) || (temp[y].type == DOLLAR
 				&& ft_strcmp(str, temp[y].value + 1) == 0)
-			|| ((temp[y].value != NULL) && (*(temp[y].value) == '$') && !*(temp[y].value + 1)))
+			|| ((temp[y].value != NULL) && (*(temp[y].value) == '$')
+				&& !*(temp[y].value + 1)))
 		{
 			temp[y].subst = 1;
 			free(str);

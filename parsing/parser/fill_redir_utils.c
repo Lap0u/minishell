@@ -6,11 +6,25 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:22:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/09 16:23:44 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:04:31 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	free_endred(t_token *tok, int ind, int i)
+{
+	while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0
+		&& (ind + 2 + i) < tok->size)
+	{
+		if ((tok[ind + 2 + i].value[0]) == '\0')
+		{
+			free(tok[ind + 2 + i].value);
+			tok[ind + 2 + i].value = NULL;
+		}
+		i++;
+	}
+}
 
 int	is_there_red(t_token *tok, int ind, int len, char **env)
 {

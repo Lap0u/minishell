@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args_parser_check.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:51:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 17:51:05 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:50:11 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_fill_args_check_var_not_exist(t_token *arr_tok, int ind)
 
 int	ft_fill_args_check_expand(t_token *arr_tok, int ind)
 {
-	if (((arr_tok[ind].type == DOLLAR && arr_tok[ind].subst == 1) || (arr_tok[ind].type == ARG && arr_tok[ind].value != NULL)))
+	if (((arr_tok[ind].type == DOLLAR && arr_tok[ind].subst == 1)
+			|| (arr_tok[ind].type == ARG && arr_tok[ind].value != NULL)))
 		return (1);
 	else
 		return (0);
