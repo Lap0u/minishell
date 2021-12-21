@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/16 11:48:01 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:04:01 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ void	new_redir(t_token *tok, t_redir **start)
 
 int	first_redir(t_redir **start, t_token *tok, int ind)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	(*start)->type = tok[ind].type - 5;
 	(*start)->next = NULL;
 	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_q == 1)
 	{
-		while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0 && (ind + 2 + i) < tok->size) 
+		while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0
+			&& (ind + 2 + i) < tok->size)
 		{
 			if ((tok[ind + 2 + i].value[0]) == '\0')
 			{
@@ -81,15 +82,7 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 		(*start)->file = tok[ind + 1].value;
 		return (0);
 	}
-	while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0 && (ind + 2 + i) < tok->size) 
-	{
-		if ((tok[ind + 2 + i].value[0]) == '\0')
-		{
-			free(tok[ind + 2 + i].value);
-			tok[ind + 2 + i].value = NULL;
-		}
-		i++;
-	}
+	free_endred(tok, ind, i);
 	return (-1);
 }
 

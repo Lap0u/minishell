@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_signals.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:56:48 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:56:54 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:49:15 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	set_signals2(void)
 {
 	signal(SIGINT, inthandler2);
 	signal(SIGQUIT, quithandler2);
+	signal(SIGSEGV, segvhandler2);
 }

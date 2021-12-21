@@ -44,7 +44,8 @@ int	nbr_words_dollar(char const *str, int *i)
 	{
 		words++;
 		*i = *i + 1;
-		nbr_words_dollar_body(str, i);
+		if (str[*i] != '<' && str[*i] != '>')
+			nbr_words_dollar_body(str, i);
 	}
 	return (words);
 }
@@ -115,5 +116,6 @@ int	nbr_words(char const *str)
 			return (check);
 		words += check;
 	}
+	printf("nbr_words = %d\n", words);
 	return (words);
 }
