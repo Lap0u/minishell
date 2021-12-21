@@ -100,6 +100,15 @@ char	*make_str(char *str, int fl_q)
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr)
 		return (NULL);
+	if (fl_q == 1)
+	{
+		str++;
+		while (i < len)
+		{
+			arr[i] = str[i];
+			i++;
+		}
+	}
 	if (make_str_check(arr, &str, &i, fl_q))
 	{
 		if (*str == '"' && fl_q != 2)

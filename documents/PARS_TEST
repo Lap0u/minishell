@@ -113,18 +113,17 @@ problemes:
 63. echo koala ||| cat - la source de probleme est meme que 62. OK
 
 
-64. >minishell export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+64. >minishell export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8    OK
 >minishell echo "$A'$B"'$C"$D'$E'"$F"'"'$G'$H"
 1'2$C   5"$F"'7'8
->minishell echo '"abc"'
-"abc"
->minishell echo '  "abc" '
 
-'65. echo " $ " | cat -e
+'65. echo '  "abc" '
 
-66. echo $:$= | cat -e
-67. export FOO=' " '
-echo " $FOO " | cat -e
+66. echo " $ " | cat -e
+
+67. echo $:$= | cat -e
+68. export FOO=' " '
+69. echo " $FOO " | cat -e
 
 
 signal(SIGINT, SIG_IGN);
