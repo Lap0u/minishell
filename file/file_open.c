@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/21 12:06:28 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:15:32 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	int		ret;
 	char	*temp_name;
 	char	*index;
+	extern int	g_signum;
 
 	index = ft_itoa(c_table->pos);
 	temp_name = ft_strjoin("file/.heredoc", index);
@@ -81,7 +82,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	close (ret);
 	ret = open(temp_name, O_RDONLY);
 	free(temp_name);
-	if (ret < 0)
+	if (ret < 0 || g_signum == 130)
 		return (ft_close_prev(c_table));
 	if (c_table->infile >= 0)
 		close(c_table->infile);
@@ -91,8 +92,9 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 void	ft_open_files(t_simple_command *c_table, t_redir *list)
 {
 	t_redir	*wrong;
+	extern int	g_signum;
 
-	while (list && c_table->outfile != -42000 && c_table->infile != -42000)
+	while (list && c_table->outfile != -42000 && c_table->infile != -42000 && g_signum != 130)
 	{
 		if (list->type == 0)
 			ft_add_output(list->file, c_table);
@@ -105,12 +107,12 @@ void	ft_open_files(t_simple_command *c_table, t_redir *list)
 		wrong = list;
 		list = list->next;
 	}
-	while (list)
+	while (list && g_signum != 130)
 	{
 		if (list->type == 3)
 			ft_add_heredoc(list->file, c_table);
 		list = list->next;
 	}
-	if (c_table->outfile == -42000 || c_table->infile == -42000)
+	if ((c_table->outfile == -42000 || c_table->infile == -42000) && g_signum != 130)
 		ft_write_wfolder(wrong, c_table);
 }

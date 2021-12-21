@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/16 16:53:34 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:41:25 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,13 @@ void	ft_close_prev(t_simple_command *c_table)
 void	write_heredoc(char *delim, int ret, char **env)
 {
 	char	*str;
+	extern int g_signum;
 
 	while (1)
 	{
 		str = readline("> ");
+		if (g_signum == 130)
+			return ;
 		if (str == NULL)
 		{
 			write(2, "minishell: warning: \"heredoc\"", 30);

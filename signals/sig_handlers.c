@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:57:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/20 10:49:09 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:06:45 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,26 @@
 void	inthandler(int sig)
 {
 	extern int	g_signum;
-
+	// int			stdin;
+	
 	(void)sig;
 	g_signum = 130;
-	write(2, "\n", 1);
+	// fprintf(stderr, "rentre");
+	// write(0, "\n", 1);
+	// stdin = dup(STDIN_FILENO);
+	// close(STDIN_FILENO);
+	// dup2(stdin, STDIN_FILENO);
+	write(0, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+void	inthandler3(int sig)
+{
+	extern int g_signum;
+	(void)sig;
+	g_signum = 130;
 }
 
 void	quithandler(int sig)
@@ -39,7 +52,7 @@ void	inthandler2(int sig)
 	(void)sig;
 	signal(SIGINT, SIG_IGN);
 	g_signum = 130;
-	write(2, "\n", 1);
+	write(0, "\n", 1);
 }
 
 void	quithandler2(int sig)
