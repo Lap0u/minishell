@@ -89,6 +89,7 @@ t_simple_command	*creation_list_command(t_token *arr_tok, int arr_len,
 	nbr_elem = nbr_pipe(arr_tok, arr_len);
 	if (nbr_elem < 0)
 		return ((void *)0);
+	set_signals3();
 	lst_command = NULL;
 	lst_command = new_elem(arr_tok, index, env, last_ret);
 	index = skip_topipe(arr_tok, index, arr_len);

@@ -232,11 +232,13 @@ void				quithandler(int sig);
 void				inthandler2(int sig);
 void				quithandler2(int sig);
 void				segvhandler2(int sig);
+void				inthandler3(int sig);
 
 /*signals/set_signals.c*/
 int					sig_val(int ret);
 void				set_signals(void);
 void				set_signals2(void);
+void				set_signals3(void);
 
 /*parsing/lexer/ft_split_tokens.c*/
 int					what_is_len(char *str, int fl_q);

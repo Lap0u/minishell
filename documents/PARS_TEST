@@ -109,6 +109,20 @@ problemes:
 59. echo "$NULL" test OK
 60. echo '"abc"'
 61. echo $NULL test OK
+62. echo test |cat  - probleme de | colle
+63. echo koala ||| cat - la source de probleme est meme que 62.
+64. >minishell export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+>minishell echo "$A'$B"'$C"$D'$E'"$F"'"'$G'$H"
+1'2$C   5"$F"'7'8
+>minishell echo '"abc"'
+"abc"
+>minishell echo '  "abc" '
+
+'65. echo " $ " | cat -e
+
+66. echo $:$= | cat -e
+67. export FOO=' " '
+echo " $FOO " | cat -e
 
 
 signal(SIGINT, SIG_IGN);

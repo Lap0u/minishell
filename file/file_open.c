@@ -71,7 +71,7 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	char	*temp_name;
 	char	*index;
 	extern int	g_signum;
-
+	int	stdin = dup(STDIN_FILENO);
 	index = ft_itoa(c_table->pos);
 	temp_name = ft_strjoin("file/.heredoc", index);
 	free(index);
@@ -82,6 +82,11 @@ void	ft_add_heredoc(char *delim, t_simple_command *c_table)
 	close (ret);
 	ret = open(temp_name, O_RDONLY);
 	free(temp_name);
+	if (g_signum == 130)
+	{
+		dup2(stdin, STDIN_FILENO);
+		write(0, "\n", 1);
+	}
 	if (ret < 0 || g_signum == 130)
 		return (ft_close_prev(c_table));
 	if (c_table->infile >= 0)
