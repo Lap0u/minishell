@@ -100,13 +100,17 @@ char	*make_str(char *str, int fl_q)
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr)
 		return (NULL);
+	printf("fl_q = %d, len = %d\n", fl_q, len);
 	if (fl_q == 1)
 	{
-		str++;
-		while (i < len)
+		if (make_str_check(arr, &str, &i, fl_q))
 		{
-			arr[i] = str[i];
-			i++;
+			str++;
+			while (i < len)
+			{
+				arr[i] = str[i];
+				i++;
+			}
 		}
 	}
 	if (make_str_check(arr, &str, &i, fl_q))

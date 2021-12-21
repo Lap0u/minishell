@@ -117,7 +117,7 @@ problemes:
 >minishell echo "$A'$B"'$C"$D'$E'"$F"'"'$G'$H"
 1'2$C   5"$F"'7'8
 
-'65. echo '  "abc" '
+'65. echo '  "abc" '   OK
 
 66. echo " $ " | cat -e
 
