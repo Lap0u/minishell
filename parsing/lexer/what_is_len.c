@@ -66,7 +66,7 @@ int	what_is_len_simple(char *str)
 
 	len = 0;
 	while (*str != '\0' && (*str != '\'' && *str != '"' && *str != '$')
-		&& (!in_charset(*str)) && *str != '>' && *str != '<')
+		&& (!in_charset(*str)) && *str != '>' && *str != '<' && *str != '|')
 	{
 		len++;
 		str++;

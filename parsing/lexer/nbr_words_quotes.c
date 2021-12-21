@@ -108,5 +108,7 @@ int	what_is_len_redir(char *str)
 		if (*str == '<')
 			len++;
 	}
+	else if (*str == '|')
+		len++;
 	return (len);
 }

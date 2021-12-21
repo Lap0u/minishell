@@ -69,6 +69,11 @@ int	nbr_words_redir(char const *str, int *i)
 		if (str[*i] == '<')
 			*i = *i + 1;
 	}
+	else if (str[*i] == '|')
+	{
+		words++;
+		*i = *i + 1;
+	}
 	return (words);
 }
 
@@ -81,7 +86,7 @@ int	nbr_words_simple(char const *str, int *i)
 		&& (in_charset(str[*i])))
 		*i = *i + 1;
 	if (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<')
+		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<' && str[*i] != '|')
 	{
 		words++;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
@@ -116,6 +121,5 @@ int	nbr_words(char const *str)
 			return (check);
 		words += check;
 	}
-	printf("nbr_words = %d\n", words);
 	return (words);
 }

@@ -25,11 +25,11 @@ int	what_is_len(char *str, int fl_q)
 		i = what_is_len_s_quotes(str);
 	else if (*arr == '"' || fl_q == 2)
 		i = what_is_len_double_quotes(str);
-	else if (*arr != '$' && (*arr != '<' && *arr != '>'))
+	else if (*arr != '$' && (*arr != '<' && *arr != '>' && *arr != '|'))
 		i = what_is_len_simple(arr);
 	else if (*arr == '$')
 		i = what_is_len_dollar(arr);
-	else if (*arr == '<' || *arr == '>')
+	else if (*arr == '<' || *arr == '>' || *arr == '|')//change
 		i = what_is_len_redir(arr);
 	else
 	{
