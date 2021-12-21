@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/16 15:15:06 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:06:28 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_add_output(char *file, t_simple_command *c_table)
 		ft_close_prev(c_table);
 		return ;
 	}
-	ret = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	ret = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (ret < 0)
 		return (ft_close_prev(c_table));
 	if (c_table->outfile >= 0)
@@ -57,7 +57,7 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 		closedir(folder);
 		return (ft_close_prev(c_table));
 	}
-	ret = open(file, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	ret = open(file, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (ret < 0)
 		return (ft_close_prev(c_table));
 	if (c_table->outfile >= 0)
