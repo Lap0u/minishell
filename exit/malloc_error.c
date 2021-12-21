@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:59:33 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/16 12:00:51 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:14:52 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_check_nullarg(t_simple_command *lst, t_token *arr_tok, int size)
 	start = lst;
 	while (lst)
 	{
-		if (!lst->args || !lst->cmd || !lst->env)
+		if ((!lst->args || !lst->cmd || !lst->env) && lst->err == 1)
 		{
 			ft_proper_free(start, start->env);
 			free_alltok(arr_tok, size);

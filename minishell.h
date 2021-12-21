@@ -62,6 +62,7 @@ typedef struct s_simple_command
 	int						outfile;
 	int						badfd;
 	int						pos;
+	int						err;
 	t_redir					*redir;
 	struct s_simple_command	*next;
 	struct s_simple_command	*previous;
