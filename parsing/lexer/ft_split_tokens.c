@@ -105,7 +105,6 @@ char	*make_str(char *str, int fl_q)
 	{
 		if (make_str_check(arr, &str, &i, fl_q))
 		{
-			str++;
 			while (i < len)
 			{
 				arr[i] = str[i];
