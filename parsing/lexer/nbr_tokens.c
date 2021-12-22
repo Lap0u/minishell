@@ -31,7 +31,7 @@ void	nbr_words_dollar_body(char const *str, int *i)
 	else if (str[*i] && str[*i] == '$')
 		*i = *i + 1;
 	else if (str[*i] && (str[*i] != '\'' && str[*i] != '"'
-			&& str[*i] != '$'))
+			&& str[*i] != '$') && (!in_charset(str[*i])))
 		*i = *i + 1;
 }
 

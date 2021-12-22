@@ -34,8 +34,9 @@ void	make_str_dollar(char *str, t_token *my_arr, int *i, int *y)
 {
 	if (str[*i] == '$')
 	{
-		my_arr[*y].value = make_str(&str[*i], 0);
-		*i = *i + 1;
+		my_arr[*y].value = make_str(&str[*i], my_arr[*y].fl_q);
+		if (str[*i + 1] != ' ' || my_arr[*y].fl_q != 2)
+			*i = *i + 1;
 		my_arr[*y].fl_space = 0;
 		if (str[*i] && ((str[*i] == '"' && str[*i + 1] == '"')
 				|| (str[*i] == '\'' && str[*i + 1] == '\'')))

@@ -23,8 +23,8 @@ int	what_is_len(char *str, int fl_q)
 		return (0);
 	if (*arr == '\'' && fl_q == 1)
 		i = what_is_len_s_quotes(str);
-	else if (*arr == '"' || fl_q == 2)
-		i = what_is_len_double_quotes(str);
+	else if ((*arr == '"' || fl_q == 2) && *arr != '$')
+		i = what_is_len_double_quotes(arr);
 	else if (*arr != '$' && (*arr != '<' && *arr != '>' && *arr != '|'))
 		i = what_is_len_simple(arr);
 	else if (*arr == '$')
@@ -100,7 +100,6 @@ char	*make_str(char *str, int fl_q)
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr)
 		return (NULL);
-	printf("fl_q = %d, len = %d\n", fl_q, len);
 	if (fl_q == 1)
 	{
 		if (make_str_check(arr, &str, &i, fl_q))
@@ -153,6 +152,7 @@ t_token	*ft_split_tokens(char *str, int nbr_tokens)
 		make_str_s_quotes(str, my_arr, &i, &y);
 		make_str_double_quote(str, my_arr, &i, &y);
 	}
+	i = 0;
 	fill_size_tokens(my_arr, nbr_tokens);
 	typification(my_arr, nbr_tokens);
 	return (my_arr);
