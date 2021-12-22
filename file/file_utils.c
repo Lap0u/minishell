@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/22 12:07:03 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:15:47 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	ft_close_prev(t_simple_command *c_table)
 
 void	write_heredoc(char *delim, int ret, char **env)
 {
-	char	*str;
-	extern int g_signum;
+	char		*str;
+	extern int	g_signum;
 
 	while (1)
 	{

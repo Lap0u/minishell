@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:57:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/22 11:38:55 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:14:58 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	inthandler(int sig)
 {
 	extern int	g_signum;
-	
+
 	(void)sig;
 	g_signum = 130;
 	write(0, "\n", 1);
