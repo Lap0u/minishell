@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 12:06:57 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/20 11:04:01 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/22 11:55:17 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	is_expandable(char *str, int red, int quote, char **env)
 {
 	int		i;
 	char	*temp;
-
+	
+	if(!str)
+		return (0);
 	if (str[0] != '$' || red == RED_HERE_DOC || quote == 1)
 		return (1);
 	if (quote != 1 && ft_strcmp(str, "$?") == 0)
@@ -49,12 +51,12 @@ void	new_redir(t_token *tok, t_redir **start)
 	if (new == NULL)
 		return ;
 	new->type = tok[0].type - 5;
-	printf("%s\n", tok[0].value);
-	if (tok[2].value && tok[1].fl_space == 0)
-	{
-		free(tok[2].value);
-		tok[2].value = NULL;
-	}
+	// printf("%s\n", tok[0].value);
+	// if (tok[2].value && tok[1].fl_space == 0)
+	// {
+	// 	free(tok[2].value);
+	// 	tok[2].value = NULL;
+	// }
 	new->file = tok[1].value;
 	new->next = NULL;
 	save->next = new;
@@ -69,8 +71,8 @@ int	first_redir(t_redir **start, t_token *tok, int ind)
 	(*start)->next = NULL;
 	if (tok[ind].type == RED_HERE_DOC || tok[ind + 1].fl_q == 1)
 	{
-		while (tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0
-			&& (ind + 2 + i) < tok->size)
+		while ((ind + 2 + i) < tok->size && tok[ind + 2 + i].value
+				&& tok[ind + 1].fl_space == 0)
 		{
 			if ((tok[ind + 2 + i].value[0]) == '\0')
 			{
