@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:51:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/22 11:49:28 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:13:59 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	ft_fill_args_check_expand(t_token *arr_tok, int ind)
 
 int	ft_fill_args_check_spaces(t_token *arr_tok, int ind)
 {
-	fprintf(stderr, "%d   %d   %s\n", ind, arr_tok[0].size, arr_tok[ind].value);
 	if (ind + 1 != arr_tok[0].size && arr_tok[ind + 1].type == PIPE)
 		return (0);
 	if ((((arr_tok[ind].fl_space == 0 && (arr_tok[ind + 1].fl_q == 2
