@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nbr_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:17:44 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:17:48 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:53:13 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	nbr_words_simple(char const *str, int *i)
 		&& (in_charset(str[*i])))
 		*i = *i + 1;
 	if (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<' && str[*i] != '|')
+		&& (in_charset(str[*i]) == 0) && str[*i] != '>'
+		&& str[*i] != '<' && str[*i] != '|')
 	{
 		words++;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')

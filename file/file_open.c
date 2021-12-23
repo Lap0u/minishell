@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:38:29 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/22 12:30:43 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:56:43 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,42 +65,6 @@ void	ft_add_append(char *file, t_simple_command *c_table)
 	if (c_table->outfile >= 0)
 		close(c_table->outfile);
 	c_table->outfile = ret;
-}
-
-char	*add_index_file(char *str, int pos)
-{
-	char	*index;
-	char	*res;
-
-	index = ft_itoa(pos);
-	res = ft_strjoin(str, index);
-	free(index);
-	return (res);
-}
-
-int	save_stdin(void)
-{
-	int	res;
-
-	res = dup(STDIN_FILENO);
-	if (res < 0)
-		perror("dup");
-	return (res);
-}
-
-void	stdin_getback(int saved)
-{
-	extern int	g_signum;
-	int			ret;
-
-	if (g_signum == 130)
-	{
-		ret = dup2(saved, STDIN_FILENO);
-		if (ret < 0)
-			perror("dup2");
-		write(0, "\n", 1);
-	}
-	close(saved);
 }
 
 void	ft_add_heredoc(char *delim, t_simple_command *c_table)

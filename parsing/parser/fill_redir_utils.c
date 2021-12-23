@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:22:04 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/22 16:15:18 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:52:36 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	free_endred(t_token *tok, int ind, int i)
 {
-	while (ind + 2 + 1 < tok[0].size && tok[ind + 2 + i].value && tok[ind + 1].fl_space == 0)
+	while (ind + 2 + 1 < tok[0].size && tok[ind + 2 + i].value
+		&& tok[ind + 1].fl_space == 0)
 	{
 		if ((tok[ind + 2 + i].value[0]) == '\0')
 		{

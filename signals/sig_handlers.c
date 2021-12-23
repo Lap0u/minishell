@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:57:01 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/22 12:14:58 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:00:05 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ void	quithandler2(int sig)
 	signal(SIGQUIT, SIG_IGN);
 	g_signum = 131;
 	write(2, "Quit (core dumped)\n", 19);
-}
-
-void	segvhandler2(int sig)
-{
-	extern int	g_signum;
-
-	(void)sig;
-	signal(SIGSEGV, SIG_IGN);
-	g_signum = 139;
-	write(2, "Segmentation fault (core dumped)\n", 34);
 }
 
 void	inthandler3(int sig)

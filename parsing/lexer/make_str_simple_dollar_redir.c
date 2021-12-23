@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_str_simple_dollar_redir.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okushnir <okushnir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:17:36 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/09 15:17:38 by okushnir         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:54:13 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ void	make_str_simple(char *str, t_token *my_arr, int *i, int *y)
 		&& (in_charset(str[*i])))
 		*i = *i + 1;
 	if (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-		&& (in_charset(str[*i]) == 0) && str[*i] != '>' && str[*i] != '<' && str[*i] != '|')
+		&& (in_charset(str[*i]) == 0) && str[*i] != '>'
+		&& str[*i] != '<' && str[*i] != '|')
 	{
 		my_arr[*y].value = make_str(&str[*i], 0);
 		my_arr[*y].fl_q = 0;
 		my_arr[*y].fl_space = 0;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-			&& (!in_charset(str[*i])) && str[*i] != '>' && str[*i] != '<' && str[*i] != '|')
+			&& (!in_charset(str[*i])) && str[*i] != '>'
+			&& str[*i] != '<' && str[*i] != '|')
 			*i = *i + 1;
 		if (str[*i] == ' ')
 			my_arr[*y].fl_space = 1;

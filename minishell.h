@@ -185,8 +185,14 @@ void				ft_write_wfolder(t_redir *wrong,
 						t_simple_command *c_table);
 void				ft_file_error(t_simple_command *c_table);
 int					ft_isfolder(char *file, int ret);
-void				ft_close_prev(t_simple_command *c_table);
 void				write_heredoc(char *delim, int ret, char **env);
+char				*add_index_file(char *str, int pos);
+
+/*file/stream_utils.c*/
+int					save_stdin(void);
+void				stdin_getback(int saved);
+char				*add_index_file(char *str, int pos);
+void				ft_close_prev(t_simple_command *c_table);
 
 /*file/heredoc_utils.c*/
 int					sizetochar(char *str, char c);
@@ -231,7 +237,6 @@ void				inthandler(int sig);
 void				quithandler(int sig);
 void				inthandler2(int sig);
 void				quithandler2(int sig);
-void				segvhandler2(int sig);
 void				inthandler3(int sig);
 
 /*signals/set_signals.c*/
@@ -239,6 +244,7 @@ int					sig_val(int ret);
 void				set_signals(void);
 void				set_signals2(void);
 void				set_signals3(void);
+void				segvhandler2(int sig);
 
 /*parsing/lexer/ft_split_tokens.c*/
 int					what_is_len(char *str, int fl_q);

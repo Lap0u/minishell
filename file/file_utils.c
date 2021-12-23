@@ -6,12 +6,23 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:42:23 by cbeaurai          #+#    #+#             */
-/*   Updated: 2021/12/22 12:15:47 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:56:53 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
+
+char	*add_index_file(char *str, int pos)
+{
+	char	*index;
+	char	*res;
+
+	index = ft_itoa(pos);
+	res = ft_strjoin(str, index);
+	free(index);
+	return (res);
+}
 
 void	ft_write_wfolder(t_redir *wrong, t_simple_command *c_table)
 {
@@ -53,16 +64,6 @@ int	ft_isfolder(char *file, int ret)
 	if (bytes < 0)
 		return (0);
 	return (1);
-}
-
-void	ft_close_prev(t_simple_command *c_table)
-{
-	if (c_table->outfile >= 0)
-		close(c_table->outfile);
-	if (c_table->infile >= 0)
-		close(c_table->infile);
-	c_table->outfile = -42000;
-	c_table->infile = -42000;
 }
 
 void	write_heredoc(char *delim, int ret, char **env)

@@ -6,7 +6,7 @@
 /*   By: cbeaurai <cbeaurai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:57 by okushnir          #+#    #+#             */
-/*   Updated: 2021/12/16 12:00:44 by cbeaurai         ###   ########.fr       */
+/*   Updated: 2021/12/23 10:52:57 by cbeaurai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	what_is_len(char *str, int fl_q)
 		i = what_is_len_simple(arr);
 	else if (*arr == '$')
 		i = what_is_len_dollar(arr);
-	else if (*arr == '<' || *arr == '>' || *arr == '|')//change
+	else if (*arr == '<' || *arr == '>' || *arr == '|') //change
 		i = what_is_len_redir(arr);
 	else
 	{
