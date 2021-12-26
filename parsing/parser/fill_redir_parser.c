@@ -51,12 +51,6 @@ void	new_redir(t_token *tok, t_redir **start)
 	if (new == NULL)
 		return ;
 	new->type = tok[0].type - 5;
-	// printf("%s\n", tok[0].value);
-	// if (tok[2].value && tok[1].fl_space == 0)
-	// {
-	// 	free(tok[2].value);
-	// 	tok[2].value = NULL;
-	// }
 	new->file = tok[1].value;
 	new->next = NULL;
 	save->next = new;

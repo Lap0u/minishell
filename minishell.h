@@ -278,6 +278,7 @@ void				make_str_dollar_filled(char *str, t_token *my_arr,
 void				make_str_dollar(char *str, t_token *my_arr, int *i, int *y);
 void				make_str_simple(char *str, t_token *my_arr, int *i, int *y);
 void				make_str_redir(char *str, t_token *my_arr, int *i, int *y);
+void				make_str_body_two(char *str, char *arr, int *i, int fl_q);
 
 /*parsing/lexer/nbr_tokens.c*/
 

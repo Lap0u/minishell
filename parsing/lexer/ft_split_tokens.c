@@ -29,7 +29,7 @@ int	what_is_len(char *str, int fl_q)
 		i = what_is_len_simple(arr);
 	else if (*arr == '$')
 		i = what_is_len_dollar(arr);
-	else if (*arr == '<' || *arr == '>' || *arr == '|') //change
+	else if (*arr == '<' || *arr == '>' || *arr == '|')
 		i = what_is_len_redir(arr);
 	else
 	{
@@ -100,17 +100,7 @@ char	*make_str(char *str, int fl_q)
 	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr)
 		return (NULL);
-	if (fl_q == 1)
-	{
-		if (make_str_check(arr, &str, &i, fl_q))
-		{
-			while (i < len)
-			{
-				arr[i] = str[i];
-				i++;
-			}
-		}
-	}
+	make_str_body_two(str, arr, &i, fl_q);
 	if (make_str_check(arr, &str, &i, fl_q))
 	{
 		if (*str == '"' && fl_q != 2)
@@ -119,11 +109,9 @@ char	*make_str(char *str, int fl_q)
 			make_str_body(arr, str, &i, len);
 		else
 		{
-			while (i < len && str[i] != '"')
-			{
+			i--;
+			while (++i < len && str[i] != '"')
 				arr[i] = str[i];
-				i++;
-			}
 		}
 	}
 	return (add_arr_zer(arr, i));

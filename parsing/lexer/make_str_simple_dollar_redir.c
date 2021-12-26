@@ -94,12 +94,30 @@ void	make_str_redir(char *str, t_token *my_arr, int *i, int *y)
 		*y = *y + 1;
 		*i += len;
 	}
-	else if (str[*i] == '|') //change
+	else if (str[*i] == '|')
 	{
 		my_arr[*y].fl_q = 0;
 		my_arr[*y].fl_space = 1;
 		my_arr[*y].value = make_str(&str[*i], 0);
 		*y = *y + 1;
 		*i = *i + 1;
+	}
+}
+
+void	make_str_body_two(char *str, char *arr, int *i, int fl_q)
+{
+	int	len;
+
+	len = what_is_len(str, fl_q);
+	if (fl_q == 1)
+	{
+		if (make_str_check(arr, &str, i, fl_q))
+		{
+			while (*i < len)
+			{
+				arr[*i] = str[*i];
+				*i = *i + 1;
+			}
+		}
 	}
 }
