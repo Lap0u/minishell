@@ -91,7 +91,8 @@ int	nbr_words_simple(char const *str, int *i)
 	{
 		words++;
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
-			&& (!in_charset(str[*i])) && str[*i] != '>' && str[*i] != '<')
+			&& (!in_charset(str[*i])) && str[*i] != '>'
+			&& str[*i] != '<' && str[*i] != '|' )
 			*i = *i + 1;
 	}
 	return (words);
